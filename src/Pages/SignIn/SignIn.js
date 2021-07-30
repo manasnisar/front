@@ -101,9 +101,6 @@ const SignIn = (props) => {
                     <Typography component="div">
                         <img src="Assets/Logos/mangekyo-logo.png" className={classes.image} alt="Sharingan Logo"/>
                     </Typography>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
                     <form className={classes.form} onSubmit={formik.handleSubmit}>
                     <ThemeProvider theme={theme}>
                         <TextField
