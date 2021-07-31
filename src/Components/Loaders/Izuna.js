@@ -6,10 +6,10 @@ const Izuna = () => {
 
     return (
         <div id="izuna-sharingan">
-            <div class="inset"></div>
-            <div class="spa sup"></div>
-            <div class="spa izq"></div>
-            <div class="spa der"></div>
+            <div className="inset"></div>
+            <div className="spa sup"></div>
+            <div className="spa izq"></div>
+            <div className="spa der"></div>
         </div>
     )
 }

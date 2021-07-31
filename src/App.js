@@ -1,14 +1,12 @@
 import React from 'react';
-import './App.css';
 import { Switch, Route, Router } from 'react-router-dom'
+
 import history from "./history";
 import { connect } from "react-redux";
 
 import SignIn from './Pages/SignIn/SignIn';
+import SignUp from './Pages/SignUp/SignUp';
 import { isAuth } from './redux/auth/auth-actions'
-
-
-
 
 class App extends React.Component {
   constructor(props) {
@@ -23,14 +21,16 @@ class App extends React.Component {
     this.props.isAuth(history)
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    this.setState({
-      isAuthenticated: nextProps.isAuthenticated
-    });
+  static getDerivedStateFromProps(nextProps) {
     if (nextProps.user) {
-      this.setState({
-        user: { ...nextProps.user }
-      });
+      return {
+        user: { ...nextProps.user },
+        isAuthenticated: nextProps.isAuthenticated
+      }
+    }else{
+      return {
+        isAuthenticated: nextProps.isAuthenticated
+      }
     }
   }
 
@@ -41,6 +41,8 @@ class App extends React.Component {
         <Switch>
           <Route path='/' exact component={SignIn} />
           <Route path='/signin' component={SignIn} />
+          <Route path='/signup' component={SignUp} />
+          
           {
             !this.state.isAuthenticated ?
             <Route path='/' component={SignIn} /> : null

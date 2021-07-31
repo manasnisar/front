@@ -5,12 +5,12 @@ import './style.css'
 const Sharingan = () => {
 
     return (
-        <div class="sharingan">
-            <div class="inner-ring">
-                <div class="tomoe"></div>
-                <div class="tomoe"></div>
-                <div class="tomoe"></div>
-                <div class="circle"></div>
+        <div className="sharingan">
+            <div className="inner-ring">
+                <div className="tomoe"></div>
+                <div className="tomoe"></div>
+                <div className="tomoe"></div>
+                <div className="circle"></div>
             </div>
         </div>
     )

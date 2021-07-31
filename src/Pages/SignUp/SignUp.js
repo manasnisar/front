@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -17,8 +13,7 @@ import * as yup from 'yup'
 import { connect } from 'react-redux'
 import { loginUserAsync, isAuth } from '../../redux/auth/auth-actions';
 
-import Sharingan from '../../Components/Loaders/Sharingan'
-
+import Mangekyo from '../../Components/Loaders/Mangekyo'
 
 const signInSchema = yup.object({
     email: yup.string().lowercase().trim().required('Email is a required field').email('Must be a valid Email'),
@@ -37,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#050505",
         display: 'flex',
         flexDirection: 'column'
+    },
+    brandImage: {
+        width: '125px',
+        marginBottom: '20px'
     },
     paper: {
         margin: theme.spacing(8, 4),
@@ -96,9 +95,9 @@ const useStyles = makeStyles((theme) => ({
     sloganContainer: {
         display: 'flex',
         justifyContent: 'center',
-        marginTop: '-8rem',
+        marginTop: '-6rem',
         [theme.breakpoints.down('md')]: {
-            marginTop: '-12rem',
+            marginTop: '-10rem',
         },
         [theme.breakpoints.down('xs')]: {
             display: 'none'
@@ -123,10 +122,10 @@ const theme = createTheme({
     },
     typography: {
         fontFamily: `"Poppins", "Roboto"`,
-    },
+      },
 });
 
-const SignIn = (props) => {
+const SignUp = (props) => {
     const classes = useStyles();
 
 
@@ -159,14 +158,13 @@ const SignIn = (props) => {
         <ThemeProvider theme={theme}>
 
             <Grid container component="main" className={classes.root}>
-                <CssBaseline />
                 <Grid item xs={false} sm={6} md={6} className={classes.animationGrid}>
                     <div className={classes.animationContainer}>
-                        <Sharingan />
+                        <Mangekyo />
                     </div>
                     <div className={classes.sloganContainer}>
                         <Typography component="h1" className={classes.slogan}>
-                            We see it all!
+                            Let us watch it for you!
                         </Typography>
                     </div>
                 </Grid>
@@ -174,7 +172,7 @@ const SignIn = (props) => {
                     <div className={classes.paper}>
                         <Typography component="div" className={classes.titleContainer}>
                             <Typography component="h1" className={classes.title}>
-                                Login to your account
+                                Let's get you set up
                             </Typography>
                         </Typography>
                         <form className={classes.form} onSubmit={formik.handleSubmit}>
@@ -207,13 +205,9 @@ const SignIn = (props) => {
                                 error={formik.touched.password && Boolean(formik.errors.password)}
                                 helperText={formik.touched.password && formik.errors.password}
                             />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
-                            />
                             {
-                                props.loginFailure ?
-                                    <div className={classes.errorMessage}><div>{props.loginError}!</div></div>
+                                props.signUpFailure ?
+                                    <div className={classes.errorMessage}><div>{props.signUpError}!</div></div>
                                     : null
                             }
                             <Button
@@ -223,20 +217,8 @@ const SignIn = (props) => {
                                 color="primary"
                                 className={classes.submit}
                             >
-                                {props.loginPending ? "Please Wait..." : "Sign In"}
+                                {props.signUpPending ? "Please Wait..." : "Sign Up"}
                             </Button>
-                            <Grid container>
-                                <Grid item xs>
-                                    <Link href="#" variant="body2">
-                                        Forgot password?
-                                    </Link>
-                                </Grid>
-                                <Grid item>
-                                    <Link href="/signup" variant="body2">
-                                        {"Don't have an account? Sign Up"}
-                                    </Link>
-                                </Grid>
-                            </Grid>
                         </form>
                     </div>
                 </Grid>
@@ -247,9 +229,9 @@ const SignIn = (props) => {
 }
 
 const mapStatetoProps = state => ({
-    loginError: state.authState.error,
-    loginFailure: state.authState.loginFailure,
-    loginPending: state.authState.pending,
+    signUpError: state.authState.error,
+    signUpFailure: state.authState.signUpFailure,
+    signUpPending: state.authState.pending,
     isAuthenticated: state.authState.isAuthenticated,
     user: state.authState.user
 })
@@ -264,4 +246,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStatetoProps,
     mapDispatchToProps
-)(SignIn)
+)(SignUp)
