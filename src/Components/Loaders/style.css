@@ -1,8 +1,8 @@
   
   .sharingan {
     background: #e41414;
-    width: 12em;
-    height: 12em;
+    width: 13em;
+    height: 13em;
     position: relative;
     border: 5px #000 solid;
     animation: spin 5s ease-in-out infinite, shine 5s linear infinite;
@@ -68,8 +68,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 6em;
-    height: 6em;
+    width: 6.5em;
+    height: 6.5em;
     border: 4px rgba(110, 13, 13, 0.5) solid;
   }
   

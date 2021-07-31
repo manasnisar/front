@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+
+import {Button, TextField, Grid, Typography, Paper, Link} from '@material-ui/core';
 import { makeStyles, ThemeProvider, createTheme } from '@material-ui/core/styles';
 
 
@@ -16,7 +13,10 @@ import { loginUserAsync, isAuth } from '../../redux/auth/auth-actions';
 import Mangekyo from '../../Components/Loaders/Mangekyo'
 
 const signInSchema = yup.object({
+    firstName: yup.string().trim().required('First Name is a required field').max(120, "First Name must be less than 120 characters"),
+    lastName: yup.string().trim().required('Last Name is a required field').max(120, "Last Name must be less than 120 characters"),
     email: yup.string().lowercase().trim().required('Email is a required field').email('Must be a valid Email'),
+    orgName: yup.string().trim().required('Organization Name is a required field').max(120, "Organization Name must be less than 120 characters"),
     password: yup.string().trim().required('Password is a required field').min(8).matches(
         /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
         "Must Contain 8 Characters, One Letter and One Number"
@@ -56,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
         backgroundColor: "#050505",
-        color: '#e41515',
         border: '1px solid #050505',
         '&:hover': {
             background: 'white',
@@ -122,7 +121,7 @@ const theme = createTheme({
     },
     typography: {
         fontFamily: `"Poppins", "Roboto"`,
-      },
+    },
 });
 
 const SignUp = (props) => {
@@ -146,8 +145,12 @@ const SignUp = (props) => {
 
     const formik = useFormik({
         initialValues: {
+            firstName: '',
+            lastName: '',
             email: '',
+            orgName: '',
             password: '',
+
         },
         validationSchema: signInSchema,
         onSubmit: onSignInFormSubmit,
@@ -176,35 +179,92 @@ const SignUp = (props) => {
                             </Typography>
                         </Typography>
                         <form className={classes.form} onSubmit={formik.handleSubmit}>
-                            <TextField
-                                className={classes.textField}
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                value={formik.values.email}
-                                onChange={formik.handleChange}
-                                error={formik.touched.email && Boolean(formik.errors.email)}
-                                helperText={formik.touched.email && formik.errors.email}
-                                autoComplete="email"
-                                autoFocus
-                            />
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                value={formik.values.password}
-                                onChange={formik.handleChange}
-                                error={formik.touched.password && Boolean(formik.errors.password)}
-                                helperText={formik.touched.password && formik.errors.password}
-                            />
+
+                            <Grid container spacing={1}>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        className={classes.textField}
+                                        autoComplete="fname"
+                                        name="firstName"
+                                        variant="outlined"
+                                        fullWidth
+                                        id="firstName"
+                                        label="First Name"
+                                        autoFocus
+                                        margin="normal"
+                                        value={formik.values.firstName}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                                        helperText={formik.touched.firstName && formik.errors.firstName}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        className={classes.textField}
+                                        variant="outlined"
+                                        fullWidth
+                                        id="lastName"
+                                        label="Last Name"
+                                        name="lastName"
+                                        autoComplete="lname"
+                                        margin="normal"
+                                        value={formik.values.lastName}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+                                        helperText={formik.touched.lastName && formik.errors.lastName}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        className={classes.textField}
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
+                                        id="email"
+                                        label="Email Address"
+                                        name="email"
+                                        value={formik.values.email}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.email && Boolean(formik.errors.email)}
+                                        helperText={formik.touched.email && formik.errors.email}
+                                        autoComplete="email"
+                                    />
+
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        className={classes.textField}
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
+                                        id="orgName"
+                                        label="Organization Name"
+                                        name="orgName"
+                                        value={formik.values.orgName}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.orgName && Boolean(formik.errors.orgName)}
+                                        helperText={formik.touched.orgName && formik.errors.orgName}
+                                        autoComplete="orgname"
+                                    />
+
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
+                                        name="password"
+                                        label="Password"
+                                        type="password"
+                                        id="password"
+                                        autoComplete="current-password"
+                                        value={formik.values.password}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.password && Boolean(formik.errors.password)}
+                                        helperText={formik.touched.password && formik.errors.password}
+                                    />
+                                </Grid>
+                            </Grid>
                             {
                                 props.signUpFailure ?
                                     <div className={classes.errorMessage}><div>{props.signUpError}!</div></div>
@@ -219,6 +279,13 @@ const SignUp = (props) => {
                             >
                                 {props.signUpPending ? "Please Wait..." : "Sign Up"}
                             </Button>
+                            <Grid container>
+                                <Grid item>
+                                    <Link href="/signin" variant="body2">
+                                        {"Already have an account? Sign In"}
+                                    </Link>
+                                </Grid>
+                            </Grid>
                         </form>
                     </div>
                 </Grid>
