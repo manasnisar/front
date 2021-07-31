@@ -1,17 +1,8 @@
-body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(0deg, #090909 0%, #1f1f1f 100%);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    min-height: 100vh;
-  }
   
   .sharingan {
     background: #e41414;
-    width: 8em;
-    height: 8em;
+    width: 12em;
+    height: 12em;
     position: relative;
     border: 5px #000 solid;
     animation: spin 5s ease-in-out infinite, shine 5s linear infinite;
@@ -78,8 +69,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 4em;
-    height: 4em;
+    width: 6em;
+    height: 6em;
     border: 4px rgba(110, 13, 13, 0.5) solid;
   }
   
@@ -94,8 +85,8 @@ body {
   .tomoe,
   .circle {
     position: absolute;
-    width: 1em;
-    height: 1em;
+    width: 1.2em;
+    height: 1.2em;
     background: #000;
     z-index: 2;
   }
@@ -111,8 +102,8 @@ body {
     position: absolute;
     box-sizing: border-box;
     top: -0.5em;
-    width: 1.9em;
-    height: 0.9em;
+    width: 2em;
+    height: 1em;
     border-left: 16px solid #000;
     border-radius: 100% 0 0 0;
   }
@@ -144,7 +135,7 @@ body {
     }
    
     100% {
-      transform: rotate(2160deg);
+      transform: rotate(3600deg);
     }
   }
   @keyframes mangekyo-spin {

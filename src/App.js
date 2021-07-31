@@ -4,7 +4,7 @@ import { Switch, Route, Router } from 'react-router-dom'
 import history from "./history";
 import { connect } from "react-redux";
 
-import SignIn from './Pages/SignIn/SignIn'
+import SignIn from './Pages/SignIn/SignIn';
 import { isAuth } from './redux/auth/auth-actions'
 
 
