@@ -1,8 +1,8 @@
   
   .sharingan {
     background: #e41414;
-    width: 13em;
-    height: 13em;
+    width: 15em;
+    height: 15em;
     position: relative;
     border: 5px #000 solid;
     animation: spin 5s ease-in-out infinite, shine 5s linear infinite;
@@ -68,8 +68,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 6.5em;
-    height: 6.5em;
+    width: 7.5em;
+    height: 7.5em;
     border: 4px rgba(110, 13, 13, 0.5) solid;
   }
   
@@ -109,13 +109,12 @@
   
   .sharingan .tomoe:nth-child(2) {
     bottom: 0.5em;
-    left: -0.3em;
     transform: rotate(-120deg);
   }
   
   .sharingan .tomoe:nth-child(3) {
     bottom: 0.5em;
-    right: -0.3em;
+    right: 0;
     transform: rotate(120deg);
   }
   
