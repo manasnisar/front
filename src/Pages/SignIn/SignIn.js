@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundRepeat: 'no-repeat',
         backgroundColor: "#050505",
         display: 'flex',
-        flexDirection: 'column'
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     paper: {
         margin: theme.spacing(8, 4),
@@ -69,10 +70,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center'
     },
     animationContainer: {
-        flexBasis: '50%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
         [theme.breakpoints.down('xs')]: {
             display: 'none'
         },
@@ -84,13 +81,15 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: '300',
         lineHeight: '58px'
     },
+    mainContainer: {
+        height: '70%',
+        maxHeight: "70%",
+        display: "flex",
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
     sloganContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: '-8rem',
-        [theme.breakpoints.down('md')]: {
-            marginTop: '-12rem',
-        },
+        marginTop: '2rem',
         [theme.breakpoints.down('xs')]: {
             display: 'none'
         },
@@ -152,13 +151,15 @@ const SignIn = (props) => {
             <Grid container component="main" className={classes.root}>
                 <CssBaseline />
                 <Grid item xs={false} sm={6} md={6} className={classes.animationGrid}>
-                    <div className={classes.animationContainer}>
-                        <Sharingan />
-                    </div>
-                    <div className={classes.sloganContainer}>
-                        <Typography component="h1" className={classes.slogan}>
-                            We see it all!
-                        </Typography>
+                    <div className={classes.mainContainer}>
+                        <div className={classes.animationContainer}>
+                            <Sharingan />
+                        </div>
+                        <div className={classes.sloganContainer}>
+                            <Typography component="h1" className={classes.slogan}>
+                                We see it all!
+                            </Typography>
+                        </div>
                     </div>
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} component={Paper} elevation={6} className={classes.grid}>

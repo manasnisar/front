@@ -7,9 +7,9 @@ import {
     USER_AUTHORIZED,
     USER_UNAUTHORIZED,
     LOGOUT,
-    CREATE_USER_FAILURE,
-    CREATE_USER_START,
-    CREATE_USER_SUCCESS,
+    REGISTER_USER_FAILURE,
+    REGISTER_USER_START,
+    REGISTER_USER_SUCCESS,
     GET_USERS_FAILURE,
     GET_USERS_START,
     GET_USERS_SUCCESS,
@@ -125,18 +125,19 @@ export const logout = (history) => async (dispatch) => {
 
 };
 
-export const createUserAsync = (post) => async (dispatch) => {
+export const registerUserAsync = (post) => async (dispatch) => {
     dispatch({
-        type: CREATE_USER_START,
+        type: REGISTER_USER_START,
     });
     let body = {
-        name: post.fullName,
-        telegramId: post.telegramId,
         email: post.email,
+        firstName: post.firstName,
+        lastName: post.lastName,
+        orgName: post.orgName,
         password: post.password,
-        shillingPoints: 0,
+        passwordAgain: post.passwordAgain,
     };
-    const requestPOST = axios.post(apiRoute + "users/", body, {
+    const requestPOST = axios.post(apiRoute + "auth/register", body, {
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -144,16 +145,16 @@ export const createUserAsync = (post) => async (dispatch) => {
     });
     await requestPOST.then(function (response) {
         dispatch({
-            type: CREATE_USER_SUCCESS,
+            type: REGISTER_USER_SUCCESS,
         });
         setTimeout(() => {
             dispatch({
-                type: "CLEAR_CREATE_USER_SUCCESS",
+                type: "CLEAR_REGISTER_USER_SUCCESS",
             });
         }, 6000)
     }).catch(function (error) {
         dispatch({
-            type: CREATE_USER_FAILURE,
+            type: REGISTER_USER_FAILURE,
             payload: error.response.data.message
         });
     })

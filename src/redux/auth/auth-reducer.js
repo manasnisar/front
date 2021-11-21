@@ -5,9 +5,9 @@ import {
     LOGIN_USER_START,
     LOGIN_USER_SUCCESS,
     LOGOUT,
-    CREATE_USER_FAILURE,
-    CREATE_USER_START,
-    CREATE_USER_SUCCESS,
+    REGISTER_USER_FAILURE,
+    REGISTER_USER_START,
+    REGISTER_USER_SUCCESS,
     GET_USERS_FAILURE,
     GET_USERS_START,
     GET_USERS_SUCCESS,
@@ -91,27 +91,27 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 isAuthenticated: false
             }
-        case CREATE_USER_START:
+        case REGISTER_USER_START:
             return {
                 ...state,
                 creationPending: true,
                 creationSuccess: false,
             }
-        case CREATE_USER_FAILURE:
+        case REGISTER_USER_FAILURE:
             return {
                 ...state,
                 creationError: action.payload,
                 creationPending: false,
                 creationSuccess: false,
             }
-        case CREATE_USER_SUCCESS:
+        case REGISTER_USER_SUCCESS:
             return {
                 ...state,
                 creationPending: false,
                 creationError: null,
                 creationSuccess: true,
             }
-        case "CLEAR_CREATE_USER_SUCCESS":
+        case "CLEAR_REGISTER_USER_SUCCESS":
             return {
                 ...state,
                 creationSuccess: false,

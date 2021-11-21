@@ -42,24 +42,6 @@ class App extends React.Component {
           <Route path='/' exact component={SignIn} />
           <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} />
-          
-          {
-            !this.state.isAuthenticated ?
-            <Route path='/' component={SignIn} /> : null
-          }
-
-          {
-            this.state.isAuthenticated && this.state.user.role === "admin" ?
-              <Switch>
-                <Route path='/' exact component={SignIn} />
-              </Switch> : null
-          }
-          {
-            this.state.isAuthenticated && this.state.user.role === "user" ?
-              <Switch>
-                <Route path='/' component={SignIn} />
-              </Switch> : null
-          }
         </Switch>
       </Router>
     );

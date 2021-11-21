@@ -8,11 +8,11 @@ import { useFormik } from 'formik';
 import * as yup from 'yup'
 
 import { connect } from 'react-redux'
-import { loginUserAsync, isAuth } from '../../redux/auth/auth-actions';
+import { registerUserAsync, isAuth } from '../../redux/auth/auth-actions';
 
 import Mangekyo from '../../Components/Loaders/Mangekyo'
 
-const signInSchema = yup.object({
+const signUpSchema = yup.object({
     firstName: yup.string().trim().required('First Name is a required field').max(120, "First Name must be less than 120 characters"),
     lastName: yup.string().trim().required('Last Name is a required field').max(120, "Last Name must be less than 120 characters"),
     email: yup.string().lowercase().trim().required('Email is a required field').email('Must be a valid Email'),
@@ -21,6 +21,9 @@ const signInSchema = yup.object({
         /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
         "Must Contain 8 Characters, One Letter and One Number"
     ),
+    passwordAgain: yup.string().trim().required('Retype Password is a required field').test('passwordAgain', function(value) {
+        return value !== this.parent.password ? this.createError({message: "Passwords do not match!", path:"passwordAgain"}) : true
+    }),
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundRepeat: 'no-repeat',
         backgroundColor: "#050505",
         display: 'flex',
-        flexDirection: 'column'
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     brandImage: {
         width: '125px',
@@ -76,10 +80,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center'
     },
     animationContainer: {
-        flexBasis: '50%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
         [theme.breakpoints.down('xs')]: {
             display: 'none'
         },
@@ -91,13 +91,15 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: '300',
         lineHeight: '58px'
     },
+    mainContainer: {
+        height: '70%',
+        maxHeight: "70%",
+        display: "flex",
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
     sloganContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: '-6rem',
-        [theme.breakpoints.down('md')]: {
-            marginTop: '-10rem',
-        },
+        marginTop: '2rem',
         [theme.breakpoints.down('xs')]: {
             display: 'none'
         },
@@ -127,20 +129,9 @@ const theme = createTheme({
 const SignUp = (props) => {
     const classes = useStyles();
 
-
-    useEffect(() => {
-        if (props.isAuthenticated) {
-            if (props.user.role === "admin") {
-                props.history.push("/admin")
-            } else {
-                props.history.push("/home")
-            }
-
-        }
-    }, [props.isAuthenticated, props.history, props.user])
-
-    const onSignInFormSubmit = (data) => {
-        props.loginUserAsync(data, props.history)
+    const onSignUpFormSubmit = (data) => {
+        console.log(data)
+        props.registerUserAsync(data, props.history)
     }
 
     const formik = useFormik({
@@ -150,10 +141,11 @@ const SignUp = (props) => {
             email: '',
             orgName: '',
             password: '',
+            passwordAgain: '',
 
         },
-        validationSchema: signInSchema,
-        onSubmit: onSignInFormSubmit,
+        validationSchema: signUpSchema,
+        onSubmit: onSignUpFormSubmit,
     });
 
 
@@ -162,13 +154,15 @@ const SignUp = (props) => {
 
             <Grid container component="main" className={classes.root}>
                 <Grid item xs={false} sm={6} md={6} className={classes.animationGrid}>
-                    <div className={classes.animationContainer}>
-                        <Mangekyo />
-                    </div>
-                    <div className={classes.sloganContainer}>
-                        <Typography component="h1" className={classes.slogan}>
-                            Let us watch it for you!
-                        </Typography>
+                    <div className={classes.mainContainer}>
+                        <div className={classes.animationContainer}>
+                            <Mangekyo />
+                        </div>
+                        <div className={classes.sloganContainer}>
+                            <Typography component="h1" className={classes.slogan}>
+                                Let us watch it for you!
+                            </Typography>
+                        </div>  
                     </div>
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} component={Paper} elevation={6} className={classes.grid}>
@@ -257,11 +251,25 @@ const SignUp = (props) => {
                                         label="Password"
                                         type="password"
                                         id="password"
-                                        autoComplete="current-password"
                                         value={formik.values.password}
                                         onChange={formik.handleChange}
                                         error={formik.touched.password && Boolean(formik.errors.password)}
                                         helperText={formik.touched.password && formik.errors.password}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
+                                        name="passwordAgain"
+                                        label="Retype Password"
+                                        type="password"
+                                        id="passwordAgain"
+                                        value={formik.values.passwordAgain}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.passwordAgain && Boolean(formik.errors.passwordAgain)}
+                                        helperText={formik.touched.passwordAgain && formik.errors.passwordAgain}
                                     />
                                 </Grid>
                             </Grid>
@@ -304,7 +312,7 @@ const mapStatetoProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    loginUserAsync: (post, history) => dispatch(loginUserAsync(post, history)),
+    registerUserAsync: (post, history) => dispatch(registerUserAsync(post, history)),
     isAuth: () => dispatch(isAuth())
 })
 
