@@ -1,8 +1,13 @@
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
-import { font, sizes, color, mixin, zIndexValues } from '../../shared/utils/styles';
-import { Logo } from '../../shared/components';
+import {
+  font,
+  sizes,
+  color,
+  mixin,
+  zIndexValues
+} from "../../shared/utils/styles";
 
 export const NavLeft = styled.aside`
   z-index: ${zIndexValues.navLeft};
@@ -14,6 +19,7 @@ export const NavLeft = styled.aside`
   width: ${sizes.appNavBarLeftWidth}px;
   background: ${color.backgroundDarkPrimary};
   transition: all 0.1s;
+
   ${mixin.hardwareAccelerate}
   &:hover {
     width: 200px;
@@ -22,18 +28,12 @@ export const NavLeft = styled.aside`
 `;
 
 export const LogoLink = styled(NavLink)`
-  display: block;
+  display: flex;
   position: relative;
+  justify-content: center;
   left: 0;
   margin: 20px 0 10px;
   transition: left 0.1s;
-`;
-
-export const StyledLogo = styled(Logo)`
-  display: inline-block;
-  margin-left: 8px;
-  padding: 10px;
-  ${mixin.clickable}
 `;
 
 export const Bottom = styled.div`
@@ -51,10 +51,12 @@ export const Item = styled.div`
   padding-left: 64px;
   color: #deebff;
   transition: color 0.1s;
+
   ${mixin.clickable}
   &:hover {
     background: rgba(255, 255, 255, 0.1);
   }
+
   i {
     position: absolute;
     left: 18px;
@@ -69,6 +71,7 @@ export const ItemText = styled.div`
   text-transform: uppercase;
   transition: all 0.1s;
   transition-property: right, visibility, opacity;
+
   ${font.bold}
   ${font.size(12)}
   ${NavLeft}:hover & {

@@ -75,6 +75,12 @@ const buttonVariants = {
     background: #fff;
     ${secondaryAndEmptyShared};
   `,
+  full: css`
+    background: ${color.primary};
+    color: white;
+    width: -webkit-fill-available;
+    margin-left: 0 !important;
+  `,
 };
 
 export const StyledSpinner = styled(Spinner)`

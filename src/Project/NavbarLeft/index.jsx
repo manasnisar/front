@@ -1,19 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { Icon, AboutTooltip } from '../../shared/components';
+import { Icon } from "../../shared/components";
 
-import { NavLeft, LogoLink, StyledLogo, Bottom, Item, ItemText } from './Styles';
+import { NavLeft, LogoLink, Bottom, Item, ItemText } from "./Styles";
+import Logo from "../../shared/components/Logo";
 
 const propTypes = {
   issueSearchModalOpen: PropTypes.func.isRequired,
-  issueCreateModalOpen: PropTypes.func.isRequired,
+  issueCreateModalOpen: PropTypes.func.isRequired
 };
 
 const ProjectNavbarLeft = ({ issueSearchModalOpen, issueCreateModalOpen }) => (
   <NavLeft>
     <LogoLink to="/">
-      <StyledLogo color="#fff" />
+      <Logo color="#fff" />
     </LogoLink>
 
     <Item onClick={issueSearchModalOpen}>
@@ -26,18 +27,7 @@ const ProjectNavbarLeft = ({ issueSearchModalOpen, issueCreateModalOpen }) => (
       <ItemText>Create Issue</ItemText>
     </Item>
 
-    <Bottom>
-      <AboutTooltip
-        placement="right"
-        offset={{ top: -218 }}
-        renderLink={linkProps => (
-          <Item {...linkProps}>
-            <Icon type="help" size={25} />
-            <ItemText>About</ItemText>
-          </Item>
-        )}
-      />
-    </Bottom>
+    <Bottom></Bottom>
   </NavLeft>
 );
 

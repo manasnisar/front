@@ -1,13 +1,17 @@
-import React from 'react';
+import React from "react";
 
-import { Button } from '../../../shared/components';
+import { Button } from "../../../shared/components";
 
-import { Header, BoardName } from './Styles';
+import { Header, BoardName } from "./Styles";
 
 const ProjectBoardHeader = () => (
   <Header>
     <BoardName>Kanban board</BoardName>
-    <a href="https://github.com/oldboyxx/jira_clone" target="_blank" rel="noreferrer noopener">
+    <a
+      href="https://github.com/manasnisar"
+      target="_blank"
+      rel="noreferrer noopener"
+    >
       <Button icon="github">Github Repo</Button>
     </a>
   </Header>

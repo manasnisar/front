@@ -1,9 +1,14 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { color, font } from '../../../shared/utils/styles';
+import { color, font } from "../../../shared/utils/styles";
 
 export const StyledField = styled.div`
   margin-top: 20px;
+`;
+
+export const FieldGroup = styled.div`
+  display: flex;
+  gap: 10px;
 `;
 
 export const FieldLabel = styled.label`
