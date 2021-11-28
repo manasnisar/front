@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Form } from "../../shared/components";
 import {
@@ -13,13 +13,14 @@ import useApi from "../../shared/hooks/api";
 import HalfScreen from "../../shared/components/HalfSide";
 import Mangekyo from "../../shared/components/Loaders/Mangekyo";
 import SharinganBanner from "../../shared/components/Banner";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { BannerText } from "../../shared/components/Banner/Styles";
 import { AuthPage } from "../Styles";
-import { FieldGroup } from "../../shared/components/Form/Styles";
+import toast from "../../shared/utils/toast";
 
 const SignUp = props => {
-  const [{ isSigningIn }, signIn] = useApi.post("/signin");
+  const [{ isCreating }, signUp] = useApi.post("/auth/register");
+  const history = useHistory();
   // useEffect(() => {
   //     if (props.isAuthenticated) {
   //         if (props.user.role === "admin") {
@@ -30,10 +31,6 @@ const SignUp = props => {
   //
   //     }
   // }, [props.isAuthenticated, props.history, props.user])
-
-  const onSignUpFormSubmit = data => {
-    props.loginUserAsync(data, props.history);
-  };
 
   return (
     <AuthPage>
@@ -47,44 +44,38 @@ const SignUp = props => {
           <Form
             enableReinitialize
             initialValues={{
-              firstName: "",
-              lastName: "",
+              name: "",
               email: "",
               password: "",
               passwordAgain: "",
-              organization: ""
+              organization: "",
+              role: "member"
             }}
             validations={{
-              firstName: Form.is.required(),
-              lastName: Form.is.required(),
+              name: Form.is.required(),
               email: [Form.is.required(), Form.is.email()],
               password: Form.is.required(),
-              passwordAgain: Form.is.required(),
-              organization: Form.is.required()
+              organization: Form.is.required(),
+              role: Form.is.oneOf(["owner", "member"])
             }}
             onSubmit={async (values, form) => {
-              // try {
-              //     await createIssue({
-              //         ...values,
-              //         status: IssueStatus.BACKLOG,
-              //         projectId: project.id,
-              //         users: values.userIds.map(id => ({ id })),
-              //     });
-              //     await fetchProject();
-              //     toast.success('Issue has been successfully created.');
-              //     onCreate();
-              // } catch (error) {
-              //     Form.handleAPIError(error, form);
-              // }
+              const { passwordAgain, ...payload } = values;
+              try {
+                await signUp({
+                  ...payload
+                });
+                toast.success("User created successfully!");
+                setTimeout(() => {
+                  history.push("/signin");
+                }, 2000);
+              } catch (error) {
+                toast.error(error);
+              }
             }}
           >
             <FormElement>
               <FormHeading>Sign up for your account</FormHeading>
-              <FieldGroup>
-                <Form.Field.Input name="firstName" placeholder="First name" />
-                <Form.Field.Input name="lastName" placeholder="Last name" />
-              </FieldGroup>
-
+              <Form.Field.Input name="name" placeholder="Full name" />
               <Form.Field.Input name="email" placeholder="Email" />
               <Form.Field.Input
                 name="password"
@@ -92,19 +83,28 @@ const SignUp = props => {
                 type="password"
               />
               <Form.Field.Input
-                name="passwordAgain"
-                placeholder="Retype password"
-                type="password"
-              />
-              <Form.Field.Input
                 name="organization"
                 placeholder="Organization name"
+              />
+              <Form.Field.Select
+                name="role"
+                options={[
+                  {
+                    value: "member",
+                    label: "Member"
+                  },
+                  {
+                    value: "owner",
+                    label: "Owner"
+                  }
+                ]}
+                variant="simple"
               />
               <Actions>
                 <ActionButton
                   type="submit"
                   variant="full"
-                  isWorking={isSigningIn}
+                  isWorking={isCreating}
                 >
                   Sign up
                 </ActionButton>
@@ -121,5 +121,4 @@ const SignUp = props => {
     </AuthPage>
   );
 };
-
 export default SignUp;

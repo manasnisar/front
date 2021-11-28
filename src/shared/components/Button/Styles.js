@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
-import { color, font, mixin } from '../../../shared/utils/styles';
-import Spinner from '../../../shared/components/Spinner';
+import { color, font, mixin } from "../../../shared/utils/styles";
+import Spinner from "../../../shared/components/Spinner";
 
 export const StyledButton = styled.button`
   display: inline-flex;
@@ -15,6 +15,7 @@ export const StyledButton = styled.button`
   border-radius: 3px;
   transition: all 0.1s;
   appearance: none;
+
   ${mixin.clickable}
   ${font.size(14.5)}
   ${props => buttonVariants[props.variant]}
@@ -27,14 +28,17 @@ export const StyledButton = styled.button`
 const colored = css`
   color: #fff;
   background: ${props => color[props.variant]};
+
   ${font.medium}
   &:not(:disabled) {
     &:hover {
       background: ${props => mixin.lighten(color[props.variant], 0.15)};
     }
+
     &:active {
       background: ${props => mixin.darken(color[props.variant], 0.1)};
     }
+
     ${props =>
       props.isActive &&
       css`
@@ -45,15 +49,18 @@ const colored = css`
 
 const secondaryAndEmptyShared = css`
   color: ${color.textDark};
+
   ${font.regular}
   &:not(:disabled) {
     &:hover {
       background: ${color.backgroundLight};
     }
+
     &:active {
       color: ${color.primary};
       background: ${color.backgroundLightPrimary};
     }
+
     ${props =>
       props.isActive &&
       css`
@@ -80,12 +87,17 @@ const buttonVariants = {
     color: white;
     width: -webkit-fill-available;
     margin-left: 0 !important;
-  `,
+  `
 };
 
 export const StyledSpinner = styled(Spinner)`
   position: relative;
   top: 1px;
+  ${props =>
+    props.variant === "full" &&
+    css`
+      margin-top: 0 !important;
+    `}
 `;
 
 export const Text = styled.div`

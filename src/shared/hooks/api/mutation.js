@@ -1,13 +1,13 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import api from '../../../shared/utils/api';
-import useMergeState from '../../../shared/hooks/mergeState';
+import api from "../../../shared/utils/api";
+import useMergeState from "../../../shared/hooks/mergeState";
 
 const useMutation = (method, url) => {
   const [state, mergeState] = useMergeState({
     data: null,
     error: null,
-    isWorking: false,
+    isWorking: false
   });
 
   const makeRequest = useCallback(
@@ -23,26 +23,26 @@ const useMutation = (method, url) => {
           error => {
             reject(error);
             mergeState({ error, data: null, isWorking: false });
-          },
+          }
         );
       }),
-    [method, url, mergeState],
+    [method, url, mergeState]
   );
 
   return [
     {
       ...state,
-      [isWorkingAlias[method]]: state.isWorking,
+      [isWorkingAlias[method]]: state.isWorking
     },
-    makeRequest,
+    makeRequest
   ];
 };
 
 const isWorkingAlias = {
-  post: 'isCreating',
-  put: 'isUpdating',
-  patch: 'isUpdating',
-  delete: 'isDeleting',
+  post: "isCreating",
+  put: "isUpdating",
+  patch: "isUpdating",
+  delete: "isDeleting"
 };
 
 export default useMutation;

@@ -13,12 +13,15 @@ import useApi from "../../shared/hooks/api";
 import HalfScreen from "../../shared/components/HalfSide";
 import Mangekyo from "../../shared/components/Loaders/Mangekyo";
 import SharinganBanner from "../../shared/components/Banner";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { BannerText } from "../../shared/components/Banner/Styles";
 import { AuthPage } from "../Styles";
+import toast from "../../shared/utils/toast";
 
 const SignIn = props => {
-  const [{ isSigningIn }, signIn] = useApi.post("/signin");
+  const [{ isCreating }, signIn] = useApi.post("/auth/login");
+  const history = useHistory();
+
   // useEffect(() => {
   //     if (props.isAuthenticated) {
   //         if (props.user.role === "admin") {
@@ -29,11 +32,6 @@ const SignIn = props => {
   //
   //     }
   // }, [props.isAuthenticated, props.history, props.user])
-
-  const onSignInFormSubmit = data => {
-    props.loginUserAsync(data, props.history);
-  };
-
   return (
     <AuthPage>
       <HalfScreen variant="left">
@@ -54,19 +52,15 @@ const SignIn = props => {
               password: Form.is.required()
             }}
             onSubmit={async (values, form) => {
-              // try {
-              //     await createIssue({
-              //         ...values,
-              //         status: IssueStatus.BACKLOG,
-              //         projectId: project.id,
-              //         users: values.userIds.map(id => ({ id })),
-              //     });
-              //     await fetchProject();
-              //     toast.success('Issue has been successfully created.');
-              //     onCreate();
-              // } catch (error) {
-              //     Form.handleAPIError(error, form);
-              // }
+              try {
+                await signIn({
+                  ...values
+                });
+                history.push("/project");
+              } catch (error) {
+                toast.error(error);
+                Form.handleAPIError(error, form);
+              }
             }}
           >
             <FormElement>
@@ -82,7 +76,7 @@ const SignIn = props => {
                 <ActionButton
                   type="submit"
                   variant="full"
-                  isWorking={isSigningIn}
+                  isWorking={isCreating}
                 >
                   <Link style={{ color: "white" }} to="/project">
                     Log In

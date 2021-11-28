@@ -1,7 +1,10 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export default styled.div`
   width: 100%;
   padding: 200px 0;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

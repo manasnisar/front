@@ -1,22 +1,30 @@
-import axios from 'axios';
+import axios from "axios";
 
-import history from '../../browserHistory';
-import toast from '../../shared/utils/toast';
-import { objectToQueryString } from '../../shared/utils/url';
-import { getStoredAuthToken, removeStoredAuthToken } from '../../shared/utils/authToken';
+import history from "../../browserHistory";
+import toast from "../../shared/utils/toast";
+import { objectToQueryString } from "../../shared/utils/url";
+import {
+  getStoredAuthToken,
+  removeStoredAuthToken,
+  storeAuthToken,
+  storeRefreshToken
+} from "../../shared/utils/authToken";
 
 const defaults = {
-  baseURL: process.env.API_URL || 'http://localhost:5000/v1',
+  baseURL: process.env.API_URL || "http://localhost:5000/v1",
   headers: () => ({
-    'Content-Type': 'application/json',
-    Authorization: getStoredAuthToken() ? `Bearer ${getStoredAuthToken()}` : undefined,
+    "Content-Type": "application/json",
+    Authorization: getStoredAuthToken()
+      ? `Bearer ${getStoredAuthToken()}`
+      : undefined
   }),
   error: {
-    code: 'INTERNAL_ERROR',
-    message: 'Something went wrong. Please check your internet connection or contact our support.',
+    code: "INTERNAL_ERROR",
+    message:
+      "Something went wrong. Please check your internet connection or contact our support.",
     status: 503,
-    data: {},
-  },
+    data: {}
+  }
 };
 
 const api = (method, url, variables) =>
@@ -25,32 +33,39 @@ const api = (method, url, variables) =>
       url: `${defaults.baseURL}${url}`,
       method,
       headers: defaults.headers(),
-      params: method === 'get' ? variables : undefined,
-      data: method !== 'get' ? variables : undefined,
-      paramsSerializer: objectToQueryString,
+      params: method === "get" ? variables : undefined,
+      data: method !== "get" ? variables : undefined,
+      paramsSerializer: objectToQueryString
     }).then(
       response => {
+        if (response.data.tokens) {
+          storeAuthToken(response.data.tokens.access.token);
+          storeRefreshToken(response.data.tokens.refresh.token);
+        }
         resolve(response.data);
       },
       error => {
         if (error.response) {
-          if (error.response.data.error.code === 'INVALID_TOKEN') {
+          if (error.response.data.statusText === "INVALID_TOKEN") {
             removeStoredAuthToken();
-            history.push('/authenticate');
+            history.push("/authenticate");
           } else {
-            reject(error.response.data.error);
+            reject(error.response.data);
           }
         } else {
           reject(defaults.error);
         }
-      },
+      }
     );
   });
 
-const optimisticUpdate = async (url, { updatedFields, currentFields, setLocalData }) => {
+const optimisticUpdate = async (
+  url,
+  { updatedFields, currentFields, setLocalData }
+) => {
   try {
     setLocalData(updatedFields);
-    await api('put', url, updatedFields);
+    await api("put", url, updatedFields);
   } catch (error) {
     setLocalData(currentFields);
     toast.error(error);
@@ -58,10 +73,10 @@ const optimisticUpdate = async (url, { updatedFields, currentFields, setLocalDat
 };
 
 export default {
-  get: (...args) => api('get', ...args),
-  post: (...args) => api('post', ...args),
-  put: (...args) => api('put', ...args),
-  patch: (...args) => api('patch', ...args),
-  delete: (...args) => api('delete', ...args),
-  optimisticUpdate,
+  get: (...args) => api("get", ...args),
+  post: (...args) => api("post", ...args),
+  put: (...args) => api("put", ...args),
+  patch: (...args) => api("patch", ...args),
+  delete: (...args) => api("delete", ...args),
+  optimisticUpdate
 };

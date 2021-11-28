@@ -11,7 +11,7 @@ import SignUp from "../Pages/SignUp";
 const Routes = () => (
   <Router history={history}>
     <Switch>
-      <Redirect exact from="/" to="/signin" />
+      <Redirect exact from="/" to="/authenticate" />
       <Route path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
       <Route path="/authenticate" component={Authenticate} />

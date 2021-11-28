@@ -1,36 +1,41 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
-import { color, font, mixin, zIndexValues } from '../../../shared/utils/styles';
-import Icon from '../../../shared/components/Icon';
+import { color, font, mixin, zIndexValues } from "../../../shared/utils/styles";
+import Icon from "../../../shared/components/Icon";
 
 export const StyledSelect = styled.div`
   position: relative;
   border-radius: 4px;
   cursor: pointer;
+
   ${font.size(14)}
-  ${props => props.variant === 'empty' && `display: inline-block;`}
+  ${props => props.variant === "empty" && `display: inline-block;`}
   ${props =>
-    props.variant === 'normal' &&
-    css`
-      width: 100%;
-      border: 1px solid ${color.borderLightest};
-      background: ${color.backgroundLightest};
-      transition: background 0.1s;
-      &:hover {
-        background: ${color.backgroundLight};
-      }
-    `}
+    props.variant === "normal" ||
+    (props.variant === "simple" &&
+      css`
+        width: 100%;
+        border: 1px solid ${color.borderLightest};
+        background: ${color.backgroundLightest};
+        transition: background 0.1s;
+
+        &:hover {
+          background: ${color.backgroundLight};
+        }
+      `)}
   &:focus {
     outline: none;
     ${props =>
-      props.variant === 'normal' &&
-      css`
-        border: 1px solid ${color.borderInputFocus};
-        box-shadow: 0 0 0 1px ${color.borderInputFocus};
-        background: #fff;
-      }
-    `}
+      props.variant === "normal" ||
+      (props.variant === "simple" &&
+        css`
+                      border: 1px solid ${color.borderInputFocus};
+                      box-shadow: 0 0 0 1px ${color.borderInputFocus};
+                      background: #fff;
+                    }
+                    `)}
   }
+
   ${props =>
     props.invalid &&
     css`
@@ -47,11 +52,12 @@ export const ValueContainer = styled.div`
   align-items: center;
   width: 100%;
   ${props =>
-    props.variant === 'normal' &&
-    css`
-      min-height: 32px;
-      padding: 5px 5px 5px 10px;
-    `}
+    props.variant === "normal" ||
+    (props.variant === "simple" &&
+      css`
+        min-height: 32px;
+        padding: 5px 5px 5px 10px;
+      `)}
 `;
 
 export const ChevronIcon = styled(Icon)`
@@ -68,7 +74,9 @@ export const ValueMulti = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  ${props => props.variant === 'normal' && `padding-top: 5px;`}
+  ${props =>
+    props.variant === "normal" ||
+    (props.variant === "simple" && `padding-top: 5px;`)}
 `;
 
 export const ValueMultiItem = styled.div`
@@ -80,6 +88,7 @@ export const AddMore = styled.div`
   display: inline-block;
   margin-bottom: 3px;
   padding: 3px 0;
+
   ${font.size(12.5)}
   ${mixin.link()}
   i {
@@ -97,7 +106,7 @@ export const Dropdown = styled.div`
   border-radius: 0 0 4px 4px;
   background: #fff;
   ${mixin.boxShadowDropdown}
-  ${props => (props.width ? `width: ${props.width}px;` : 'width: 100%;')}
+  ${props => (props.width ? `width: ${props.width}px;` : "width: 100%;")}
 `;
 
 export const DropdownInput = styled.input`
@@ -106,6 +115,7 @@ export const DropdownInput = styled.input`
   border: none;
   color: ${color.textDarkest};
   background: none;
+
   &:focus {
     outline: none;
   }
@@ -131,9 +141,11 @@ export const Option = styled.div`
   padding: 8px 14px;
   word-break: break-word;
   cursor: pointer;
+
   &:last-of-type {
     margin-bottom: 8px;
   }
+
   &.jira-select-option-is-active {
     background: ${color.backgroundLightPrimary};
   }

@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import Spinner from '../../../shared/components/Spinner';
+import Spinner from "../../../shared/components/Spinner";
 
-import StyledPageLoader from './Styles';
+import StyledPageLoader from "./Styles";
+import Mangekyo from "../Loaders/Mangekyo";
 
 const PageLoader = () => (
   <StyledPageLoader>
-    <Spinner size={70} />
+    <Mangekyo size={100} />
   </StyledPageLoader>
 );
 
