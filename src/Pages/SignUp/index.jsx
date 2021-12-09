@@ -7,7 +7,7 @@ import {
   Divider,
   FormElement,
   FormHeading
-} from "../../Project/IssueCreate/Styles";
+} from "../Project/IssueCreate/Styles";
 import EntryCard from "../../shared/components/EntryCard/EntryCard";
 import useApi from "../../shared/hooks/api";
 import HalfScreen from "../../shared/components/HalfSide";
@@ -17,20 +17,12 @@ import { Link, useHistory } from "react-router-dom";
 import { BannerText } from "../../shared/components/Banner/Styles";
 import { AuthPage } from "../Styles";
 import toast from "../../shared/utils/toast";
+import { getStoredAuthToken } from "../../shared/utils/authToken";
+import api from "../../shared/utils/api";
 
 const SignUp = props => {
   const [{ isCreating }, signUp] = useApi.post("/auth/register");
   const history = useHistory();
-  // useEffect(() => {
-  //     if (props.isAuthenticated) {
-  //         if (props.user.role === "admin") {
-  //             props.history.push("/admin")
-  //         } else {
-  //             props.history.push("/home")
-  //         }
-  //
-  //     }
-  // }, [props.isAuthenticated, props.history, props.user])
 
   return (
     <AuthPage>

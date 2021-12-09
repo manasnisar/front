@@ -7,7 +7,7 @@ import {
   Divider,
   FormElement,
   FormHeading
-} from "../../Project/IssueCreate/Styles";
+} from "../Project/IssueCreate/Styles";
 import EntryCard from "../../shared/components/EntryCard/EntryCard";
 import useApi from "../../shared/hooks/api";
 import HalfScreen from "../../shared/components/HalfSide";

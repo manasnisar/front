@@ -19,8 +19,8 @@ const Authenticate = () => {
         if (user) {
           history.push("/project/board");
         }
-      } catch (error) {
-        toast.error(error);
+      } catch (e) {
+        history.push("/signin");
       }
     };
     checkAuthStatus();

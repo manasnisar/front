@@ -85,7 +85,7 @@ const Select = ({
 
   const activateDropdown = () => {
     if (isDropdownOpen) {
-      $inputRef.current.focus();
+      $selectRef.current.focus();
     } else {
       setDropdownOpen(true);
     }

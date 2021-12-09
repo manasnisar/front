@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@nadavshaar/react-grid-table": "^1.0.2",
     "axios": "^0.21.1",
     "color": "^3.1.2",
     "core-js": "^3.4.7",
