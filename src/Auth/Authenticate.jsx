@@ -17,7 +17,7 @@ const Authenticate = () => {
       try {
         const { user } = await api.get("/auth");
         if (user) {
-          history.push("/project/board");
+          history.push("/myprojects");
         }
       } catch (e) {
         history.push("/signin");

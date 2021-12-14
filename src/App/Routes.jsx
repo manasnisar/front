@@ -12,7 +12,7 @@ import MyWork from "../Pages/MyWork";
 const Routes = () => (
   <Router history={history}>
     <Switch>
-      <Redirect exact from="/" to="/myprojects" />
+      <Redirect exact from="/" to="/authenticate" />
       <Route path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
       <Route path="/authenticate" component={Authenticate} />

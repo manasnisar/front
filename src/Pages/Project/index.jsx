@@ -13,6 +13,7 @@ import IssueSearch from "./IssueSearch";
 import IssueCreate from "./IssueCreate";
 import ProjectSettings from "./ProjectSettings";
 import { ProjectPage } from "./Styles";
+import Backlog from "./Backlog";
 
 const Project = () => {
   const match = useRouteMatch();
@@ -85,6 +86,17 @@ const Project = () => {
         path={`${match.path}/board`}
         render={() => (
           <Board
+            project={project}
+            fetchProject={fetchProject}
+            updateLocalProjectIssues={updateLocalProjectIssues}
+          />
+        )}
+      />
+
+      <Route
+        path={`${match.path}/backlog`}
+        render={() => (
+          <Backlog
             project={project}
             fetchProject={fetchProject}
             updateLocalProjectIssues={updateLocalProjectIssues}

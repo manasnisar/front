@@ -23,11 +23,33 @@ export const NavLeft = styled.aside`
 
 export const LogoLink = styled(NavLink)`
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   position: relative;
   justify-content: center;
   left: 0;
   margin: 20px 0 10px;
   transition: left 0.1s;
+`;
+
+export const LogoText = styled.div`
+  color: white;
+  font-size: 20px;
+  position: relative;
+  right: 12px;
+  visibility: hidden;
+  opacity: 0;
+  text-transform: uppercase;
+  transition: all 0.1s;
+  transition-property: right, visibility, opacity;
+
+  ${font.bold}
+  ${NavLeft}:hover & {
+    right: 0;
+    visibility: visible;
+    opacity: 1;
+  }
 `;
 
 export const Bottom = styled.div`

@@ -1,6 +1,7 @@
 import React from "react";
 import GridTable from "@nadavshaar/react-grid-table";
 import { GridContainer } from "./Styes";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 // custom cell component
 const ProjectName = ({
@@ -115,16 +116,26 @@ const columns = [
   }
 ];
 
-const ProjectsTable = () => (
-  <GridContainer>
-    <GridTable
-      columns={columns}
-      rows={rows}
-      isPaginated={false}
-      showSearch={false}
-      showColumnVisibilityManager={false}
-    />
-  </GridContainer>
-);
+const ProjectsTable = () => {
+  const match = useRouteMatch();
+  const history = useHistory();
+  return (
+    <GridContainer>
+      <GridTable
+        columns={columns}
+        rows={rows}
+        isPaginated={false}
+        showSearch={false}
+        showColumnVisibilityManager={false}
+        onRowClick={(
+          { rowIndex, data, column, isEdit, event },
+          tableManager
+        ) => {
+          history.push(`/project`);
+        }}
+      />
+    </GridContainer>
+  );
+};
 
 export default ProjectsTable;

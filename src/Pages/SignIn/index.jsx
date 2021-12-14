@@ -56,7 +56,7 @@ const SignIn = props => {
                 await signIn({
                   ...values
                 });
-                history.push("/project");
+                history.push("/myprojects");
               } catch (error) {
                 toast.error(error);
                 Form.handleAPIError(error, form);

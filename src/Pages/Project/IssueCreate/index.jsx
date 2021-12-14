@@ -72,7 +72,7 @@ const ProjectIssueCreate = ({
             users: values.userIds.map(id => ({ id }))
           });
           await fetchProject();
-          toast.success("Project has been successfully created.");
+          toast.success("Issue has been successfully created.");
           onCreate();
         } catch (error) {
           Form.handleAPIError(error, form);

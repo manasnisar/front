@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import { Icon } from "../index";
 
-import { NavLeft, LogoLink, Bottom, Item, ItemText } from "./Styles";
+import { NavLeft, LogoLink, Bottom, Item, ItemText, LogoText } from "./Styles";
 import Logo from "../Logo";
 import { useHistory } from "react-router-dom";
 import useApi from "../../hooks/api";
@@ -25,6 +25,7 @@ const ProjectNavbarLeft = ({ issueSearchModalOpen, issueCreateModalOpen }) => {
     <NavLeft>
       <LogoLink to="/">
         <Logo color="#fff" />
+        <LogoText>Sharingan</LogoText>
       </LogoLink>
 
       <Item onClick={issueSearchModalOpen}>
