@@ -4,21 +4,13 @@ import { GridContainer } from "./Styes";
 import { useHistory, useRouteMatch } from "react-router-dom";
 
 // custom cell component
-const ProjectName = ({
-  tableManager,
-  value,
-  field,
-  data,
-  column,
-  colIndex,
-  rowIndex
-}) => {
+const ProjectName = ({ value, data }) => {
   return (
     <div
       className="rgt-cell-inner"
       style={{ display: "flex", alignItems: "center", overflow: "hidden" }}
     >
-      <img src={data.avatar} alt="user avatar" />
+      <img src={data.avatarUrl} alt="user avatar" />
       <span className="rgt-text-truncate" style={{ marginLeft: 10 }}>
         {value}
       </span>
@@ -26,55 +18,14 @@ const ProjectName = ({
   );
 };
 
-let rows = [
-  {
-    id: 1,
-    name: "Sample Project 0",
-    key: "SM0",
-    crteatedAt: "12/08/2019",
-    lead: "Anas",
-    avatar: "https://robohash.org/atquenihillaboriosam.bmp?size=32x32&set=set1"
-  },
-  {
-    id: 2,
-    name: "Sample Project 1",
-    key: "SM1",
-    crteatedAt: "12/08/2019",
-    lead: "Anas",
-    avatar: "https://robohash.org/etsedex.bmp?size=32x32&set=set1"
-  },
-  {
-    id: 3,
-    name: "Sample Project 2",
-    key: "SM2",
-    crteatedAt: "12/08/2019",
-    lead: "Anas",
-    avatar: "https://robohash.org/inimpeditquam.bmp?size=32x32&set=set1"
-  },
-  {
-    id: 4,
-    name: "Sample Project 3",
-    key: "SM3",
-    crteatedAt: "12/08/2019",
-    lead: "Anas",
-    avatar: "https://robohash.org/nobisducimussaepe.bmp?size=32x32&set=set1"
-  },
-  {
-    id: 5,
-    name: "Sample Project 4",
-    key: "SM4",
-    crteatedAt: "12/08/2019",
-    lead: "Anas",
-    avatar: "https://robohash.org/etconsequatureaque.jpg?size=32x32&set=set1"
-  }
-];
-
+const projectLead = ({ data }) => {
+  return <div>{data.projectLead.name}</div>;
+};
 const columns = [
   {
     id: 1,
     field: "name",
     label: "Name",
-    cellRenderer: ProjectName,
     width: "35%"
   },
   {
@@ -110,22 +61,24 @@ const columns = [
   },
   {
     id: 4,
-    field: "lead",
+    field: "projectLead",
     label: "Lead",
-    width: "25%"
+    width: "25%",
+    cellRenderer: projectLead
   }
 ];
 
-const ProjectsTable = () => {
+const ProjectsTable = ({ projects }) => {
   const match = useRouteMatch();
   const history = useHistory();
   return (
     <GridContainer>
       <GridTable
         columns={columns}
-        rows={rows}
+        rows={projects}
         isPaginated={false}
         showSearch={false}
+        showRowsInformation={false}
         showColumnVisibilityManager={false}
         onRowClick={(
           { rowIndex, data, column, isEdit, event },

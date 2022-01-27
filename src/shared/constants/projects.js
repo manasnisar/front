@@ -1,11 +1,9 @@
-export const ProjectCategory = {
-  SOFTWARE: 'software',
-  MARKETING: 'marketing',
-  BUSINESS: 'business',
+export const ProjectType = {
+  DEV: "development",
+  OPS: "operations"
 };
 
-export const ProjectCategoryCopy = {
-  [ProjectCategory.SOFTWARE]: 'Software',
-  [ProjectCategory.MARKETING]: 'Marketing',
-  [ProjectCategory.BUSINESS]: 'Business',
+export const ProjectTypeCopy = {
+  [ProjectType.DEV]: "DEV",
+  [ProjectType.OPS]: "OPS"
 };

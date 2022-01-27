@@ -13,11 +13,16 @@ import {
 } from "../../utils/authToken";
 
 const propTypes = {
-  issueSearchModalOpen: PropTypes.func.isRequired,
-  issueCreateModalOpen: PropTypes.func.isRequired
+  issueSearchModalOpen: PropTypes.func,
+  issueCreateModalOpen: PropTypes.func,
+  page: PropTypes.string.isRequired
 };
 
-const ProjectNavbarLeft = ({ issueSearchModalOpen, issueCreateModalOpen }) => {
+const ProjectNavbarLeft = ({
+  issueSearchModalOpen,
+  issueCreateModalOpen,
+  page
+}) => {
   const history = useHistory();
   const [, signOut] = useApi.post("/auth/logout");
 
@@ -28,15 +33,19 @@ const ProjectNavbarLeft = ({ issueSearchModalOpen, issueCreateModalOpen }) => {
         <LogoText>Sharingan</LogoText>
       </LogoLink>
 
-      <Item onClick={issueSearchModalOpen}>
-        <Icon type="search" size={22} top={1} left={3} />
-        <ItemText>Search issues</ItemText>
-      </Item>
+      {page !== "projects" && (
+        <div>
+          <Item onClick={issueSearchModalOpen}>
+            <Icon type="search" size={22} top={1} left={3} />
+            <ItemText>Search issues</ItemText>
+          </Item>
 
-      <Item onClick={issueCreateModalOpen}>
-        <Icon type="plus" size={27} />
-        <ItemText>Create Issue</ItemText>
-      </Item>
+          <Item onClick={issueCreateModalOpen}>
+            <Icon type="plus" size={27} />
+            <ItemText>Create Issue</ItemText>
+          </Item>
+        </div>
+      )}
 
       <Bottom>
         <Item

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { NavLink, useRouteMatch } from "react-router-dom";
 
-import { ProjectCategoryCopy } from "../../../shared/constants/projects";
+import { ProjectTypeCopy } from "../../../shared/constants/projects";
 import { Icon, ProjectAvatar } from "../../../shared/components";
 
 import {
@@ -31,7 +31,7 @@ const ProjectSidebar = ({ project }) => {
         <ProjectTexts>
           <ProjectName>{project.name}</ProjectName>
           <ProjectCategory>
-            {ProjectCategoryCopy[project.category]} project
+            {ProjectTypeCopy[project.category]} project
           </ProjectCategory>
         </ProjectTexts>
       </ProjectInfo>

@@ -47,7 +47,12 @@ Form.Field = mapValues(
           {...props}
           name={name}
           error={get(touched, name) && get(errors, name)}
-          onChange={value => setFieldValue(name, value)}
+          onChange={value => {
+            setFieldValue(name, value);
+            if (name === "projectName") {
+              setFieldValue("key", value.slice(0, 3).toUpperCase());
+            }
+          }}
         />
       )}
     </FormikField>

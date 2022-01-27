@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "../../../../shared/components";
 
 import { Header, BoardName } from "./Styles";
-import { GridContainer } from "../../../MyWork/Board/ProjectsTable/Styes";
+import { GridContainer } from "../../../MyProjects/Board/ProjectsTable/Styes";
 import GridTable from "@nadavshaar/react-grid-table";
 import { useHistory, useRouteMatch } from "react-router-dom";
 

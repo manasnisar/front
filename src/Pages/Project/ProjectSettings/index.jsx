@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import {
-  ProjectCategory,
-  ProjectCategoryCopy
+  ProjectType,
+  ProjectTypeCopy
 } from "../../../shared/constants/projects";
 import toast from "../../../shared/utils/toast";
 import useApi from "../../../shared/hooks/api";
@@ -69,9 +69,9 @@ const ProjectSettings = ({ project, fetchProject }) => {
   );
 };
 
-const categoryOptions = Object.values(ProjectCategory).map(category => ({
+const categoryOptions = Object.values(ProjectType).map(category => ({
   value: category,
-  label: ProjectCategoryCopy[category]
+  label: ProjectTypeCopy[category]
 }));
 
 ProjectSettings.propTypes = propTypes;

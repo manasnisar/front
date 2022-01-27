@@ -4,11 +4,13 @@ import { Button } from "../../../../shared/components";
 
 import { Header, BoardName } from "./Styles";
 
-const ProjectBoardHeader = () => (
+const ProjectBoardHeader = ({ openCreateProjectModal }) => (
   <Header>
     <BoardName>My Projects</BoardName>
 
-    <Button variant="primary">Create Project</Button>
+    <Button onClick={openCreateProjectModal} variant="primary">
+      Create Project
+    </Button>
   </Header>
 );
 

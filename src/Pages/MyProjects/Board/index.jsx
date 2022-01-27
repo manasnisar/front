@@ -6,6 +6,8 @@ import { Divider } from "../../Project/Sidebar/Styles";
 import Header from "./Header";
 import Filters from "./Filters";
 import ProjectsTable from "./ProjectsTable";
+import { Route } from "react-router-dom";
+import Board from "../../Project/Board";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
@@ -20,19 +22,19 @@ const defaultFilters = {
   recent: false
 };
 
-const ProjectBoard = ({ project }) => {
+const ProjectBoard = ({ projects, openCreateProjectModal, users }) => {
   const [filters, mergeFilters] = useMergeState(defaultFilters);
 
   return (
     <Fragment>
-      <Header />
+      <Header openCreateProjectModal={openCreateProjectModal} />
       <Filters
-        projectUsers={project.users}
+        projectUsers={users}
         defaultFilters={defaultFilters}
         filters={filters}
         mergeFilters={mergeFilters}
       />
-      <ProjectsTable />
+      <ProjectsTable projects={projects} />
     </Fragment>
   );
 };

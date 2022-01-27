@@ -7,7 +7,7 @@ import Authenticate from "../Auth/Authenticate";
 import PageError from "../shared/components/PageError";
 import SignIn from "../Pages/SignIn";
 import SignUp from "../Pages/SignUp";
-import MyWork from "../Pages/MyWork";
+import MyProjects from "../Pages/MyProjects";
 
 const Routes = () => (
   <Router history={history}>
@@ -16,7 +16,7 @@ const Routes = () => (
       <Route path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
       <Route path="/authenticate" component={Authenticate} />
-      <Route path="/myprojects" component={MyWork} />
+      <Route path="/myprojects" component={MyProjects} />
       <Route path="/project" component={Project} />
       <Route component={PageError} />
     </Switch>

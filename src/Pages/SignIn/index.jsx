@@ -17,21 +17,12 @@ import { Link, useHistory } from "react-router-dom";
 import { BannerText } from "../../shared/components/Banner/Styles";
 import { AuthPage } from "../Styles";
 import toast from "../../shared/utils/toast";
+import { connect } from "react-redux";
+import { setUser } from "../../redux/user/user-reducer";
 
-const SignIn = props => {
+const SignIn = ({ setUser }) => {
   const [{ isCreating }, signIn] = useApi.post("/auth/login");
   const history = useHistory();
-
-  // useEffect(() => {
-  //     if (props.isAuthenticated) {
-  //         if (props.user.role === "admin") {
-  //             props.history.push("/admin")
-  //         } else {
-  //             props.history.push("/home")
-  //         }
-  //
-  //     }
-  // }, [props.isAuthenticated, props.history, props.user])
   return (
     <AuthPage>
       <HalfScreen variant="left">
@@ -53,9 +44,10 @@ const SignIn = props => {
             }}
             onSubmit={async (values, form) => {
               try {
-                await signIn({
+                const user = await signIn({
                   ...values
                 });
+                await setUser(user.user);
                 history.push("/myprojects");
               } catch (error) {
                 toast.error(error);
@@ -96,4 +88,8 @@ const SignIn = props => {
   );
 };
 
-export default SignIn;
+const mapDispatchToProps = dispatch => ({
+  setUser: user => dispatch(setUser(user))
+});
+
+export default connect(null, mapDispatchToProps)(SignIn);
