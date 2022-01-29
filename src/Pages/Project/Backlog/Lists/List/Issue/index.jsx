@@ -26,9 +26,7 @@ const propTypes = {
 const ProjectBoardListIssue = ({ projectUsers, issue, index }) => {
   const match = useRouteMatch();
 
-  const assignees = issue.userIds.map(userId =>
-    projectUsers.find(user => user.id === userId)
-  );
+  const assignee = projectUsers.find(user => user.id === issue.assigneeId);
 
   return (
     <Draggable draggableId={issue.id.toString()} index={index}>
@@ -54,14 +52,12 @@ const ProjectBoardListIssue = ({ projectUsers, issue, index }) => {
                 />
               </div>
               <Assignees>
-                {assignees.map(user => (
-                  <AssigneeAvatar
-                    key={user.id}
-                    size={24}
-                    avatarUrl={user.avatarUrl}
-                    name={user.name}
-                  />
-                ))}
+                <AssigneeAvatar
+                  key={assignee.id}
+                  size={24}
+                  avatarUrl={assignee.avatarUrl}
+                  name={assignee.name}
+                />
               </Assignees>
             </Bottom>
           </Issue>

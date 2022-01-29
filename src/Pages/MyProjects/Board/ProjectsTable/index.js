@@ -1,26 +1,21 @@
 import React from "react";
 import GridTable from "@nadavshaar/react-grid-table";
 import { GridContainer } from "./Styes";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-// custom cell component
-const ProjectName = ({ value, data }) => {
+const projectLead = ({ data }) => {
+  return <div style={{ marginLeft: "20px" }}>{data.projectLead.name}</div>;
+};
+
+const createdAt = ({ data }) => {
+  const date = new Date(data.creationDate);
   return (
-    <div
-      className="rgt-cell-inner"
-      style={{ display: "flex", alignItems: "center", overflow: "hidden" }}
-    >
-      <img src={data.avatarUrl} alt="user avatar" />
-      <span className="rgt-text-truncate" style={{ marginLeft: 10 }}>
-        {value}
-      </span>
+    <div style={{ marginLeft: "20px" }}>
+      {date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()}
     </div>
   );
 };
 
-const projectLead = ({ data }) => {
-  return <div>{data.projectLead.name}</div>;
-};
 const columns = [
   {
     id: 1,
@@ -36,9 +31,10 @@ const columns = [
   },
   {
     id: 3,
-    field: "crteatedAt",
-    label: "Crteated At",
+    field: "creationDate",
+    label: "Created At",
     width: "25%",
+    cellRenderer: createdAt,
     sort: ({ a, b, isAscending }) => {
       let aa = a
           .split("/")
@@ -68,8 +64,7 @@ const columns = [
   }
 ];
 
-const ProjectsTable = ({ projects }) => {
-  const match = useRouteMatch();
+const ProjectsTable = ({ projects, filters }) => {
   const history = useHistory();
   return (
     <GridContainer>
@@ -77,6 +72,7 @@ const ProjectsTable = ({ projects }) => {
         columns={columns}
         rows={projects}
         isPaginated={false}
+        searchText={filters.searchTerm}
         showSearch={false}
         showRowsInformation={false}
         showColumnVisibilityManager={false}
@@ -84,7 +80,7 @@ const ProjectsTable = ({ projects }) => {
           { rowIndex, data, column, isEdit, event },
           tableManager
         ) => {
-          history.push(`/project`);
+          history.push(`/project/${data.id}/board`);
         }}
       />
     </GridContainer>

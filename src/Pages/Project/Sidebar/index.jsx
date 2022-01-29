@@ -31,17 +31,17 @@ const ProjectSidebar = ({ project }) => {
         <ProjectTexts>
           <ProjectName>{project.name}</ProjectName>
           <ProjectCategory>
-            {ProjectTypeCopy[project.category]} project
+            {ProjectTypeCopy[project.category]} Project
           </ProjectCategory>
         </ProjectTexts>
       </ProjectInfo>
 
       {renderLinkItem(match, "Active Sprint", "board", "/board")}
-      {renderLinkItem(match, "BackLog", "issues", "/backlog")}
-      {renderLinkItem(match, "History", "issues", "/history")}
+      {renderLinkItem(match, "Back Log", "plus", "/backlog")}
+      {renderLinkItem(match, "History", "menu", "/history")}
       {renderLinkItem(match, "Project settings", "settings", "/settings")}
       <Divider />
-      {/*{renderLinkItem(match, "Releases", "shipping")}*/}
+      {renderLinkItem(match, "Back to Projects", "arrow-left", "../projects")}
       {/*{renderLinkItem(match, "Issues and filters", "issues")}*/}
       {/*{renderLinkItem(match, "Pages", "page")}*/}
       {/*{renderLinkItem(match, "Reports", "reports")}*/}
@@ -54,7 +54,13 @@ const renderLinkItem = (match, text, iconType, path) => {
   const isImplemented = !!path;
 
   const linkItemProps = isImplemented
-    ? { as: NavLink, exact: true, to: `${match.path}${path}` }
+    ? {
+        as: NavLink,
+        exact: true,
+        to: path.includes("..")
+          ? `${path.replaceAll(".", "")}`
+          : `${match.url}${path}`
+      }
     : { as: "div" };
 
   return (

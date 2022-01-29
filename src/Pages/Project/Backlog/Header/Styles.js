@@ -12,3 +12,8 @@ export const BoardName = styled.div`
   ${font.size(24)}
   ${font.medium}
 `;
+
+export const ActionContainer = styled.div`
+  gap: 10px;
+  display: flex;
+`;

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import api from "../shared/utils/api";
-import toast from "../shared/utils/toast";
 import { getStoredAuthToken } from "../shared/utils/authToken";
 import { PageLoader } from "../shared/components";
 
@@ -17,7 +16,7 @@ const Authenticate = () => {
       try {
         const { user } = await api.get("/auth");
         if (user) {
-          history.push("/myprojects");
+          history.push("/projects");
         }
       } catch (e) {
         history.push("/signin");

@@ -19,7 +19,13 @@ const propTypes = {
   updateLocalProjectIssues: PropTypes.func.isRequired
 };
 
-const ProjectBoardLists = ({ project, filters, updateLocalProjectIssues }) => {
+const ProjectBoardLists = ({
+  project,
+  filters,
+  updateLocalProjectIssues,
+  issueCreateModalOpen,
+  epic
+}) => {
   const { currentUserId } = useCurrentUser();
 
   const handleIssueDrop = ({ draggableId, destination, source }) => {
@@ -52,6 +58,8 @@ const ProjectBoardLists = ({ project, filters, updateLocalProjectIssues }) => {
             project={project}
             filters={filters}
             currentUserId={currentUserId}
+            issueCreateModalOpen={issueCreateModalOpen}
+            epic={epic}
           />
         ))}
       </Lists>

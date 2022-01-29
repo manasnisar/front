@@ -2,27 +2,27 @@ import React from "react";
 
 import { Button } from "../../../../shared/components";
 
-import { Header, BoardName } from "./Styles";
-import { GridContainer } from "../../../MyProjects/Board/ProjectsTable/Styes";
-import GridTable from "@nadavshaar/react-grid-table";
+import { Header, BoardName, ActionContainer } from "./Styles";
 import { useHistory, useRouteMatch } from "react-router-dom";
 
-const ProjectBoardHeader = () => {
-  const match = useRouteMatch();
-
+const ProjectBoardHeader = ({ epicCreateModalOpen }) => {
   const history = useHistory();
   return (
     <Header>
       <BoardName>Backlog</BoardName>
-
-      <Button
-        variant="primary"
-        onClick={() => {
-          history.push(`/project/board`);
-        }}
-      >
-        Start Sprint
-      </Button>
+      <ActionContainer>
+        <Button variant="success" onClick={epicCreateModalOpen}>
+          Create Epic
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => {
+            history.push(`/project/board`);
+          }}
+        >
+          Start Sprint
+        </Button>
+      </ActionContainer>
     </Header>
   );
 };

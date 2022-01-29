@@ -48,7 +48,8 @@ const SignIn = ({ setUser }) => {
                   ...values
                 });
                 await setUser(user.user);
-                history.push("/myprojects");
+                console.log("here in singin");
+                history.push("/projects");
               } catch (error) {
                 toast.error(error);
                 Form.handleAPIError(error, form);

@@ -7,8 +7,12 @@ import { Breadcrumbs, Modal } from "../../../shared/components";
 
 import Header from "./Header";
 import Filters from "./Filters";
-import Lists from "./Lists";
 import IssueDetails from "./IssueDetails";
+import ProjectBoardEpics from "./Rows";
+
+import ProjectBoardTitleList from "./Titles";
+import { TitlesAndLists } from "./Styles";
+import useCurrentUser from "../../../shared/hooks/currentUser";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
@@ -26,6 +30,7 @@ const defaultFilters = {
 const ProjectBoard = ({ project, fetchProject, updateLocalProjectIssues }) => {
   const match = useRouteMatch();
   const history = useHistory();
+  const { currentUserId } = useCurrentUser();
 
   const [filters, mergeFilters] = useMergeState(defaultFilters);
 
@@ -39,11 +44,19 @@ const ProjectBoard = ({ project, fetchProject, updateLocalProjectIssues }) => {
         filters={filters}
         mergeFilters={mergeFilters}
       />
-      <Lists
-        project={project}
-        filters={filters}
-        updateLocalProjectIssues={updateLocalProjectIssues}
-      />
+      <TitlesAndLists>
+        <ProjectBoardTitleList
+          filters={filters}
+          project={project}
+          currentUserId={currentUserId}
+        />
+        <ProjectBoardEpics
+          filters={filters}
+          project={project}
+          updateLocalProjectIssues={updateLocalProjectIssues}
+        />
+      </TitlesAndLists>
+
       <Route
         path={`${match.path}/issues/:issueId`}
         render={routeProps => (

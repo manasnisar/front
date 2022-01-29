@@ -67,6 +67,9 @@ export const Item = styled.div`
   padding-left: 64px;
   color: #deebff;
   transition: color 0.1s;
+  display: flex;
+  align-items: center;
+  text-align: center;
 
   ${mixin.clickable}
   &:hover {

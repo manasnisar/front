@@ -1,32 +1,23 @@
 import styled from "styled-components";
+import { color, font, mixin } from "../../../../shared/utils/styles";
 
-import { color, font, mixin } from "../../../../../shared/utils/styles";
-
-export const List = styled.div`
+export const Titles = styled.div`
   display: flex;
-  flex-direction: column;
-  margin: 0 5px;
-  padding-top: 10px;
-  min-height: 200px;
-  width: 20%;
   border-radius: 3px;
-  background: ${color.backgroundLightest};
+  gap: 10px;
 `;
 
 export const Title = styled.div`
   padding: 13px 10px 17px;
+  background: ${color.backgroundLightest};
   text-transform: uppercase;
   color: ${color.textMedium};
   ${font.size(12.5)};
+  width: 50%;
   ${mixin.truncateText}
 `;
 
 export const IssuesCount = styled.span`
   text-transform: lowercase;
   ${font.size(13)};
-`;
-
-export const Issues = styled.div`
-  height: 100%;
-  padding: 0 5px;
 `;

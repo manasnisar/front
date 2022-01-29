@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import {
@@ -28,6 +28,7 @@ import {
   Actions,
   ActionButton
 } from "./Styles";
+import { connect } from "react-redux";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
@@ -40,9 +41,12 @@ const ProjectIssueCreate = ({
   project,
   fetchProject,
   onCreate,
-  modalClose
+  modalClose,
+  epicToBeUpdated
 }) => {
-  const [{ isCreating }, createIssue] = useApi.post("/issues");
+  const [{ isCreating }, createIssue] = useApi.post(
+    `/issue/${epicToBeUpdated}`
+  );
 
   const { currentUserId } = useCurrentUser();
 
@@ -54,40 +58,52 @@ const ProjectIssueCreate = ({
         title: "",
         description: "",
         reporterId: currentUserId,
-        userIds: [],
+        epicId: epicToBeUpdated,
+        assigneeId: "",
         priority: IssuePriority.MEDIUM
       }}
       validations={{
         type: Form.is.required(),
         title: [Form.is.required(), Form.is.maxLength(200)],
         reporterId: Form.is.required(),
+        epicId: Form.is.required(),
+        assigneeId: Form.is.required(),
         priority: Form.is.required()
       }}
       onSubmit={async (values, form) => {
+        const epic = getEpicById(project, values.epicId);
         try {
           await createIssue({
             ...values,
             status: IssueStatus.BACKLOG,
-            projectId: project.id,
-            users: values.userIds.map(id => ({ id }))
+            key: `${epic.key}.${epic.totalIssues + 1}`,
+            projectId: project.id
           });
           await fetchProject();
           toast.success("Issue has been successfully created.");
           onCreate();
         } catch (error) {
-          Form.handleAPIError(error, form);
+          console.error(error);
+          toast.error("Issue creation failed!");
         }
       }}
     >
       <FormElement>
-        <FormHeading>Create issue</FormHeading>
+        <FormHeading>Create Issue</FormHeading>
         <Form.Field.Select
           name="type"
-          label="Issue Type"
+          label="Issue type"
           tip="Start typing to get a list of possible matches."
           options={typeOptions}
           renderOption={renderType}
           renderValue={renderType}
+        />
+        <Form.Field.Select
+          name="epicId"
+          label="Epic"
+          options={epicOptions(project, epicToBeUpdated)}
+          renderOption={renderEpic(project)}
+          renderValue={renderEpic(project)}
         />
         <Divider />
         <Form.Field.Input
@@ -108,9 +124,8 @@ const ProjectIssueCreate = ({
           renderValue={renderUser(project)}
         />
         <Form.Field.Select
-          isMulti
-          name="userIds"
-          label="Assignees"
+          name="assigneeId"
+          label="Assignee"
           tio="People who are responsible for dealing with this issue."
           options={userOptions(project)}
           renderOption={renderUser(project)}
@@ -150,6 +165,17 @@ const priorityOptions = Object.values(IssuePriority).map(priority => ({
 const userOptions = project =>
   project.users.map(user => ({ value: user.id, label: user.name }));
 
+const getEpicById = (project, epicId) => {
+  return project.epics.find(epic => epic.id === epicId);
+};
+
+const epicOptions = (project, epicToBeUpdated) => {
+  console.log(project.epics, epicToBeUpdated);
+  return project.epics
+    .filter(epic => epic.id === epicToBeUpdated)
+    .map(epic => ({ value: epic.id, label: epic.key }));
+};
+
 const renderType = ({ value: type }) => (
   <SelectItem>
     <IssueTypeIcon type={type} top={1} />
@@ -180,6 +206,27 @@ const renderUser = project => ({ value: userId, removeOptionValue }) => {
   );
 };
 
+const renderEpic = project => ({ value: epicId, removeOptionValue }) => {
+  const epic = project.epics.find(({ id }) => id === epicId);
+
+  return (
+    <SelectItem
+      key={epic.id}
+      withBottomMargin={!!removeOptionValue}
+      onClick={() => removeOptionValue && removeOptionValue()}
+    >
+      <SelectItemLabel>
+        {epic.key} {epic.title}
+      </SelectItemLabel>
+      {removeOptionValue && <Icon type="close" top={2} />}
+    </SelectItem>
+  );
+};
+
 ProjectIssueCreate.propTypes = propTypes;
 
-export default ProjectIssueCreate;
+const mapStatetoProps = state => ({
+  epicToBeUpdated: state.epicState.epicToBeUpdated
+});
+
+export default connect(mapStatetoProps)(ProjectIssueCreate);

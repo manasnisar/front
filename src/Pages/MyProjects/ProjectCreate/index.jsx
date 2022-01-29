@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-import { IssueType, IssueStatus } from "../../../shared/constants/issues";
 import toast from "../../../shared/utils/toast";
 import useApi from "../../../shared/hooks/api";
 import useCurrentUser from "../../../shared/hooks/currentUser";
@@ -23,14 +21,13 @@ import {
 } from "../../../shared/constants/projects";
 
 const propTypes = {
-  project: PropTypes.object.isRequired,
-  fetchProject: PropTypes.func.isRequired,
+  fetchProjects: PropTypes.func.isRequired,
   onCreate: PropTypes.func.isRequired,
-  modalClose: PropTypes.func.isRequired
+  modalClose: PropTypes.func.isRequired,
+  orgId: PropTypes.string.isRequired
 };
 
 const CreateProject = ({
-  projects,
   fetchProjects,
   onCreate,
   modalClose,
@@ -55,7 +52,7 @@ const CreateProject = ({
         key: Form.is.required(),
         projectLead: Form.is.required()
       }}
-      onSubmit={async (values, form) => {
+      onSubmit={async values => {
         try {
           await createProject({
             category: values.category,
@@ -68,7 +65,7 @@ const CreateProject = ({
           toast.success("Project created successfully!");
           onCreate();
         } catch (error) {
-          Form.handleAPIError(error, form);
+          toast.error(error);
         }
       }}
     >

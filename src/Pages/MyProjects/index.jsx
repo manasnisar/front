@@ -1,20 +1,16 @@
 import React from "react";
 
 import useApi from "../../shared/hooks/api";
-import { updateArrayItemById } from "../../shared/utils/javascript";
 import { createQueryParamModalHelpers } from "../../shared/utils/queryParamModal";
 import { PageLoader, PageError, Modal } from "../../shared/components";
 
 import Board from "./Board";
 import NavbarLeft from "../../shared/components/NavbarLeft";
 import { ProjectPage } from "./Styles";
-import { useHistory, useRouteMatch } from "react-router-dom";
 import ProjectCreate from "./ProjectCreate";
 import { connect } from "react-redux";
 
 const MyProjects = ({ orgId }) => {
-  const match = useRouteMatch();
-  const history = useHistory();
   const projectCreateModalHelpers = createQueryParamModalHelpers(
     "project-create"
   );
@@ -46,7 +42,7 @@ const MyProjects = ({ orgId }) => {
               projects={projects}
               users={users}
               fetchProjects={fetchProjects}
-              onCreate={() => history.push(`${match.url}/board`)}
+              onCreate={modal.close}
               modalClose={modal.close}
             />
           )}

@@ -1,35 +1,43 @@
-import React from "react";
-import { Route, Redirect, useRouteMatch, useHistory } from "react-router-dom";
-
+import React, { useEffect, useState } from "react";
+import {
+  Route,
+  Redirect,
+  useRouteMatch,
+  useHistory,
+  useParams
+} from "react-router-dom";
 import useApi from "../../shared/hooks/api";
 import { updateArrayItemById } from "../../shared/utils/javascript";
 import { createQueryParamModalHelpers } from "../../shared/utils/queryParamModal";
 import { PageLoader, PageError, Modal } from "../../shared/components";
-
 import NavbarLeft from "../../shared/components/NavbarLeft";
 import Sidebar from "./Sidebar";
 import Board from "./Board";
-import IssueSearch from "./IssueSearch";
 import IssueCreate from "./IssueCreate";
 import ProjectSettings from "./ProjectSettings";
 import { ProjectPage } from "./Styles";
 import Backlog from "./Backlog";
+import EpicCreate from "./EpicCreate";
+import { connect } from "react-redux";
+import { setProject } from "../../redux/project/project-reducer";
 
-const Project = () => {
+const Project = ({ setProject }) => {
+  const [navbarState, setNavbarState] = useState("board");
   const match = useRouteMatch();
-  const history = useHistory();
+  const params = useParams();
+  console.log(params);
 
-  const issueSearchModalHelpers = createQueryParamModalHelpers("issue-search");
   const issueCreateModalHelpers = createQueryParamModalHelpers("issue-create");
+  const epicCreateModalHelpers = createQueryParamModalHelpers("epic-create");
 
   const [{ data, error, setLocalData }, fetchProject] = useApi.get(
-    "/project/manage/62131"
+    `/project/manage/${params.id}`
   );
 
   if (!data) return <PageLoader />;
   if (error) return <PageError />;
-
   const { project } = data;
+  setProject(project);
 
   const updateLocalProjectIssues = (issueId, updatedFields) => {
     setLocalData(currentData => ({
@@ -47,22 +55,12 @@ const Project = () => {
   return (
     <ProjectPage>
       <NavbarLeft
-        issueSearchModalOpen={issueSearchModalHelpers.open}
         issueCreateModalOpen={issueCreateModalHelpers.open}
+        epicCreateModalOpen={epicCreateModalHelpers.open}
+        page={navbarState}
       />
 
       <Sidebar project={project} />
-
-      {issueSearchModalHelpers.isOpen() && (
-        <Modal
-          isOpen
-          testid="modal:issue-search"
-          variant="aside"
-          width={600}
-          onClose={issueSearchModalHelpers.close}
-          renderContent={() => <IssueSearch project={project} />}
-        />
-      )}
 
       {issueCreateModalHelpers.isOpen() && (
         <Modal
@@ -75,7 +73,25 @@ const Project = () => {
             <IssueCreate
               project={project}
               fetchProject={fetchProject}
-              onCreate={() => history.push(`${match.url}/board`)}
+              onCreate={modal.close}
+              modalClose={modal.close}
+            />
+          )}
+        />
+      )}
+
+      {epicCreateModalHelpers.isOpen() && (
+        <Modal
+          isOpen
+          testid="modal:epic-create"
+          width={800}
+          withCloseIcon={false}
+          onClose={epicCreateModalHelpers.close}
+          renderContent={modal => (
+            <EpicCreate
+              project={project}
+              fetchProject={fetchProject}
+              onCreate={modal.close}
               modalClose={modal.close}
             />
           )}
@@ -84,31 +100,40 @@ const Project = () => {
 
       <Route
         path={`${match.path}/board`}
-        render={() => (
-          <Board
-            project={project}
-            fetchProject={fetchProject}
-            updateLocalProjectIssues={updateLocalProjectIssues}
-          />
-        )}
+        render={() => {
+          setNavbarState("board");
+          return (
+            <Board
+              project={project}
+              fetchProject={fetchProject}
+              updateLocalProjectIssues={updateLocalProjectIssues}
+            />
+          );
+        }}
       />
 
       <Route
-        path={`${match.path}/backlog`}
-        render={() => (
-          <Backlog
-            project={project}
-            fetchProject={fetchProject}
-            updateLocalProjectIssues={updateLocalProjectIssues}
-          />
-        )}
+        path={`${match.url}/backlog`}
+        render={() => {
+          setNavbarState("backlog");
+          return (
+            <Backlog
+              issueCreateModalOpen={issueCreateModalHelpers.open}
+              epicCreateModalOpen={epicCreateModalHelpers.open}
+              project={project}
+              fetchProject={fetchProject}
+              updateLocalProjectIssues={updateLocalProjectIssues}
+            />
+          );
+        }}
       />
 
       <Route
         path={`${match.path}/settings`}
-        render={() => (
-          <ProjectSettings project={project} fetchProject={fetchProject} />
-        )}
+        render={() => {
+          setNavbarState("backlog");
+          return <ProjectSettings project={data} fetchProject={fetchProject} />;
+        }}
       />
 
       {match.isExact && <Redirect to={`${match.url}/board`} />}
@@ -116,4 +141,8 @@ const Project = () => {
   );
 };
 
-export default Project;
+const mapDispatchToProps = dispatch => ({
+  setProject: project => dispatch(setProject(project))
+});
+
+export default connect(null, mapDispatchToProps)(Project);

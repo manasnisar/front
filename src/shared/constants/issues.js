@@ -6,17 +6,26 @@ export const IssueType = {
 
 export const IssueStatus = {
   BLOCKED: "blocked",
-  SELECTED: "selected",
-  INPROGRESS: "inprogress",
+  SELECTED: "ready",
+  INPROGRESS: "inProgress",
+  INQA: "inQa",
   DONE: "done"
 };
 
 export const BacklogIssueStatus = {
   UNPLANNED: "unplanned",
-  READY: "ready"
+  PLANNED: "planned"
 };
 
 export const IssuePriority = {
+  HIGHEST: "5",
+  HIGH: "4",
+  MEDIUM: "3",
+  LOW: "2",
+  LOWEST: "1"
+};
+
+export const EpicPriority = {
   HIGHEST: "5",
   HIGH: "4",
   MEDIUM: "3",
@@ -32,14 +41,15 @@ export const IssueTypeCopy = {
 
 export const IssueStatusCopy = {
   [IssueStatus.BLOCKED]: "Blocked",
-  [IssueStatus.SELECTED]: "Selected for development",
+  [IssueStatus.SELECTED]: "Ready for development",
   [IssueStatus.INPROGRESS]: "In progress",
+  [IssueStatus.INQA]: "In QA",
   [IssueStatus.DONE]: "Done"
 };
 
 export const BacklogIssueStatusCopy = {
   [BacklogIssueStatus.UNPLANNED]: "Ready for sprint planning",
-  [BacklogIssueStatus.READY]: "Candidates for filling sprint"
+  [BacklogIssueStatus.PLANNED]: "Candidates for filling sprint"
 };
 
 export const IssuePriorityCopy = {
@@ -48,4 +58,12 @@ export const IssuePriorityCopy = {
   [IssuePriority.MEDIUM]: "Medium",
   [IssuePriority.LOW]: "Low",
   [IssuePriority.LOWEST]: "Lowest"
+};
+
+export const EpicPriorityCopy = {
+  [EpicPriority.HIGHEST]: "Highest",
+  [EpicPriority.HIGH]: "High",
+  [EpicPriority.MEDIUM]: "Medium",
+  [EpicPriority.LOW]: "Low",
+  [EpicPriority.LOWEST]: "Lowest"
 };

@@ -16,8 +16,8 @@ const Routes = () => (
       <Route path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
       <Route path="/authenticate" component={Authenticate} />
-      <Route path="/myprojects" component={MyProjects} />
-      <Route path="/project" component={Project} />
+      <Route path="/projects" component={MyProjects} />
+      <Route path="/project/:id" component={Project} />
       <Route component={PageError} />
     </Switch>
   </Router>

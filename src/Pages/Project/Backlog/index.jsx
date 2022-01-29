@@ -7,13 +7,17 @@ import { Breadcrumbs, Modal } from "../../../shared/components";
 
 import Header from "./Header";
 import Filters from "./Filters";
-import Lists from "./Lists";
 import IssueDetails from "./IssueDetails";
+import { TitlesAndLists } from "../Board/Styles";
+import ProjectBacklogTitleList from "./Titles";
+import ProjectBacklogEpics from "./Rows";
+import useCurrentUser from "../../../shared/hooks/currentUser";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
   fetchProject: PropTypes.func.isRequired,
-  updateLocalProjectIssues: PropTypes.func.isRequired
+  updateLocalProjectIssues: PropTypes.func.isRequired,
+  issueCreateModalOpen: PropTypes.func.isRequired
 };
 
 const defaultFilters = {
@@ -26,28 +30,39 @@ const defaultFilters = {
 const ProjectBacklog = ({
   project,
   fetchProject,
-  updateLocalProjectIssues
+  updateLocalProjectIssues,
+  epicCreateModalOpen,
+  issueCreateModalOpen
 }) => {
   const match = useRouteMatch();
   const history = useHistory();
+  const { currentUserId } = useCurrentUser();
 
   const [filters, mergeFilters] = useMergeState(defaultFilters);
 
   return (
     <Fragment>
       <Breadcrumbs items={["Projects", project.name, "Backlog"]} />
-      <Header />
+      <Header epicCreateModalOpen={epicCreateModalOpen} />
       <Filters
         projectUsers={project.users}
         defaultFilters={defaultFilters}
         filters={filters}
         mergeFilters={mergeFilters}
       />
-      <Lists
-        project={project}
-        filters={filters}
-        updateLocalProjectIssues={updateLocalProjectIssues}
-      />
+      <TitlesAndLists>
+        <ProjectBacklogTitleList
+          filters={filters}
+          project={project}
+          currentUserId={currentUserId}
+        />
+        <ProjectBacklogEpics
+          filters={filters}
+          project={project}
+          updateLocalProjectIssues={updateLocalProjectIssues}
+          issueCreateModalOpen={issueCreateModalOpen}
+        />
+      </TitlesAndLists>
       <Route
         path={`${match.path}/issues/:issueId`}
         render={routeProps => (

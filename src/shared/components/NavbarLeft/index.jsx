@@ -13,14 +13,13 @@ import {
 } from "../../utils/authToken";
 
 const propTypes = {
-  issueSearchModalOpen: PropTypes.func,
   issueCreateModalOpen: PropTypes.func,
   page: PropTypes.string.isRequired
 };
 
 const ProjectNavbarLeft = ({
-  issueSearchModalOpen,
   issueCreateModalOpen,
+  epicCreateModalOpen,
   page
 }) => {
   const history = useHistory();
@@ -33,16 +32,15 @@ const ProjectNavbarLeft = ({
         <LogoText>Sharingan</LogoText>
       </LogoLink>
 
-      {page !== "projects" && (
+      {page === "backlog" && (
         <div>
-          <Item onClick={issueSearchModalOpen}>
-            <Icon type="search" size={22} top={1} left={3} />
-            <ItemText>Search issues</ItemText>
-          </Item>
-
           <Item onClick={issueCreateModalOpen}>
             <Icon type="plus" size={27} />
             <ItemText>Create Issue</ItemText>
+          </Item>
+          <Item onClick={epicCreateModalOpen}>
+            <Icon type="plus" size={27} />
+            <ItemText>Create Epic</ItemText>
           </Item>
         </div>
       )}

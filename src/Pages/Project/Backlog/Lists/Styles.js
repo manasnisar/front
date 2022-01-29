@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Lists = styled.div`
   display: flex;
-  margin: 26px -5px 0;
+  margin: 10px -5px 0;
 `;
