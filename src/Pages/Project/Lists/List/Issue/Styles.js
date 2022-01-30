@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 
-import { color, font, mixin } from "../../../../../../shared/utils/styles";
-import { Avatar } from "../../../../../../shared/components";
+import { color, font, mixin } from "../../../../../shared/utils/styles";
+import { Avatar } from "../../../../../shared/components";
 
 export const IssueLink = styled(Link)`
   display: block;
@@ -15,13 +15,14 @@ export const Issue = styled.div`
   background: #fff;
   box-shadow: 0px 1px 2px 0px rgba(9, 30, 66, 0.25);
   transition: background 0.1s;
-  ${mixin.clickable}
-  @media (max-width: 1100px) {
+  ${mixin.clickable} @media(max-width: 1100 px) {
     padding: 10px 8px;
   }
+
   &:hover {
     background: ${color.backgroundLight};
   }
+
   ${props =>
     props.isBeingDragged &&
     css`
@@ -32,8 +33,7 @@ export const Issue = styled.div`
 
 export const Title = styled.p`
   padding-bottom: 11px;
-  ${font.size(15)}
-  @media (max-width: 1100px) {
+  ${font.size(15)} @media(max-width: 1100 px) {
     ${font.size(14.5)}
   }
 `;

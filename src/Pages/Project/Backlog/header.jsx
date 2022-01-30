@@ -1,8 +1,8 @@
 import React from "react";
 
-import { Button } from "../../../../shared/components";
+import { Button } from "../../../shared/components";
 
-import { Header, BoardName, ActionContainer } from "./Styles";
+import { Header, BoardName, ActionContainer } from "../Styles";
 import { useHistory } from "react-router-dom";
 
 const ProjectBoardHeader = ({ epicCreateModalOpen }) => {

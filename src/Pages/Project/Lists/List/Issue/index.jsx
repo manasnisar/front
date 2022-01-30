@@ -6,7 +6,7 @@ import { Draggable } from "react-beautiful-dnd";
 import {
   IssueTypeIcon,
   IssuePriorityIcon
-} from "../../../../../../shared/components";
+} from "../../../../../shared/components";
 
 import {
   IssueLink,

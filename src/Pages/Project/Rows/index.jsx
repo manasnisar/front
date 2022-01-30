@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Lists from "../Lists";
 import Collapsible from "react-collapsible";
 import { Rows, Trigger } from "./Styles";
-import { Icon } from "../../../../shared/components";
+import { Icon } from "../../../shared/components";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
@@ -35,7 +35,8 @@ const ProjectBacklogEpics = ({
   project,
   filters,
   fetchProject,
-  issueCreateModalOpen
+  issueCreateModalOpen,
+  page
 }) => {
   return (
     <Rows>
@@ -54,6 +55,7 @@ const ProjectBacklogEpics = ({
               issues={getIssuesForEpic(project, epic)}
               filters={filters}
               issueCreateModalOpen={issueCreateModalOpen}
+              page={page}
             />
           </Collapsible>
         );
