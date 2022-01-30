@@ -5,13 +5,13 @@ import { Route, useRouteMatch, useHistory } from "react-router-dom";
 import useMergeState from "../../../shared/hooks/mergeState";
 import { Breadcrumbs, Modal } from "../../../shared/components";
 
-import Header from "./Header";
-import Filters from "./Filters";
+import Header from "./header";
+import Filters from "../Filters";
 import IssueDetails from "../IssueDetails";
-import ProjectBoardEpics from "./Rows";
+import ProjectBoardEpics from "../Rows";
 
-import ProjectBoardTitleList from "./Titles";
-import { TitlesAndLists } from "./Styles";
+import ProjectBoardTitleList from "../Titles";
+import { TitlesAndLists } from "../Styles";
 import useCurrentUser from "../../../shared/hooks/currentUser";
 import { connect } from "react-redux";
 
@@ -50,11 +50,13 @@ const ProjectBoard = ({ project, fetchProject, updateLocalProjectIssues }) => {
           filters={filters}
           project={project}
           currentUserId={currentUserId}
+          page="active"
         />
         <ProjectBoardEpics
           filters={filters}
           project={project}
           updateLocalProjectIssues={updateLocalProjectIssues}
+          page="active"
         />
       </TitlesAndLists>
 

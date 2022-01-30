@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { color, font, mixin } from "../../../../shared/utils/styles";
+import { color, font, mixin } from "../../../shared/utils/styles";
 
 export const Titles = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ export const Title = styled.div`
   text-transform: uppercase;
   color: ${color.textMedium};
   ${font.size(12.5)};
-  width: 20%;
+  width: 50%;
   ${mixin.truncateText}
 `;
 

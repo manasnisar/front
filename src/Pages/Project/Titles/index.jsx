@@ -3,10 +3,13 @@ import PropTypes from "prop-types";
 
 import { Titles, Title, IssuesCount } from "./Styles";
 
-import { BacklogIssueStatusCopy } from "../../../../shared/constants/issues";
-import formatIssuesCount from "../../../../shared/utils/formatIssueCount";
-import getSortedListIssues from "../../../../shared/utils/getSortedLists";
-import filterIssues from "../../../../shared/utils/filterIssues";
+import {
+  BacklogIssueStatusCopy,
+  IssueStatusCopy
+} from "../../../shared/constants/issues";
+import formatIssuesCount from "../../../shared/utils/formatIssueCount";
+import getSortedListIssues from "../../../shared/utils/getSortedLists";
+import filterIssues from "../../../shared/utils/filterIssues";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
@@ -18,12 +21,14 @@ const defaultProps = {
   currentUserId: null
 };
 
-const ProjectBacklogTitleList = ({ project, filters, currentUserId }) => {
+const ProjectBacklogTitleList = ({ project, filters, currentUserId, page }) => {
   const filteredIssues = filterIssues(project.issues, filters, currentUserId);
 
   return (
     <Titles>
-      {Object.entries(BacklogIssueStatusCopy).map((entry, index) => (
+      {Object.entries(
+        page === "backlog" ? BacklogIssueStatusCopy : IssueStatusCopy
+      ).map((entry, index) => (
         <Title key={index}>
           {`${entry[1]} `}
           <IssuesCount>

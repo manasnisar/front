@@ -2,17 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
 
-import useCurrentUser from "../../../../shared/hooks/currentUser";
-import api from "../../../../shared/utils/api";
+import useCurrentUser from "../../../shared/hooks/currentUser";
+import api from "../../../shared/utils/api";
 import {
   moveItemWithinArray,
   insertItemIntoArray
-} from "../../../../shared/utils/javascript";
-import { BacklogIssueStatus } from "../../../../shared/constants/issues";
+} from "../../../shared/utils/javascript";
+import {
+  BacklogIssueStatus,
+  IssueStatus
+} from "../../../shared/constants/issues";
 
 import List from "./List";
 import { Lists } from "./Styles";
-import { updateLocalIssues } from "../../../../redux/project/project-reducer";
+import { updateLocalIssues } from "../../../redux/project/project-reducer";
 import { connect } from "react-redux";
 
 const propTypes = {
@@ -26,7 +29,8 @@ const ProjectBoardLists = ({
   fetchProject,
   filters,
   issueCreateModalOpen,
-  updateLocalIssues
+  updateLocalIssues,
+  page
 }) => {
   const { currentUserId } = useCurrentUser();
 
@@ -50,7 +54,9 @@ const ProjectBoardLists = ({
   return (
     <DragDropContext onDragEnd={handleIssueDrop}>
       <Lists>
-        {Object.values(BacklogIssueStatus).map(status => (
+        {Object.values(
+          page === "backlog" ? BacklogIssueStatus : IssueStatus
+        ).map(status => (
           <List
             key={status}
             status={status}

@@ -5,12 +5,12 @@ import { Route, useRouteMatch, useHistory } from "react-router-dom";
 import useMergeState from "../../../shared/hooks/mergeState";
 import { Breadcrumbs, Modal } from "../../../shared/components";
 
-import Header from "./Header";
-import Filters from "./Filters";
+import Header from "./header";
+import Filters from "../Filters";
 import IssueDetails from "../IssueDetails";
-import { TitlesAndLists } from "../Board/Styles";
-import ProjectBacklogTitleList from "./Titles";
-import ProjectBacklogEpics from "./Rows";
+import { TitlesAndLists } from "../Styles";
+import ProjectBacklogTitleList from "../Titles";
+import ProjectBacklogEpics from "../Rows";
 import useCurrentUser from "../../../shared/hooks/currentUser";
 import { connect } from "react-redux";
 
@@ -54,12 +54,14 @@ const ProjectBacklog = ({
           filters={filters}
           project={project}
           currentUserId={currentUserId}
+          page="backlog"
         />
         <ProjectBacklogEpics
           filters={filters}
           project={project}
           fetchProject={fetchProject}
           issueCreateModalOpen={issueCreateModalOpen}
+          page="backlog"
         />
       </TitlesAndLists>
       <Route

@@ -1,13 +1,14 @@
 import styled from "styled-components";
-import { color } from "../../../../shared/utils/styles";
+import { color } from "../../../shared/utils/styles";
 
 export const Rows = styled.div`
   display: flex;
+  margin: 5px 0;
   flex-direction: column;
-  margin: 10px 0;
 
   .Collapsible {
     width: 100%;
+    margin-top: 10px;
   }
 `;
 
