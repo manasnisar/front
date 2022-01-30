@@ -7,16 +7,16 @@ import { Breadcrumbs, Modal } from "../../../shared/components";
 
 import Header from "./Header";
 import Filters from "./Filters";
-import IssueDetails from "./IssueDetails";
+import IssueDetails from "../IssueDetails";
 import { TitlesAndLists } from "../Board/Styles";
 import ProjectBacklogTitleList from "./Titles";
 import ProjectBacklogEpics from "./Rows";
 import useCurrentUser from "../../../shared/hooks/currentUser";
+import { connect } from "react-redux";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
   fetchProject: PropTypes.func.isRequired,
-  updateLocalProjectIssues: PropTypes.func.isRequired,
   issueCreateModalOpen: PropTypes.func.isRequired
 };
 
@@ -30,7 +30,6 @@ const defaultFilters = {
 const ProjectBacklog = ({
   project,
   fetchProject,
-  updateLocalProjectIssues,
   epicCreateModalOpen,
   issueCreateModalOpen
 }) => {
@@ -59,7 +58,7 @@ const ProjectBacklog = ({
         <ProjectBacklogEpics
           filters={filters}
           project={project}
-          updateLocalProjectIssues={updateLocalProjectIssues}
+          fetchProject={fetchProject}
           issueCreateModalOpen={issueCreateModalOpen}
         />
       </TitlesAndLists>
@@ -77,7 +76,6 @@ const ProjectBacklog = ({
                 issueId={routeProps.match.params.issueId}
                 projectUsers={project.users}
                 fetchProject={fetchProject}
-                updateLocalProjectIssues={updateLocalProjectIssues}
                 modalClose={modal.close}
               />
             )}
@@ -90,4 +88,8 @@ const ProjectBacklog = ({
 
 ProjectBacklog.propTypes = propTypes;
 
-export default ProjectBacklog;
+const mapStatetoProps = state => ({
+  project: state.projectState.project
+});
+
+export default connect(mapStatetoProps)(ProjectBacklog);

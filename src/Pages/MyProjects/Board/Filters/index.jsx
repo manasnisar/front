@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { Filters, SearchInput, ClearAll } from "./Styles";
 
 const propTypes = {
-  projectUsers: PropTypes.array.isRequired,
   defaultFilters: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
   mergeFilters: PropTypes.func.isRequired

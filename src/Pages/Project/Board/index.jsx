@@ -7,12 +7,13 @@ import { Breadcrumbs, Modal } from "../../../shared/components";
 
 import Header from "./Header";
 import Filters from "./Filters";
-import IssueDetails from "./IssueDetails";
+import IssueDetails from "../IssueDetails";
 import ProjectBoardEpics from "./Rows";
 
 import ProjectBoardTitleList from "./Titles";
 import { TitlesAndLists } from "./Styles";
 import useCurrentUser from "../../../shared/hooks/currentUser";
+import { connect } from "react-redux";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
@@ -84,4 +85,8 @@ const ProjectBoard = ({ project, fetchProject, updateLocalProjectIssues }) => {
 
 ProjectBoard.propTypes = propTypes;
 
-export default ProjectBoard;
+const mapStatetoProps = state => ({
+  project: state.projectState.project
+});
+
+export default connect(mapStatetoProps)(ProjectBoard);

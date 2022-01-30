@@ -35,6 +35,7 @@ const ProjectBoardEpics = ({ project, filters, updateLocalProjectIssues }) => {
       {project.epics.map(epic => {
         return (
           <Collapsible
+            key={epic.key}
             transitionTime={200}
             open={true}
             trigger={<TriggerWhenClosed epic={epic} />}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Form } from "../../shared/components";
 import {
@@ -22,7 +22,18 @@ import { setUser } from "../../redux/user/user-reducer";
 
 const SignIn = ({ setUser }) => {
   const [{ isCreating }, signIn] = useApi.post("/auth/login");
+  const [{ data }] = useApi.get("/auth", {}, { cachePolicy: "no-cache" });
   const history = useHistory();
+  useEffect(() => {
+    let mounted = true;
+    if (mounted && data) {
+      setUser(data.user);
+      history.push("/projects");
+    }
+    return function cleanup() {
+      mounted = false;
+    };
+  }, []);
   return (
     <AuthPage>
       <HalfScreen variant="left">
@@ -48,11 +59,9 @@ const SignIn = ({ setUser }) => {
                   ...values
                 });
                 await setUser(user.user);
-                console.log("here in singin");
                 history.push("/projects");
               } catch (error) {
                 toast.error(error);
-                Form.handleAPIError(error, form);
               }
             }}
           >
@@ -71,9 +80,7 @@ const SignIn = ({ setUser }) => {
                   variant="full"
                   isWorking={isCreating}
                 >
-                  <Link style={{ color: "white" }} to="/project">
-                    Log In
-                  </Link>
+                  Log In
                 </ActionButton>
               </Actions>
               <Divider />

@@ -8,7 +8,9 @@ import { Icon } from "../../../../shared/components";
 const propTypes = {
   project: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
-  updateLocalProjectIssues: PropTypes.func.isRequired
+  fetchProject: PropTypes.func.isRequired,
+  updateLocalProjectIssues: PropTypes.func.isRequired,
+  issueCreateModalOpen: PropTypes.func.isRequired
 };
 
 const TriggerWhenClosed = ({ epic }) => {
@@ -32,7 +34,7 @@ const TriggerWhenOpen = ({ epic }) => {
 const ProjectBacklogEpics = ({
   project,
   filters,
-  updateLocalProjectIssues,
+  fetchProject,
   issueCreateModalOpen
 }) => {
   return (
@@ -40,23 +42,28 @@ const ProjectBacklogEpics = ({
       {project.epics.map(epic => {
         return (
           <Collapsible
+            key={epic.key}
             transitionTime={200}
             open={true}
             trigger={<TriggerWhenClosed epic={epic} />}
             triggerWhenOpen={<TriggerWhenOpen epic={epic} />}
           >
             <Lists
-              project={project}
+              users={project.users}
+              fetchProject={fetchProject}
+              issues={getIssuesForEpic(project, epic)}
               filters={filters}
-              updateLocalProjectIssues={updateLocalProjectIssues}
               issueCreateModalOpen={issueCreateModalOpen}
-              epic={epic}
             />
           </Collapsible>
         );
       })}
     </Rows>
   );
+};
+
+const getIssuesForEpic = (project, epic) => {
+  return project.issues.filter(issue => issue.epicId === epic.id);
 };
 
 ProjectBacklogEpics.propTypes = propTypes;

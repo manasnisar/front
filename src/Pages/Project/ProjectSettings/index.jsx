@@ -10,6 +10,7 @@ import useApi from "../../../shared/hooks/api";
 import { Form, Breadcrumbs } from "../../../shared/components";
 
 import { FormCont, FormHeading, FormElement, ActionButton } from "./Styles";
+import { connect } from "react-redux";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
@@ -76,4 +77,8 @@ const categoryOptions = Object.values(ProjectType).map(category => ({
 
 ProjectSettings.propTypes = propTypes;
 
-export default ProjectSettings;
+const mapStatetoProps = state => ({
+  project: state.projectState.project
+});
+
+export default connect(mapStatetoProps)(ProjectSettings);

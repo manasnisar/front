@@ -18,6 +18,7 @@ import {
   Actions,
   ActionButton
 } from "./Styles";
+import { connect } from "react-redux";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
@@ -105,4 +106,8 @@ const renderPriority = ({ value: priority }) => (
 
 ProjectEpicCreate.propTypes = propTypes;
 
-export default ProjectEpicCreate;
+const mapStatetoProps = state => ({
+  project: state.projectState.project
+});
+
+export default connect(mapStatetoProps)(ProjectEpicCreate);

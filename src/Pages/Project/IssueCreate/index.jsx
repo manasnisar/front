@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 
 import {
   IssueType,
-  IssueStatus,
   IssuePriority,
   IssueTypeCopy,
-  IssuePriorityCopy
+  IssuePriorityCopy,
+  BacklogIssueStatus
 } from "../../../shared/constants/issues";
 import toast from "../../../shared/utils/toast";
 import useApi from "../../../shared/hooks/api";
@@ -44,9 +44,7 @@ const ProjectIssueCreate = ({
   modalClose,
   epicToBeUpdated
 }) => {
-  const [{ isCreating }, createIssue] = useApi.post(
-    `/issue/${epicToBeUpdated}`
-  );
+  const [{ isCreating }, createIssue] = useApi.post("/issue");
 
   const { currentUserId } = useCurrentUser();
 
@@ -60,6 +58,7 @@ const ProjectIssueCreate = ({
         reporterId: currentUserId,
         epicId: epicToBeUpdated,
         assigneeId: "",
+        estimate: "",
         priority: IssuePriority.MEDIUM
       }}
       validations={{
@@ -70,12 +69,14 @@ const ProjectIssueCreate = ({
         assigneeId: Form.is.required(),
         priority: Form.is.required()
       }}
-      onSubmit={async (values, form) => {
+      onSubmit={async values => {
         const epic = getEpicById(project, values.epicId);
         try {
           await createIssue({
             ...values,
-            status: IssueStatus.BACKLOG,
+            assignee: values.assigneeId,
+            reporter: values.reporterId,
+            status: BacklogIssueStatus.UNPLANNED,
             key: `${epic.key}.${epic.totalIssues + 1}`,
             projectId: project.id
           });
@@ -101,7 +102,7 @@ const ProjectIssueCreate = ({
         <Form.Field.Select
           name="epicId"
           label="Epic"
-          options={epicOptions(project, epicToBeUpdated)}
+          options={epicOptions(project)}
           renderOption={renderEpic(project)}
           renderValue={renderEpic(project)}
         />
@@ -130,6 +131,12 @@ const ProjectIssueCreate = ({
           options={userOptions(project)}
           renderOption={renderUser(project)}
           renderValue={renderUser(project)}
+        />
+        <Form.Field.Input
+          name="estimate"
+          type="number"
+          label="Time Estimate"
+          tip="How much time would this task take to complete"
         />
         <Form.Field.Select
           name="priority"
@@ -169,11 +176,8 @@ const getEpicById = (project, epicId) => {
   return project.epics.find(epic => epic.id === epicId);
 };
 
-const epicOptions = (project, epicToBeUpdated) => {
-  console.log(project.epics, epicToBeUpdated);
-  return project.epics
-    .filter(epic => epic.id === epicToBeUpdated)
-    .map(epic => ({ value: epic.id, label: epic.key }));
+const epicOptions = project => {
+  return project.epics.map(epic => ({ value: epic.id, label: epic.key }));
 };
 
 const renderType = ({ value: type }) => (
@@ -226,7 +230,7 @@ const renderEpic = project => ({ value: epicId, removeOptionValue }) => {
 ProjectIssueCreate.propTypes = propTypes;
 
 const mapStatetoProps = state => ({
-  epicToBeUpdated: state.epicState.epicToBeUpdated
+  project: state.projectState.project
 });
 
 export default connect(mapStatetoProps)(ProjectIssueCreate);

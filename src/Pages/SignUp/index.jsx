@@ -17,12 +17,24 @@ import { Link, useHistory } from "react-router-dom";
 import { BannerText } from "../../shared/components/Banner/Styles";
 import { AuthPage } from "../Styles";
 import toast from "../../shared/utils/toast";
-import { getStoredAuthToken } from "../../shared/utils/authToken";
-import api from "../../shared/utils/api";
+import { setUser } from "../../redux/user/user-reducer";
+import { connect } from "react-redux";
 
-const SignUp = props => {
+const SignUp = ({}) => {
   const [{ isCreating }, signUp] = useApi.post("/auth/register");
+  const [{ data }] = useApi.get("/auth", {}, { cachePolicy: "no-cache" });
   const history = useHistory();
+
+  useEffect(() => {
+    let mounted = true;
+    if (mounted && data) {
+      setUser(data.user);
+      history.push("/projects");
+    }
+    return function cleanup() {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <AuthPage>
@@ -113,4 +125,9 @@ const SignUp = props => {
     </AuthPage>
   );
 };
-export default SignUp;
+
+const mapDispatchToProps = dispatch => ({
+  setUser: user => dispatch(setUser(user))
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);

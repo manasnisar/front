@@ -12,16 +12,7 @@ import {
   removeStoredAuthToken
 } from "../../utils/authToken";
 
-const propTypes = {
-  issueCreateModalOpen: PropTypes.func,
-  page: PropTypes.string.isRequired
-};
-
-const ProjectNavbarLeft = ({
-  issueCreateModalOpen,
-  epicCreateModalOpen,
-  page
-}) => {
+const ProjectNavbarLeft = () => {
   const history = useHistory();
   const [, signOut] = useApi.post("/auth/logout");
 
@@ -31,19 +22,6 @@ const ProjectNavbarLeft = ({
         <Logo color="#fff" />
         <LogoText>Sharingan</LogoText>
       </LogoLink>
-
-      {page === "backlog" && (
-        <div>
-          <Item onClick={issueCreateModalOpen}>
-            <Icon type="plus" size={27} />
-            <ItemText>Create Issue</ItemText>
-          </Item>
-          <Item onClick={epicCreateModalOpen}>
-            <Icon type="plus" size={27} />
-            <ItemText>Create Epic</ItemText>
-          </Item>
-        </div>
-      )}
 
       <Bottom>
         <Item
@@ -61,7 +39,5 @@ const ProjectNavbarLeft = ({
     </NavLeft>
   );
 };
-
-ProjectNavbarLeft.propTypes = propTypes;
 
 export default ProjectNavbarLeft;

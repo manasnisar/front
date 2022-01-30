@@ -51,14 +51,16 @@ const ProjectBoardListIssue = ({ projectUsers, issue, index }) => {
                   left={4}
                 />
               </div>
-              <Assignees>
-                <AssigneeAvatar
-                  key={assignee.id}
-                  size={24}
-                  avatarUrl={assignee.avatarUrl}
-                  name={assignee.name}
-                />
-              </Assignees>
+              {assignee && (
+                <Assignees>
+                  <AssigneeAvatar
+                    key={assignee.id}
+                    size={24}
+                    avatarUrl={assignee.avatarUrl}
+                    name={assignee.name}
+                  />
+                </Assignees>
+              )}
             </Bottom>
           </Issue>
         </IssueLink>

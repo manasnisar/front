@@ -25,8 +25,8 @@ const ProjectBoardTitleList = ({ project, filters, currentUserId }) => {
 
   return (
     <Titles>
-      {Object.entries(IssueStatusCopy).map(entry => (
-        <Title>
+      {Object.entries(IssueStatusCopy).map((entry, index) => (
+        <Title key={index}>
           {`${entry[1]} `}
           <IssuesCount>
             <IssuesCount>

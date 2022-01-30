@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "../../../../shared/components";
 
 import { Header, BoardName, ActionContainer } from "./Styles";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const ProjectBoardHeader = ({ epicCreateModalOpen }) => {
   const history = useHistory();

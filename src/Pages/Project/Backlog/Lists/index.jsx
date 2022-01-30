@@ -12,40 +12,39 @@ import { BacklogIssueStatus } from "../../../../shared/constants/issues";
 
 import List from "./List";
 import { Lists } from "./Styles";
+import { updateLocalIssues } from "../../../../redux/project/project-reducer";
+import { connect } from "react-redux";
 
 const propTypes = {
-  project: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
-  updateLocalProjectIssues: PropTypes.func.isRequired
+  fetchProject: PropTypes.func.isRequired
 };
 
 const ProjectBoardLists = ({
-  project,
+  issues,
+  users,
+  fetchProject,
   filters,
-  updateLocalProjectIssues,
   issueCreateModalOpen,
-  epic
+  updateLocalIssues
 }) => {
   const { currentUserId } = useCurrentUser();
 
-  const handleIssueDrop = ({ draggableId, destination, source }) => {
+  const handleIssueDrop = async ({ draggableId, destination, source }) => {
     if (!isPositionChanged(source, destination)) return;
 
-    const issueId = Number(draggableId);
-
-    api.optimisticUpdate(`/issues/${issueId}`, {
-      updatedFields: {
-        status: destination.droppableId,
-        listPosition: calculateIssueListPosition(
-          project.issues,
-          destination,
-          source,
-          issueId
-        )
-      },
-      currentFields: project.issues.find(({ id }) => id === issueId),
-      setLocalData: fields => updateLocalProjectIssues(issueId, fields)
+    const issueId = draggableId;
+    const updatedIssues = issues.map(iss => {
+      if (iss.id === issueId) {
+        iss.status = destination.droppableId;
+      }
+      return iss;
     });
+    updateLocalIssues(updatedIssues);
+    await api.optimisticUpdate(`/issue/${issueId}`, {
+      status: destination.droppableId
+    });
+    await fetchProject();
   };
 
   return (
@@ -55,11 +54,11 @@ const ProjectBoardLists = ({
           <List
             key={status}
             status={status}
-            project={project}
+            users={users}
+            issues={issues}
             filters={filters}
             currentUserId={currentUserId}
             issueCreateModalOpen={issueCreateModalOpen}
-            epic={epic}
           />
         ))}
       </Lists>
@@ -68,28 +67,16 @@ const ProjectBoardLists = ({
 };
 
 const isPositionChanged = (destination, source) => {
-  if (!destination) return false;
+  if (
+    !destination ||
+    !destination.droppableId ||
+    !source ||
+    !source.droppableId
+  )
+    return false;
   const isSameList = destination.droppableId === source.droppableId;
   const isSamePosition = destination.index === source.index;
   return !isSameList || !isSamePosition;
-};
-
-const calculateIssueListPosition = (...args) => {
-  const { prevIssue, nextIssue } = getAfterDropPrevNextIssue(...args);
-  let position;
-
-  if (!prevIssue && !nextIssue) {
-    position = 1;
-  } else if (!prevIssue) {
-    position = nextIssue.listPosition - 1;
-  } else if (!nextIssue) {
-    position = prevIssue.listPosition + 1;
-  } else {
-    position =
-      prevIssue.listPosition +
-      (nextIssue.listPosition - prevIssue.listPosition) / 2;
-  }
-  return position;
 };
 
 const getAfterDropPrevNextIssue = (
@@ -130,4 +117,8 @@ const getSortedListIssues = (issues, status) =>
 
 ProjectBoardLists.propTypes = propTypes;
 
-export default ProjectBoardLists;
+const mapDispatchToProps = dispatch => ({
+  updateLocalIssues: issues => dispatch(updateLocalIssues(issues))
+});
+
+export default connect(null, mapDispatchToProps)(ProjectBoardLists);
