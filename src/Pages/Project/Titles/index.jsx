@@ -5,6 +5,7 @@ import { Titles, Title, IssuesCount } from "./Styles";
 
 import {
   BacklogIssueStatusCopy,
+  HistoryIssueStatusCopy,
   IssueStatusCopy
 } from "../../../shared/constants/issues";
 import formatIssuesCount from "../../../shared/utils/formatIssueCount";
@@ -27,7 +28,11 @@ const ProjectBacklogTitleList = ({ project, filters, currentUserId, page }) => {
   return (
     <Titles>
       {Object.entries(
-        page === "backlog" ? BacklogIssueStatusCopy : IssueStatusCopy
+        page === "backlog"
+          ? BacklogIssueStatusCopy
+          : page === "history"
+          ? HistoryIssueStatusCopy
+          : IssueStatusCopy
       ).map((entry, index) => (
         <Title key={index}>
           {`${entry[1]} `}

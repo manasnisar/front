@@ -17,6 +17,10 @@ export const BacklogIssueStatus = {
   PLANNED: "planned"
 };
 
+export const HistoryIssueStatus = {
+  ARCHIVED: "archived"
+};
+
 export const IssuePriority = {
   HIGHEST: "5",
   HIGH: "4",
@@ -50,6 +54,10 @@ export const IssueStatusCopy = {
 export const BacklogIssueStatusCopy = {
   [BacklogIssueStatus.UNPLANNED]: "Ready for sprint planning",
   [BacklogIssueStatus.PLANNED]: "Candidates for filling sprint"
+};
+
+export const HistoryIssueStatusCopy = {
+  [HistoryIssueStatus.ARCHIVED]: "Archived"
 };
 
 export const IssuePriorityCopy = {

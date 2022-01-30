@@ -14,6 +14,7 @@ import Backlog from "./Backlog";
 import EpicCreate from "./EpicCreate";
 import { connect } from "react-redux";
 import { setProject } from "../../redux/project/project-reducer";
+import History from "./History";
 
 const Project = ({ setProject }) => {
   const match = useRouteMatch();
@@ -83,6 +84,19 @@ const Project = ({ setProject }) => {
         render={() => {
           return (
             <Backlog
+              issueCreateModalOpen={issueCreateModalHelpers.open}
+              epicCreateModalOpen={epicCreateModalHelpers.open}
+              fetchProject={fetchProject}
+            />
+          );
+        }}
+      />
+
+      <Route
+        path={`${match.path}/history`}
+        render={() => {
+          return (
+            <History
               issueCreateModalOpen={issueCreateModalHelpers.open}
               epicCreateModalOpen={epicCreateModalHelpers.open}
               fetchProject={fetchProject}

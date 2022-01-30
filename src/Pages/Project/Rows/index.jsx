@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Lists from "../Lists";
 import Collapsible from "react-collapsible";
-import { Rows, Trigger } from "./Styles";
+import { Rows, Trigger, TriggerInner } from "./Styles";
 import { Icon } from "../../../shared/components";
 
 const propTypes = {
@@ -16,8 +16,18 @@ const propTypes = {
 const TriggerWhenClosed = ({ epic }) => {
   return (
     <Trigger>
-      <Icon type={"chevron-right"} size={18} />
-      <div>{epic.title}</div>
+      <TriggerInner>
+        <Icon type={"chevron-right"} size={20} />
+        <div style={{ margin: "2px 0 0 5px" }}>{epic.title}</div>
+      </TriggerInner>
+      <Icon
+        onClick={e => {
+          e.stopPropagation();
+          console.log("here when epic is clicked");
+        }}
+        type={"more"}
+        size={22}
+      />
     </Trigger>
   );
 };
@@ -25,8 +35,11 @@ const TriggerWhenClosed = ({ epic }) => {
 const TriggerWhenOpen = ({ epic }) => {
   return (
     <Trigger>
-      <Icon type={"chevron-down"} size={18} />
-      <div>{epic.title}</div>
+      <TriggerInner>
+        <Icon type={"chevron-down"} size={20} />
+        <div style={{ margin: "2px 0 0 5px" }}>{epic.title}</div>
+      </TriggerInner>
+      <Icon type={"more"} size={22} />
     </Trigger>
   );
 };
