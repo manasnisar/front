@@ -13,7 +13,7 @@ export const Title = styled.div`
   text-transform: uppercase;
   color: ${color.textMedium};
   ${font.size(12.5)};
-  width: 50%;
+  width: 100%;
   ${mixin.truncateText}
 `;
 

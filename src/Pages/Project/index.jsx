@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Route, Redirect, useRouteMatch, useParams } from "react-router-dom";
 import useApi from "../../shared/hooks/api";
-import { updateArrayItemById } from "../../shared/utils/javascript";
 import { createQueryParamModalHelpers } from "../../shared/utils/queryParamModal";
 import { PageLoader, PageError, Modal } from "../../shared/components";
 import NavbarLeft from "../../shared/components/NavbarLeft";
@@ -14,13 +13,16 @@ import Backlog from "./Backlog";
 import EpicCreate from "./EpicCreate";
 import { connect } from "react-redux";
 import { setProject } from "../../redux/project/project-reducer";
+import History from "./History";
+import EpicDetails from "./EpicDetails";
 
-const Project = ({ setProject }) => {
+const Project = ({ setProject, epicUnderView }) => {
   const match = useRouteMatch();
   const params = useParams();
 
   const issueCreateModalHelpers = createQueryParamModalHelpers("issue-create");
   const epicCreateModalHelpers = createQueryParamModalHelpers("epic-create");
+  const epicDetailsModalHelpers = createQueryParamModalHelpers("epic-details");
 
   const [{ data, error }, fetchProject] = useApi.get(
     `/project/manage/${params.id}`
@@ -71,20 +73,54 @@ const Project = ({ setProject }) => {
         />
       )}
 
+      {epicDetailsModalHelpers.isOpen() && (
+        <Modal
+          isOpen
+          testid="modal:epic-details"
+          width={1040}
+          withCloseIcon={false}
+          onClose={epicDetailsModalHelpers.close}
+          renderContent={modal => (
+            <EpicDetails
+              epicId={epicUnderView}
+              projectUsers={project.users}
+              fetchProject={fetchProject}
+              modalClose={modal.close}
+            />
+          )}
+        />
+      )}
+
       <Route
         path={`${match.path}/board`}
-        render={() => {
-          return <Board fetchProject={fetchProject} />;
-        }}
+        render={() => (
+          <Board
+            fetchProject={fetchProject}
+            epicDetailsModalOpen={epicDetailsModalHelpers.open}
+          />
+        )}
       />
 
       <Route
         path={`${match.url}/backlog`}
+        render={() => (
+          <Backlog
+            issueCreateModalOpen={issueCreateModalHelpers.open}
+            epicCreateModalOpen={epicCreateModalHelpers.open}
+            epicDetailsModalOpen={epicDetailsModalHelpers.open}
+            fetchProject={fetchProject}
+          />
+        )}
+      />
+
+      <Route
+        path={`${match.path}/history`}
         render={() => {
           return (
-            <Backlog
+            <History
               issueCreateModalOpen={issueCreateModalHelpers.open}
               epicCreateModalOpen={epicCreateModalHelpers.open}
+              epicDetailsModalOpen={epicDetailsModalHelpers.open}
               fetchProject={fetchProject}
             />
           );
@@ -106,5 +142,8 @@ const Project = ({ setProject }) => {
 const mapDispatchToProps = dispatch => ({
   setProject: project => dispatch(setProject(project))
 });
+const mapStatetoProps = state => ({
+  epicUnderView: state.epicState.epicUnderView
+});
 
-export default connect(null, mapDispatchToProps)(Project);
+export default connect(mapStatetoProps, mapDispatchToProps)(Project);

@@ -10,6 +10,7 @@ import {
 } from "../../../shared/utils/javascript";
 import {
   BacklogIssueStatus,
+  HistoryIssueStatus,
   IssueStatus
 } from "../../../shared/constants/issues";
 
@@ -55,7 +56,11 @@ const ProjectBoardLists = ({
     <DragDropContext onDragEnd={handleIssueDrop}>
       <Lists>
         {Object.values(
-          page === "backlog" ? BacklogIssueStatus : IssueStatus
+          page === "backlog"
+            ? BacklogIssueStatus
+            : page === "history"
+            ? HistoryIssueStatus
+            : IssueStatus
         ).map(status => (
           <List
             key={status}
@@ -84,42 +89,6 @@ const isPositionChanged = (destination, source) => {
   const isSamePosition = destination.index === source.index;
   return !isSameList || !isSamePosition;
 };
-
-const getAfterDropPrevNextIssue = (
-  allIssues,
-  destination,
-  source,
-  droppedIssueId
-) => {
-  const beforeDropDestinationIssues = getSortedListIssues(
-    allIssues,
-    destination.droppableId
-  );
-  const droppedIssue = allIssues.find(issue => issue.id === droppedIssueId);
-  const isSameList = destination.droppableId === source.droppableId;
-
-  const afterDropDestinationIssues = isSameList
-    ? moveItemWithinArray(
-        beforeDropDestinationIssues,
-        droppedIssue,
-        destination.index
-      )
-    : insertItemIntoArray(
-        beforeDropDestinationIssues,
-        droppedIssue,
-        destination.index
-      );
-
-  return {
-    prevIssue: afterDropDestinationIssues[destination.index - 1],
-    nextIssue: afterDropDestinationIssues[destination.index + 1]
-  };
-};
-
-const getSortedListIssues = (issues, status) =>
-  issues
-    .filter(issue => issue.status === status)
-    .sort((a, b) => a.listPosition - b.listPosition);
 
 ProjectBoardLists.propTypes = propTypes;
 

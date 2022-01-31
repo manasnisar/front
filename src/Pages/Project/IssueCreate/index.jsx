@@ -66,7 +66,6 @@ const ProjectIssueCreate = ({
         title: [Form.is.required(), Form.is.maxLength(200)],
         reporterId: Form.is.required(),
         epicId: Form.is.required(),
-        assigneeId: Form.is.required(),
         priority: Form.is.required()
       }}
       onSubmit={async values => {
@@ -78,7 +77,8 @@ const ProjectIssueCreate = ({
             reporter: values.reporterId,
             status: BacklogIssueStatus.UNPLANNED,
             key: `${epic.key}.${epic.totalIssues + 1}`,
-            projectId: project.id
+            projectId: project.id,
+            creationDate: Date.now()
           });
           await fetchProject();
           toast.success("Issue has been successfully created.");

@@ -37,15 +37,11 @@ const ProjectSidebar = ({ project }) => {
       </ProjectInfo>
 
       {renderLinkItem(match, "Active Sprint", "board", "/board")}
-      {renderLinkItem(match, "Back Log", "plus", "/backlog")}
+      {renderLinkItem(match, "Backlog", "plus", "/backlog")}
       {renderLinkItem(match, "History", "menu", "/history")}
       {renderLinkItem(match, "Project settings", "settings", "/settings")}
       <Divider />
       {renderLinkItem(match, "Back to Projects", "arrow-left", "../projects")}
-      {/*{renderLinkItem(match, "Issues and filters", "issues")}*/}
-      {/*{renderLinkItem(match, "Pages", "page")}*/}
-      {/*{renderLinkItem(match, "Reports", "reports")}*/}
-      {/*{renderLinkItem(match, "Components", "component")}*/}
     </Sidebar>
   );
 };

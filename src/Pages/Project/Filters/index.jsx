@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { xor } from 'lodash';
+import React from "react";
+import PropTypes from "prop-types";
+import { xor } from "lodash";
 
 import {
   Filters,
@@ -9,20 +9,27 @@ import {
   AvatarIsActiveBorder,
   StyledAvatar,
   StyledButton,
-  ClearAll,
-} from './Styles';
+  ClearAll
+} from "./Styles";
 
 const propTypes = {
   projectUsers: PropTypes.array.isRequired,
   defaultFilters: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
-  mergeFilters: PropTypes.func.isRequired,
+  mergeFilters: PropTypes.func.isRequired
 };
 
-const ProjectBoardFilters = ({ projectUsers, defaultFilters, filters, mergeFilters }) => {
+const ProjectBoardFilters = ({
+  projectUsers,
+  defaultFilters,
+  filters,
+  mergeFilters,
+  page
+}) => {
   const { searchTerm, userIds, myOnly, recent } = filters;
 
-  const areFiltersCleared = !searchTerm && userIds.length === 0 && !myOnly && !recent;
+  const areFiltersCleared =
+    !searchTerm && userIds.length === 0 && !myOnly && !recent;
 
   return (
     <Filters data-testid="board-filters">
@@ -33,7 +40,10 @@ const ProjectBoardFilters = ({ projectUsers, defaultFilters, filters, mergeFilte
       />
       <Avatars>
         {projectUsers.map(user => (
-          <AvatarIsActiveBorder key={user.id} isActive={userIds.includes(user.id)}>
+          <AvatarIsActiveBorder
+            key={user.id}
+            isActive={userIds.includes(user.id)}
+          >
             <StyledAvatar
               avatarUrl={user.avatarUrl}
               name={user.name}
@@ -49,15 +59,20 @@ const ProjectBoardFilters = ({ projectUsers, defaultFilters, filters, mergeFilte
       >
         Only My Issues
       </StyledButton>
-      <StyledButton
-        variant="empty"
-        isActive={recent}
-        onClick={() => mergeFilters({ recent: !recent })}
-      >
-        Recently Updated
-      </StyledButton>
+      {page !== "history" && (
+        <StyledButton
+          variant="empty"
+          isActive={recent}
+          onClick={() => mergeFilters({ recent: !recent })}
+        >
+          Recently Updated
+        </StyledButton>
+      )}
+
       {!areFiltersCleared && (
-        <ClearAll onClick={() => mergeFilters(defaultFilters)}>Clear all</ClearAll>
+        <ClearAll onClick={() => mergeFilters(defaultFilters)}>
+          Clear all
+        </ClearAll>
       )}
     </Filters>
   );

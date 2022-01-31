@@ -36,7 +36,7 @@ const ProjectBoardIssueDetails = ({
   projectLead
 }) => {
   const [{ data, error }, fetchIssue] = useApi.get(`/issue/${issueId}`);
-
+  console.log(user);
   if (!data) return <Loader />;
   if (error) return <PageError />;
 

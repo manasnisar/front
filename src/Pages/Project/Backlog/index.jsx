@@ -13,11 +13,13 @@ import ProjectBacklogTitleList from "../Titles";
 import ProjectBacklogEpics from "../Rows";
 import useCurrentUser from "../../../shared/hooks/currentUser";
 import { connect } from "react-redux";
+import EpicDetails from "../EpicDetails";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
   fetchProject: PropTypes.func.isRequired,
-  issueCreateModalOpen: PropTypes.func.isRequired
+  issueCreateModalOpen: PropTypes.func.isRequired,
+  epicDetailsModalOpen: PropTypes.func.isRequired
 };
 
 const defaultFilters = {
@@ -31,7 +33,8 @@ const ProjectBacklog = ({
   project,
   fetchProject,
   epicCreateModalOpen,
-  issueCreateModalOpen
+  issueCreateModalOpen,
+  epicDetailsModalOpen
 }) => {
   const match = useRouteMatch();
   const history = useHistory();
@@ -62,6 +65,7 @@ const ProjectBacklog = ({
           fetchProject={fetchProject}
           issueCreateModalOpen={issueCreateModalOpen}
           page="backlog"
+          epicDetailsModalOpen={epicDetailsModalOpen}
         />
       </TitlesAndLists>
       <Route

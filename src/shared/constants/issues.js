@@ -17,15 +17,11 @@ export const BacklogIssueStatus = {
   PLANNED: "planned"
 };
 
-export const IssuePriority = {
-  HIGHEST: "5",
-  HIGH: "4",
-  MEDIUM: "3",
-  LOW: "2",
-  LOWEST: "1"
+export const HistoryIssueStatus = {
+  ARCHIVED: "archived"
 };
 
-export const EpicPriority = {
+export const IssuePriority = {
   HIGHEST: "5",
   HIGH: "4",
   MEDIUM: "3",
@@ -52,18 +48,14 @@ export const BacklogIssueStatusCopy = {
   [BacklogIssueStatus.PLANNED]: "Candidates for filling sprint"
 };
 
+export const HistoryIssueStatusCopy = {
+  [HistoryIssueStatus.ARCHIVED]: "Archived"
+};
+
 export const IssuePriorityCopy = {
   [IssuePriority.HIGHEST]: "Highest",
   [IssuePriority.HIGH]: "High",
   [IssuePriority.MEDIUM]: "Medium",
   [IssuePriority.LOW]: "Low",
   [IssuePriority.LOWEST]: "Lowest"
-};
-
-export const EpicPriorityCopy = {
-  [EpicPriority.HIGHEST]: "Highest",
-  [EpicPriority.HIGH]: "High",
-  [EpicPriority.MEDIUM]: "Medium",
-  [EpicPriority.LOW]: "Low",
-  [EpicPriority.LOWEST]: "Lowest"
 };

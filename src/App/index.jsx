@@ -13,18 +13,19 @@ import { connect } from "react-redux";
 import Mangekyo from "../shared/components/Loaders/Mangekyo";
 
 const App = ({ setUser }) => {
-  const [{ data, isLoading }] = useApi.get(
+  const [{ data, error, isLoading }] = useApi.get(
     "/auth",
     {},
     { cachePolicy: "no-cache" }
   );
   useEffect(() => {
+    console.log(data);
+
     async function checkAuth() {
-      if (data) {
-        setUser(data.user);
-        history.push("/projects");
-      } else {
+      if (error) {
         history.push("/signin");
+      } else if (data) {
+        setUser(data.user);
       }
     }
 

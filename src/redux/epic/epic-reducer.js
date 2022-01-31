@@ -1,22 +1,22 @@
-const SET_EPIC_TO_BE_UPDATED = "SET_EPIC_TO_BE_UPDATED";
+const SET_EPIC_UNDER_VIEW = "SET_EPIC_UNDER_VIEW";
 
 const initialState = {
-  epicToBeUpdated: ""
+  epicUnderView: ""
 };
 
-export const setEpicToBeUpdated = payload => dispatch => {
+export const setEpicUnderView = payload => dispatch => {
   dispatch({
-    type: SET_EPIC_TO_BE_UPDATED,
+    type: SET_EPIC_UNDER_VIEW,
     payload: payload
   });
 };
 
 const epicReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_EPIC_TO_BE_UPDATED:
+    case SET_EPIC_UNDER_VIEW:
       return {
         ...state,
-        epicToBeUpdated: action.payload
+        epicUnderView: action.payload
       };
     default:
       return state;

@@ -2,33 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import Lists from "../Lists";
 import Collapsible from "react-collapsible";
-import { Rows, Trigger } from "./Styles";
+import { IconStyler, Rows, Trigger, TriggerInner } from "./Styles";
 import { Icon } from "../../../shared/components";
+import { connect } from "react-redux";
+import { setEpicUnderView } from "../../../redux/epic/epic-reducer";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
   fetchProject: PropTypes.func.isRequired,
   updateLocalProjectIssues: PropTypes.func.isRequired,
-  issueCreateModalOpen: PropTypes.func.isRequired
-};
-
-const TriggerWhenClosed = ({ epic }) => {
-  return (
-    <Trigger>
-      <Icon type={"chevron-right"} size={18} />
-      <div>{epic.title}</div>
-    </Trigger>
-  );
-};
-
-const TriggerWhenOpen = ({ epic }) => {
-  return (
-    <Trigger>
-      <Icon type={"chevron-down"} size={18} />
-      <div>{epic.title}</div>
-    </Trigger>
-  );
+  issueCreateModalOpen: PropTypes.func.isRequired,
+  epicDetailsModalOpen: PropTypes.func.isRequired
 };
 
 const ProjectBacklogEpics = ({
@@ -36,8 +21,31 @@ const ProjectBacklogEpics = ({
   filters,
   fetchProject,
   issueCreateModalOpen,
-  page
+  page,
+  setEpicUnderView,
+  epicDetailsModalOpen
 }) => {
+  const TriggerRenderer = ({ epic, open }) => {
+    return (
+      <Trigger>
+        <TriggerInner>
+          <Icon type={open ? "chevron-down" : "chevron-right"} size={20} />
+          <div style={{ margin: "2px 0 0 5px" }}>{epic.title}</div>
+        </TriggerInner>
+        <IconStyler>
+          <Icon
+            onClick={async e => {
+              e.stopPropagation();
+              await setEpicUnderView(epic.id);
+              epicDetailsModalOpen();
+            }}
+            type={"more"}
+            size={22}
+          />
+        </IconStyler>
+      </Trigger>
+    );
+  };
   return (
     <Rows>
       {project.epics.map(epic => {
@@ -46,8 +54,8 @@ const ProjectBacklogEpics = ({
             key={epic.key}
             transitionTime={200}
             open={true}
-            trigger={<TriggerWhenClosed epic={epic} />}
-            triggerWhenOpen={<TriggerWhenOpen epic={epic} />}
+            trigger={<TriggerRenderer epic={epic} open={false} />}
+            triggerWhenOpen={<TriggerRenderer epic={epic} open={true} />}
           >
             <Lists
               users={project.users}
@@ -70,4 +78,8 @@ const getIssuesForEpic = (project, epic) => {
 
 ProjectBacklogEpics.propTypes = propTypes;
 
-export default ProjectBacklogEpics;
+const mapDispatchToProps = dispatch => ({
+  setEpicUnderView: epicId => dispatch(setEpicUnderView(epicId))
+});
+
+export default connect(null, mapDispatchToProps)(ProjectBacklogEpics);

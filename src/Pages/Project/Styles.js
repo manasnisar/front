@@ -22,8 +22,9 @@ export const TitlesAndLists = styled.div`
 `;
 
 export const Header = styled.div`
-  margin-top: 6px;
+  margin-top: 20px;
   display: flex;
+  min-height: 32px;
   justify-content: space-between;
 `;
 

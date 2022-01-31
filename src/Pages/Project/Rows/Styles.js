@@ -14,9 +14,27 @@ export const Rows = styled.div`
 
 export const Trigger = styled.div`
   display: flex;
+  background: #f4f5f7;
+  border-radius: 2px;
+  padding: 5px 5px;
+  justify-content: space-between;
   cursor: pointer;
   user-select: none;
+  font-size: 16px;
   align-items: center;
   text-align: center;
   color: ${color.textMedium};
+`;
+
+export const TriggerInner = styled.div`
+  display: flex;
+`;
+
+export const IconStyler = styled.div`
+  border-radius: 50%;
+  padding: 0 2px;
+
+  &:hover {
+    background: #e2e3e9;
+  }
 `;
