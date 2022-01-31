@@ -42,10 +42,6 @@ const ProjectSidebar = ({ project }) => {
       {renderLinkItem(match, "Project settings", "settings", "/settings")}
       <Divider />
       {renderLinkItem(match, "Back to Projects", "arrow-left", "../projects")}
-      {/*{renderLinkItem(match, "Issues and filters", "issues")}*/}
-      {/*{renderLinkItem(match, "Pages", "page")}*/}
-      {/*{renderLinkItem(match, "Reports", "reports")}*/}
-      {/*{renderLinkItem(match, "Components", "component")}*/}
     </Sidebar>
   );
 };

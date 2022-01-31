@@ -7,6 +7,10 @@ const projectLead = ({ data }) => {
   return <div style={{ marginLeft: "20px" }}>{data.projectLead.name}</div>;
 };
 
+const projectName = ({ data }) => {
+  return <div style={{ marginLeft: "20px" }}>{data.name}</div>;
+};
+
 const createdAt = ({ data }) => {
   const date = new Date(data.creationDate);
   return (
@@ -21,19 +25,23 @@ const columns = [
     id: 1,
     field: "name",
     label: "Name",
-    width: "35%"
+    width: "35%",
+    cellRenderer: projectName,
+    className: "pointer"
   },
   {
     id: 2,
     field: "key",
     label: "Key",
-    width: "15%"
+    width: "15%",
+    className: "pointer"
   },
   {
     id: 3,
     field: "creationDate",
     label: "Created At",
     width: "25%",
+    className: "pointer",
     cellRenderer: createdAt,
     sort: ({ a, b, isAscending }) => {
       let aa = a
@@ -60,6 +68,7 @@ const columns = [
     field: "projectLead",
     label: "Lead",
     width: "25%",
+    className: "pointer",
     cellRenderer: projectLead
   }
 ];

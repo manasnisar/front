@@ -31,7 +31,7 @@ const ProjectHistory = ({
   project,
   fetchProject,
   epicCreateModalOpen,
-  issueCreateModalOpen
+  epicDetailsModalOpen
 }) => {
   const match = useRouteMatch();
   const history = useHistory();
@@ -61,7 +61,7 @@ const ProjectHistory = ({
           filters={filters}
           project={project}
           fetchProject={fetchProject}
-          issueCreateModalOpen={issueCreateModalOpen}
+          epicDetailsModalOpen={epicDetailsModalOpen}
           page="history"
         />
       </TitlesAndLists>

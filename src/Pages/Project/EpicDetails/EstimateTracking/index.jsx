@@ -62,7 +62,7 @@ const ProjectBoardIssueDetailsEstimateTracking = ({ issue, updateIssue }) => (
 
 const renderHourInput = (fieldName, issue, updateIssue) => (
   <InputDebounced
-    placeholder="Estimate"
+    placeholder="Number"
     filter={/^\d{0,6}$/}
     value={isNil(issue[fieldName]) ? "" : issue[fieldName]}
     onChange={stringValue => {

@@ -29,14 +29,6 @@ export const IssuePriority = {
   LOWEST: "1"
 };
 
-export const EpicPriority = {
-  HIGHEST: "5",
-  HIGH: "4",
-  MEDIUM: "3",
-  LOW: "2",
-  LOWEST: "1"
-};
-
 export const IssueTypeCopy = {
   [IssueType.TASK]: "Task",
   [IssueType.BUG]: "Bug",
@@ -66,12 +58,4 @@ export const IssuePriorityCopy = {
   [IssuePriority.MEDIUM]: "Medium",
   [IssuePriority.LOW]: "Low",
   [IssuePriority.LOWEST]: "Lowest"
-};
-
-export const EpicPriorityCopy = {
-  [EpicPriority.HIGHEST]: "Highest",
-  [EpicPriority.HIGH]: "High",
-  [EpicPriority.MEDIUM]: "Medium",
-  [EpicPriority.LOW]: "Low",
-  [EpicPriority.LOWEST]: "Lowest"
 };

@@ -29,3 +29,12 @@ export const Trigger = styled.div`
 export const TriggerInner = styled.div`
   display: flex;
 `;
+
+export const IconStyler = styled.div`
+  border-radius: 50%;
+  padding: 0 2px;
+
+  &:hover {
+    background: #e2e3e9;
+  }
+`;

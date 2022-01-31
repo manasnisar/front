@@ -17,8 +17,7 @@ import { connect } from "react-redux";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
-  fetchProject: PropTypes.func.isRequired,
-  updateLocalProjectIssues: PropTypes.func.isRequired
+  fetchProject: PropTypes.func.isRequired
 };
 
 const defaultFilters = {
@@ -28,7 +27,7 @@ const defaultFilters = {
   recent: false
 };
 
-const ProjectBoard = ({ project, fetchProject, updateLocalProjectIssues }) => {
+const ProjectBoard = ({ project, fetchProject, epicDetailsModalOpen }) => {
   const match = useRouteMatch();
   const history = useHistory();
   const { currentUserId } = useCurrentUser();
@@ -55,7 +54,7 @@ const ProjectBoard = ({ project, fetchProject, updateLocalProjectIssues }) => {
         <ProjectBoardEpics
           filters={filters}
           project={project}
-          updateLocalProjectIssues={updateLocalProjectIssues}
+          epicDetailsModalOpen={epicDetailsModalOpen}
           page="active"
         />
       </TitlesAndLists>
@@ -74,7 +73,6 @@ const ProjectBoard = ({ project, fetchProject, updateLocalProjectIssues }) => {
                 issueId={routeProps.match.params.issueId}
                 projectUsers={project.users}
                 fetchProject={fetchProject}
-                updateLocalProjectIssues={updateLocalProjectIssues}
                 modalClose={modal.close}
               />
             )}

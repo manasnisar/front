@@ -11,51 +11,47 @@ import Delete from "./Delete";
 import Title from "./Title";
 import Description from "./Description";
 import Comments from "./Comments";
-import Status from "./Status";
-import AssigneesReporter from "./AssigneesReporter";
 import Priority from "./Priority";
-import EstimateTracking from "./EstimateTracking";
 import Dates from "./Dates";
 import { TopActions, TopActionsRight, Content, Left, Right } from "./Styles";
 import { connect } from "react-redux";
+import IssuesCount from "./IssuesCount";
 
 const propTypes = {
-  issueId: PropTypes.string.isRequired,
+  epicId: PropTypes.string.isRequired,
   projectUsers: PropTypes.array.isRequired,
   fetchProject: PropTypes.func.isRequired,
   modalClose: PropTypes.func.isRequired
 };
 
-const ProjectBoardIssueDetails = ({
-  issueId,
-  projectUsers,
+const ProjectBoardEpicDetails = ({
+  epicId,
   fetchProject,
   modalClose,
-  page,
   user,
   projectLead
 }) => {
-  const [{ data, error }, fetchIssue] = useApi.get(`/issue/${issueId}`);
-  console.log(user);
+  const [{ data, error }, fetchEpic] = useApi.get(`/epic/manage/${epicId}`);
+
   if (!data) return <Loader />;
   if (error) return <PageError />;
 
-  const issue = data;
+  const epic = data;
 
-  const updateIssue = async updatedFields => {
-    await api.optimisticUpdate(`/issue/${issueId}`, updatedFields);
-    await fetchIssue();
+  const updateEpic = async updatedFields => {
+    await api.optimisticUpdate(`/epic/manage/${epicId}`, updatedFields);
+    await fetchEpic();
     await fetchProject();
   };
 
   return (
     <Fragment>
       <TopActions>
-        <Type issue={issue} updateIssue={updateIssue} />
+        <Type epic={epic} />
         <TopActionsRight>
           {(user.role === "owner" || user.id === projectLead.id) && (
             <Delete
-              issue={issue}
+              epic={epic}
               fetchProject={fetchProject}
               modalClose={modalClose}
             />
@@ -71,30 +67,24 @@ const ProjectBoardIssueDetails = ({
       </TopActions>
       <Content>
         <Left>
-          <Title issue={issue} updateIssue={updateIssue} />
-          <Description issue={issue} updateIssue={updateIssue} />
-          <Comments issue={issue} fetchIssue={fetchIssue} />
+          <Title epic={epic} updateEpic={updateEpic} />
+          <Description epic={epic} updateEpic={updateEpic} />
+          <Comments epic={epic} fetchEpic={fetchEpic} />
         </Left>
         <Right>
-          <Status issue={issue} updateIssue={updateIssue} page={page} />
-          <AssigneesReporter
-            issue={issue}
-            updateIssue={updateIssue}
-            projectUsers={projectUsers}
-          />
-          <Priority issue={issue} updateIssue={updateIssue} />
-          <EstimateTracking issue={issue} updateIssue={updateIssue} />
-          <Dates issue={issue} />
+          <Priority epic={epic} updateEpic={updateEpic} />
+          <IssuesCount epic={epic} />
+          <Dates epic={epic} />
         </Right>
       </Content>
     </Fragment>
   );
 };
 
-ProjectBoardIssueDetails.propTypes = propTypes;
+ProjectBoardEpicDetails.propTypes = propTypes;
 const mapStatetoProps = state => ({
   user: state.userState.user,
   projectLead: state.projectState.project.projectLead
 });
 
-export default connect(mapStatetoProps)(ProjectBoardIssueDetails);
+export default connect(mapStatetoProps)(ProjectBoardEpicDetails);

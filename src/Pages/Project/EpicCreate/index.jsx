@@ -2,10 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import {
-  EpicPriorityCopy,
   IssuePriority,
   IssuePriorityCopy
 } from "../../../shared/constants/issues";
+
+import { EpicPriorityCopy } from "../../../shared/constants/epics";
 import toast from "../../../shared/utils/toast";
 import useApi from "../../../shared/hooks/api";
 import { Form, IssuePriorityIcon } from "../../../shared/components";
@@ -46,10 +47,12 @@ const ProjectEpicCreate = ({ project, fetchProject, onCreate, modalClose }) => {
       onSubmit={async (values, form) => {
         try {
           await createEpic({
+            description: values.description,
             title: values.epicTitle,
             key: `${project.key}-${project.totalEpics + 1}`,
             projectId: project._id,
-            priority: values.priority
+            priority: values.priority,
+            creationDate: Date.now()
           });
           await fetchProject();
           toast.success("Epic has been successfully created.");
