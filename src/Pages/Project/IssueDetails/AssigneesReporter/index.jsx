@@ -27,7 +27,7 @@ const ProjectBoardIssueDetailsAssigneesReporter = ({
 
   return (
     <Fragment>
-      <SectionTitle>Assignees</SectionTitle>
+      <SectionTitle>Assignee</SectionTitle>
       <Select
         variant="empty"
         dropdownWidth={343}

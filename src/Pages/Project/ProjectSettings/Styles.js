@@ -8,9 +8,13 @@ export const FormCont = styled.div`
   justify-content: center;
 `;
 
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const FormElement = styled(Form.Element)`
   width: 100%;
-  max-width: 640px;
 `;
 
 export const FormHeading = styled.h1`
