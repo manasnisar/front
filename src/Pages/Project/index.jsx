@@ -1,5 +1,11 @@
 import React from "react";
-import { Route, Redirect, useRouteMatch, useParams } from "react-router-dom";
+import {
+  Route,
+  Redirect,
+  useRouteMatch,
+  useParams,
+  useHistory
+} from "react-router-dom";
 import useApi from "../../shared/hooks/api";
 import { createQueryParamModalHelpers } from "../../shared/utils/queryParamModal";
 import { PageLoader, PageError, Modal } from "../../shared/components";
@@ -13,12 +19,13 @@ import Backlog from "./Backlog";
 import EpicCreate from "./EpicCreate";
 import { connect } from "react-redux";
 import { setProject } from "../../redux/project/project-reducer";
-import History from "./History";
 import EpicDetails from "./EpicDetails";
+import History from "./History";
 
 const Project = ({ setProject, epicUnderView }) => {
   const match = useRouteMatch();
   const params = useParams();
+  const history = useHistory();
 
   const issueCreateModalHelpers = createQueryParamModalHelpers("issue-create");
   const epicCreateModalHelpers = createQueryParamModalHelpers("epic-create");
@@ -45,7 +52,9 @@ const Project = ({ setProject, epicUnderView }) => {
           testid="modal:issue-create"
           width={800}
           withCloseIcon={false}
-          onClose={issueCreateModalHelpers.close}
+          onClose={() => {
+            history.goBack();
+          }}
           renderContent={modal => (
             <IssueCreate
               fetchProject={fetchProject}
@@ -62,7 +71,9 @@ const Project = ({ setProject, epicUnderView }) => {
           testid="modal:epic-create"
           width={800}
           withCloseIcon={false}
-          onClose={epicCreateModalHelpers.close}
+          onClose={() => {
+            history.goBack();
+          }}
           renderContent={modal => (
             <EpicCreate
               fetchProject={fetchProject}
@@ -79,10 +90,12 @@ const Project = ({ setProject, epicUnderView }) => {
           testid="modal:epic-details"
           width={1040}
           withCloseIcon={false}
-          onClose={epicDetailsModalHelpers.close}
+          onClose={() => {
+            history.goBack();
+          }}
           renderContent={modal => (
             <EpicDetails
-              epicId={epicUnderView}
+              epic={epicUnderView}
               projectUsers={project.users}
               fetchProject={fetchProject}
               modalClose={modal.close}

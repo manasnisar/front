@@ -28,7 +28,7 @@ const ProjectBoardIssueDetailsStatus = ({ issue, updateIssue, page }) => (
       name="status"
       value={issue.status}
       options={
-        page === "active"
+        page === "board"
           ? Object.values(IssueStatus).map(status => ({
               value: status,
               label: IssueStatusCopy[status]

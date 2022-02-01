@@ -16,30 +16,29 @@ import Dates from "./Dates";
 import { TopActions, TopActionsRight, Content, Left, Right } from "./Styles";
 import { connect } from "react-redux";
 import IssuesCount from "./IssuesCount";
+import ChildIssues from "./ChildIssues";
 
 const propTypes = {
-  epicId: PropTypes.string.isRequired,
+  epic: PropTypes.string.isRequired,
   projectUsers: PropTypes.array.isRequired,
   fetchProject: PropTypes.func.isRequired,
   modalClose: PropTypes.func.isRequired
 };
 
 const ProjectBoardEpicDetails = ({
-  epicId,
+  epic,
   fetchProject,
   modalClose,
   user,
   projectLead
 }) => {
-  const [{ data, error }, fetchEpic] = useApi.get(`/epic/manage/${epicId}`);
+  const [{ data, error }, fetchEpic] = useApi.get(`/epic/manage/${epic.epic}`);
 
   if (!data) return <Loader />;
   if (error) return <PageError />;
 
-  const epic = data;
-
   const updateEpic = async updatedFields => {
-    await api.optimisticUpdate(`/epic/manage/${epicId}`, updatedFields);
+    await api.optimisticUpdate(`/epic/manage/${epic.epic}`, updatedFields);
     await fetchEpic();
     await fetchProject();
   };
@@ -47,11 +46,11 @@ const ProjectBoardEpicDetails = ({
   return (
     <Fragment>
       <TopActions>
-        <Type epic={epic} />
+        <Type epic={data} />
         <TopActionsRight>
           {(user.role === "owner" || user.id === projectLead.id) && (
             <Delete
-              epic={epic}
+              epic={data}
               fetchProject={fetchProject}
               modalClose={modalClose}
             />
@@ -67,14 +66,15 @@ const ProjectBoardEpicDetails = ({
       </TopActions>
       <Content>
         <Left>
-          <Title epic={epic} updateEpic={updateEpic} />
-          <Description epic={epic} updateEpic={updateEpic} />
-          <Comments epic={epic} fetchEpic={fetchEpic} />
+          <Title epic={data} updateEpic={updateEpic} />
+          <Description epic={data} updateEpic={updateEpic} />
+          <ChildIssues epic={data} stage={epic.stage} />
+          <Comments epic={data} fetchEpic={fetchEpic} />
         </Left>
         <Right>
-          <Priority epic={epic} updateEpic={updateEpic} />
-          <IssuesCount epic={epic} />
-          <Dates epic={epic} />
+          <Priority epic={data} updateEpic={updateEpic} />
+          <IssuesCount epic={data} />
+          <Dates epic={data} />
         </Right>
       </Content>
     </Fragment>

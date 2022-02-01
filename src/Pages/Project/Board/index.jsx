@@ -49,13 +49,13 @@ const ProjectBoard = ({ project, fetchProject, epicDetailsModalOpen }) => {
           filters={filters}
           project={project}
           currentUserId={currentUserId}
-          page="active"
+          page="board"
         />
         <ProjectBoardEpics
           filters={filters}
           project={project}
           epicDetailsModalOpen={epicDetailsModalOpen}
-          page="active"
+          page="board"
         />
       </TitlesAndLists>
 
@@ -67,7 +67,9 @@ const ProjectBoard = ({ project, fetchProject, epicDetailsModalOpen }) => {
             testid="modal:issue-details"
             width={1040}
             withCloseIcon={false}
-            onClose={() => history.push(match.url)}
+            onClose={() => {
+              history.goBack();
+            }}
             renderContent={modal => (
               <IssueDetails
                 issueId={routeProps.match.params.issueId}
