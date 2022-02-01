@@ -49,7 +49,6 @@ const ProjectSettings = ({ project, fetchProject }) => {
           <FormHeading>Project Details</FormHeading>
 
           <Form.Field.Input name="name" label="Name" />
-          <Form.Field.Input name="url" label="URL" />
           <Form.Field.TextEditor
             name="description"
             label="Description"

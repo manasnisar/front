@@ -14,7 +14,7 @@ export const FormElement = styled(Form.Element)`
 `;
 
 export const FormHeading = styled.h1`
-  padding: 6px 0 15px;
+  padding: 20px 0 10px;
   ${font.size(24)}
   ${font.medium}
 `;

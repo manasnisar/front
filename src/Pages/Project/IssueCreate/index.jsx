@@ -70,21 +70,33 @@ const ProjectIssueCreate = ({
       }}
       onSubmit={async values => {
         const epic = getEpicById(project, values.epicId);
-        try {
-          await createIssue({
-            ...values,
+        let reqObject = {
+          reporter: values.reporterId,
+          reporterId: values.reporterId,
+          epicId: values.epicId,
+          estimate: values.estimate,
+          description: values.description,
+          priority: values.priority,
+          title: values.title,
+          type: values.type,
+          status: BacklogIssueStatus.UNPLANNED,
+          key: `${epic.key}.${epic.totalIssues + 1}`,
+          projectId: project.id,
+          creationDate: Date.now()
+        };
+        if (values.assigneeId) {
+          reqObject = {
+            ...reqObject,
             assignee: values.assigneeId,
-            reporter: values.reporterId,
-            status: BacklogIssueStatus.UNPLANNED,
-            key: `${epic.key}.${epic.totalIssues + 1}`,
-            projectId: project.id,
-            creationDate: Date.now()
-          });
+            assigneeId: values.assigneeId
+          };
+        }
+        try {
+          await createIssue(reqObject);
           await fetchProject();
           toast.success("Issue has been successfully created.");
           onCreate();
         } catch (error) {
-          console.error(error);
           toast.error("Issue creation failed!");
         }
       }}

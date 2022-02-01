@@ -69,14 +69,16 @@ const ProjectBacklog = ({
         />
       </TitlesAndLists>
       <Route
-        path={`${match.path}/issues/:issueId`}
+        path={`${match.path}/issues/:issueId/:bte?`}
         render={routeProps => (
           <Modal
             isOpen
             testid="modal:issue-details"
             width={1040}
             withCloseIcon={false}
-            onClose={() => history.push(match.url)}
+            onClose={() => {
+              history.goBack();
+            }}
             renderContent={modal => (
               <IssueDetails
                 issueId={routeProps.match.params.issueId}

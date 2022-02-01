@@ -1,7 +1,7 @@
 const SET_EPIC_UNDER_VIEW = "SET_EPIC_UNDER_VIEW";
 
 const initialState = {
-  epicUnderView: ""
+  epicUnderView: {}
 };
 
 export const setEpicUnderView = payload => dispatch => {

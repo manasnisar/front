@@ -36,7 +36,7 @@ const ProjectBacklogEpics = ({
           <Icon
             onClick={async e => {
               e.stopPropagation();
-              await setEpicUnderView(epic.id);
+              await setEpicUnderView({ epic: epic.id, stage: page });
               epicDetailsModalOpen();
             }}
             type={"more"}
