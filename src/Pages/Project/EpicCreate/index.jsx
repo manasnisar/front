@@ -35,7 +35,7 @@ const ProjectEpicCreate = ({ project, fetchProject, onCreate, modalClose }) => {
     <Form
       enableReinitialize
       initialValues={{
-        title: "",
+        epicTitle: "",
         description: "",
         priority: IssuePriority.MEDIUM
       }}

@@ -6,14 +6,15 @@ import Filters from "./Filters";
 import ProjectsTable from "./ProjectsTable";
 
 const propTypes = {
-  projects: PropTypes.array.isRequired
+  projects: PropTypes.array.isRequired,
+  openCreateProjectModal: PropTypes.func.isRequired
 };
 
 const defaultFilters = {
   searchTerm: ""
 };
 
-const ProjectBoard = ({ projects, openCreateProjectModal, users }) => {
+const ProjectBoard = ({ projects, openCreateProjectModal }) => {
   const [filters, mergeFilters] = useMergeState(defaultFilters);
 
   return (

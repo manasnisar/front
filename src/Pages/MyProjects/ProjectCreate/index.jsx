@@ -42,8 +42,10 @@ const CreateProject = ({
       enableReinitialize
       initialValues={{
         type: ProjectType.DEV,
-        title: "",
-        leadId: currentUserId
+        projectName: "",
+        description: "",
+        category: "",
+        projectLead: currentUserId
       }}
       validations={{
         category: Form.is.required(),
