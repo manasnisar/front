@@ -28,6 +28,7 @@ const MyProjects = ({ userId }) => {
       <Board
         projects={projects}
         users={users}
+        fetchProjects={fetchProjects}
         openCreateProjectModal={projectCreateModalHelpers.open}
       />
       {projectCreateModalHelpers.isOpen() && (

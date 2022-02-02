@@ -41,7 +41,6 @@ const ProjectEpicCreate = ({ project, fetchProject, onCreate, modalClose }) => {
       }}
       validations={{
         epicTitle: [Form.is.required(), Form.is.maxLength(200)],
-        description: Form.is.required(),
         priority: Form.is.required()
       }}
       onSubmit={async (values, form) => {

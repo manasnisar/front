@@ -7,14 +7,15 @@ import ProjectsTable from "./ProjectsTable";
 
 const propTypes = {
   projects: PropTypes.array.isRequired,
-  openCreateProjectModal: PropTypes.func.isRequired
+  openCreateProjectModal: PropTypes.func.isRequired,
+  fetchProjects: PropTypes.func.isRequired
 };
 
 const defaultFilters = {
   searchTerm: ""
 };
 
-const ProjectBoard = ({ projects, openCreateProjectModal }) => {
+const ProjectBoard = ({ projects, openCreateProjectModal, fetchProjects }) => {
   const [filters, mergeFilters] = useMergeState(defaultFilters);
 
   return (
@@ -25,7 +26,11 @@ const ProjectBoard = ({ projects, openCreateProjectModal }) => {
         filters={filters}
         mergeFilters={mergeFilters}
       />
-      <ProjectsTable projects={projects} filters={filters} />
+      <ProjectsTable
+        projects={projects}
+        filters={filters}
+        fetchProjects={fetchProjects}
+      />
     </Fragment>
   );
 };
