@@ -87,8 +87,8 @@ const ProjectBoard = ({ project, fetchProject, epicDetailsModalOpen }) => {
 
 ProjectBoard.propTypes = propTypes;
 
-const mapStatetoProps = state => ({
+const mapStateToProps = state => ({
   project: state.projectState.project
 });
 
-export default connect(mapStatetoProps)(ProjectBoard);
+export default connect(mapStateToProps)(ProjectBoard);

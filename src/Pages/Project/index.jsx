@@ -21,6 +21,7 @@ import { connect } from "react-redux";
 import { setProject } from "../../redux/project/project-reducer";
 import EpicDetails from "./EpicDetails";
 import History from "./History";
+import InviteMember from "./ProjectSettings/InviteMember";
 
 const Project = ({ setProject, epicUnderView }) => {
   const match = useRouteMatch();
@@ -30,6 +31,9 @@ const Project = ({ setProject, epicUnderView }) => {
   const issueCreateModalHelpers = createQueryParamModalHelpers("issue-create");
   const epicCreateModalHelpers = createQueryParamModalHelpers("epic-create");
   const epicDetailsModalHelpers = createQueryParamModalHelpers("epic-details");
+  const inviteMemberModalHelpers = createQueryParamModalHelpers(
+    "invite-member"
+  );
 
   const [{ data, error }, fetchProject] = useApi.get(
     `/project/manage/${params.id}`
@@ -143,10 +147,28 @@ const Project = ({ setProject, epicUnderView }) => {
       <Route
         path={`${match.path}/settings`}
         render={() => {
-          return <ProjectSettings fetchProject={fetchProject} />;
+          return (
+            <ProjectSettings
+              fetchProject={fetchProject}
+              openInvitationModal={inviteMemberModalHelpers.open}
+            />
+          );
         }}
       />
-
+      {inviteMemberModalHelpers.isOpen() && (
+        <Modal
+          isOpen
+          testid="modal:invite-member"
+          width={500}
+          withCloseIcon={false}
+          onClose={() => {
+            history.goBack();
+          }}
+          renderContent={modal => (
+            <InviteMember project={project} modalClose={modal.close} />
+          )}
+        />
+      )}
       {match.isExact && <Redirect to={`${match.url}/board`} />}
     </ProjectPage>
   );
@@ -155,8 +177,8 @@ const Project = ({ setProject, epicUnderView }) => {
 const mapDispatchToProps = dispatch => ({
   setProject: project => dispatch(setProject(project))
 });
-const mapStatetoProps = state => ({
+const mapStateToProps = state => ({
   epicUnderView: state.epicState.epicUnderView
 });
 
-export default connect(mapStatetoProps, mapDispatchToProps)(Project);
+export default connect(mapStateToProps, mapDispatchToProps)(Project);

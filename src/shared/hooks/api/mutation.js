@@ -2,10 +2,11 @@ import { useCallback } from "react";
 
 import api from "../../../shared/utils/api";
 import useMergeState from "../../../shared/hooks/mergeState";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 const useMutation = (method, url) => {
   const history = useHistory();
+  const match = useRouteMatch();
   const [state, mergeState] = useMergeState({
     data: null,
     error: null,
@@ -24,7 +25,7 @@ const useMutation = (method, url) => {
           },
           error => {
             if (error.code === 401 && error.message === "Please authenticate") {
-              history.push("/signin");
+              if (match.path !== "signup") history.push("/signin");
             }
             reject(error);
             mergeState({ error, data: null, isWorking: false });

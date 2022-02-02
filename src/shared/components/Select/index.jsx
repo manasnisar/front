@@ -15,6 +15,8 @@ import {
   ValueMultiItem,
   AddMore
 } from "./Styles";
+import { toggleInviteInputVisibility } from "../../../redux/user/user-reducer";
+import { connect } from "react-redux";
 
 const propTypes = {
   className: PropTypes.string,
@@ -69,7 +71,8 @@ const Select = ({
   isMulti,
   withClearValue,
   renderValue: propsRenderValue,
-  renderOption: propsRenderOption
+  renderOption: propsRenderOption,
+  toggleInviteInputVisibility
 }) => {
   const [stateValue, setStateValue] = useState(
     defaultValue || (isMulti ? [] : null)
@@ -116,6 +119,12 @@ const Select = ({
   };
 
   const handleChange = newValue => {
+    if (name === "role" && newValue === "owner") {
+      toggleInviteInputVisibility(false);
+    }
+    if (name === "role" && newValue === "member") {
+      toggleInviteInputVisibility(true);
+    }
     if (!isControlled) {
       setStateValue(preserveValueType(newValue));
     }
@@ -224,4 +233,9 @@ const Select = ({
 Select.propTypes = propTypes;
 Select.defaultProps = defaultProps;
 
-export default Select;
+const mapDispatchToProps = dispatch => ({
+  toggleInviteInputVisibility: value =>
+    dispatch(toggleInviteInputVisibility(value))
+});
+
+export default connect(null, mapDispatchToProps)(Select);

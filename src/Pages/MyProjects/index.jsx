@@ -10,12 +10,12 @@ import { ProjectPage } from "./Styles";
 import ProjectCreate from "./ProjectCreate";
 import { connect } from "react-redux";
 
-const MyProjects = ({ orgId }) => {
+const MyProjects = ({ userId }) => {
   const projectCreateModalHelpers = createQueryParamModalHelpers(
     "project-create"
   );
 
-  const [{ data, error }, fetchProjects] = useApi.get(`/project/${orgId}`);
+  const [{ data, error }, fetchProjects] = useApi.get(`/project/${userId}`);
 
   if (!data) return <PageLoader />;
   if (error) return <PageError />;
@@ -52,8 +52,8 @@ const MyProjects = ({ orgId }) => {
   );
 };
 
-const mapStatetoProps = state => ({
-  orgId: state.userState.user.orgId
+const mapStateToProps = state => ({
+  userId: state.userState.user.id
 });
 
-export default connect(mapStatetoProps)(MyProjects);
+export default connect(mapStateToProps)(MyProjects);

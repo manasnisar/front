@@ -92,9 +92,9 @@ const ProjectBoardIssueDetails = ({
 };
 
 ProjectBoardIssueDetails.propTypes = propTypes;
-const mapStatetoProps = state => ({
+const mapStateToProps = state => ({
   user: state.userState.user,
   projectLead: state.projectState.project.projectLead
 });
 
-export default connect(mapStatetoProps)(ProjectBoardIssueDetails);
+export default connect(mapStateToProps)(ProjectBoardIssueDetails);

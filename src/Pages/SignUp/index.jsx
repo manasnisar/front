@@ -20,7 +20,7 @@ import toast from "../../shared/utils/toast";
 import { setUser } from "../../redux/user/user-reducer";
 import { connect } from "react-redux";
 
-const SignUp = ({}) => {
+const SignUp = ({ inviteInputVisible }) => {
   const [{ isCreating }, signUp] = useApi.post("/auth/register");
   const [{ data }] = useApi.get("/auth", {}, { cachePolicy: "no-cache" });
   const history = useHistory();
@@ -104,6 +104,13 @@ const SignUp = ({}) => {
                 ]}
                 variant="simple"
               />
+              {inviteInputVisible && (
+                <Form.Field.Input
+                  name="invitationCode"
+                  placeholder="Invitation code"
+                />
+              )}
+
               <Actions>
                 <ActionButton
                   type="submit"
@@ -130,4 +137,8 @@ const mapDispatchToProps = dispatch => ({
   setUser: user => dispatch(setUser(user))
 });
 
-export default connect(null, mapDispatchToProps)(SignUp);
+const mapStateToProps = state => ({
+  inviteInputVisible: state.userState.inviteInputVisible
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

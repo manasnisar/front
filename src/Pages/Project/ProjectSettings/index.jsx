@@ -25,17 +25,14 @@ import { getTextContentsFromHtmlString } from "../../../shared/utils/browser";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
-  fetchProject: PropTypes.func.isRequired
+  fetchProject: PropTypes.func.isRequired,
+  openInvitationModal: PropTypes.func.isRequired
 };
 
-const ProjectSettings = ({ project, fetchProject }) => {
+const ProjectSettings = ({ project, fetchProject, openInvitationModal }) => {
   const [{ isUpdating }, updateProject] = useApi.put(
     `/project/manage/${project._id}`
   );
-
-  const inviteMembers = event => {
-    console.log(event);
-  };
 
   return (
     <Fragment>
@@ -70,7 +67,7 @@ const ProjectSettings = ({ project, fetchProject }) => {
               <FormHeading>Project Details</FormHeading>
               <ActionButton
                 type="button"
-                onClick={inviteMembers}
+                onClick={openInvitationModal}
                 variant="success"
               >
                 Invite Members
@@ -136,8 +133,8 @@ const categoryOptions = Object.values(ProjectType).map(category => ({
 
 ProjectSettings.propTypes = propTypes;
 
-const mapStatetoProps = state => ({
+const mapStateToProps = state => ({
   project: state.projectState.project
 });
 
-export default connect(mapStatetoProps)(ProjectSettings);
+export default connect(mapStateToProps)(ProjectSettings);
