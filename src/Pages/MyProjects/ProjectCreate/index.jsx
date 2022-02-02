@@ -42,8 +42,10 @@ const CreateProject = ({
       enableReinitialize
       initialValues={{
         type: ProjectType.DEV,
-        title: "",
-        leadId: currentUserId
+        projectName: "",
+        description: "",
+        category: "",
+        projectLead: currentUserId
       }}
       validations={{
         category: Form.is.required(),
@@ -148,8 +150,8 @@ const renderUser = users => ({ value: userId, removeOptionValue }) => {
 
 CreateProject.propTypes = propTypes;
 
-const mapStatetoProps = state => ({
+const mapStateToProps = state => ({
   orgId: state.userState.user.orgId
 });
 
-export default connect(mapStatetoProps)(CreateProject);
+export default connect(mapStateToProps)(CreateProject);

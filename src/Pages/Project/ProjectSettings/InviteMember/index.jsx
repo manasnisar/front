@@ -1,13 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import toast from "../../../shared/utils/toast";
-import useApi from "../../../shared/hooks/api";
-import useCurrentUser from "../../../shared/hooks/currentUser";
-import { Form } from "../../../shared/components";
-import { connect } from "react-redux";
+import toast from "../../../../shared/utils/toast";
+import useApi from "../../../../shared/hooks/api";
+import { Form } from "../../../../shared/components";
 
-import { ActionButton, FormElement, FormHeading } from "../Styles";
-import { Actions } from "../../EpicCreate/Styles";
+import { ActionButton, FormElement, FormHeading, Actions } from "./Styles";
+import { connect } from "react-redux";
 
 const propTypes = {
   project: PropTypes.object.isRequired,
@@ -16,9 +14,8 @@ const propTypes = {
 };
 
 const InviteMemberToProject = ({ project, user, modalClose }) => {
-  const [{ isCreating }, createInvitation] = useApi.post(`/project/invite`);
+  const [{ isCreating }, inviteMember] = useApi.post(`/project/invite`);
 
-  const { currentUserId } = useCurrentUser();
   return (
     <Form
       enableReinitialize
@@ -29,20 +26,25 @@ const InviteMemberToProject = ({ project, user, modalClose }) => {
         email: [Form.is.required(), Form.is.email()]
       }}
       onSubmit={async values => {
-        // try {
-        //   await createProject({
-        //     category: values.category,
-        //     name: values.projectName,
-        //     description: values.description,
-        //     key: values.key,
-        //     projectLead: values.projectLead
-        //   });
-        //   await fetchProjects();
-        //   toast.success("Project created successfully!");
-        //   onCreate();
-        // } catch (error) {
-        //   toast.error(error);
-        // }
+        if (values.email === user.email) {
+          toast.error("Already a member!");
+          return;
+        }
+        const code = Math.random()
+          .toString(36)
+          .substr(2, 6)
+          .toUpperCase();
+        try {
+          await inviteMember({
+            email: values.email,
+            invitationCode: code,
+            projectId: project._id,
+            orgId: user.orgId
+          });
+          toast.success("Invitation Sent!");
+        } catch (error) {
+          toast.error(error);
+        }
       }}
     >
       <FormElement>
@@ -52,10 +54,9 @@ const InviteMemberToProject = ({ project, user, modalClose }) => {
           label="Email"
           tip="Type email of new team member"
         />
-
         <Actions>
           <ActionButton type="submit" variant="primary" isWorking={isCreating}>
-            Generate Invite Code
+            Invite
           </ActionButton>
           <ActionButton type="button" variant="empty" onClick={modalClose}>
             Cancel
@@ -68,4 +69,8 @@ const InviteMemberToProject = ({ project, user, modalClose }) => {
 
 InviteMemberToProject.propTypes = propTypes;
 
-export default InviteMemberToProject;
+const mapStateToProps = state => ({
+  user: state.userState.user
+});
+
+export default connect(mapStateToProps)(InviteMemberToProject);

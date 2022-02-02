@@ -13,7 +13,6 @@ export const setProject = payload => dispatch => {
 };
 
 export const updateLocalIssues = payload => dispatch => {
-  console.log("here");
   dispatch({
     type: SET_ISSUES,
     payload: payload

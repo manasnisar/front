@@ -35,7 +35,7 @@ const ProjectEpicCreate = ({ project, fetchProject, onCreate, modalClose }) => {
     <Form
       enableReinitialize
       initialValues={{
-        title: "",
+        epicTitle: "",
         description: "",
         priority: IssuePriority.MEDIUM
       }}
@@ -109,8 +109,8 @@ const renderPriority = ({ value: priority }) => (
 
 ProjectEpicCreate.propTypes = propTypes;
 
-const mapStatetoProps = state => ({
+const mapStateToProps = state => ({
   project: state.projectState.project
 });
 
-export default connect(mapStatetoProps)(ProjectEpicCreate);
+export default connect(mapStateToProps)(ProjectEpicCreate);

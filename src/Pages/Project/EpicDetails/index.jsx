@@ -82,9 +82,9 @@ const ProjectBoardEpicDetails = ({
 };
 
 ProjectBoardEpicDetails.propTypes = propTypes;
-const mapStatetoProps = state => ({
+const mapStateToProps = state => ({
   user: state.userState.user,
   projectLead: state.projectState.project.projectLead
 });
 
-export default connect(mapStatetoProps)(ProjectBoardEpicDetails);
+export default connect(mapStateToProps)(ProjectBoardEpicDetails);

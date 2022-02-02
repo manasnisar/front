@@ -4,10 +4,11 @@ import { isEqual } from "lodash";
 import api from "../../../shared/utils/api";
 import useMergeState from "../../../shared/hooks/mergeState";
 import useDeepCompareMemoize from "../../../shared/hooks/deepCompareMemoize";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 const useQuery = (url, propsVariables = {}, options = {}) => {
   const history = useHistory();
+  const match = useRouteMatch();
   const { lazy = false, cachePolicy = "cache-first" } = options;
 
   const wasCalled = useRef(false);
@@ -46,7 +47,7 @@ const useQuery = (url, propsVariables = {}, options = {}) => {
         },
         error => {
           if (error.code === 401 && error.message === "Please authenticate") {
-            history.push("/signin");
+            if (match.path !== "/signup") history.push("/signin");
           }
           mergeState({ error, data: null, isLoading: false });
         }

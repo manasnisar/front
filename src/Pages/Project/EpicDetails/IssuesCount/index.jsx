@@ -25,8 +25,8 @@ const ProjectBoardEpicDetailsIssuesCount = ({ epic, issues }) => (
 
 ProjectBoardEpicDetailsIssuesCount.propTypes = propTypes;
 
-const mapStatetoProps = state => ({
+const mapStateToProps = state => ({
   issues: state.projectState.project.issues
 });
 
-export default connect(mapStatetoProps)(ProjectBoardEpicDetailsIssuesCount);
+export default connect(mapStateToProps)(ProjectBoardEpicDetailsIssuesCount);

@@ -96,8 +96,8 @@ const ProjectBacklog = ({
 
 ProjectBacklog.propTypes = propTypes;
 
-const mapStatetoProps = state => ({
+const mapStateToProps = state => ({
   project: state.projectState.project
 });
 
-export default connect(mapStatetoProps)(ProjectBacklog);
+export default connect(mapStateToProps)(ProjectBacklog);

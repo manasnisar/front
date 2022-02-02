@@ -93,8 +93,8 @@ const ProjectHistory = ({
 
 ProjectHistory.propTypes = propTypes;
 
-const mapStatetoProps = state => ({
+const mapStateToProps = state => ({
   project: state.projectState.project
 });
 
-export default connect(mapStatetoProps)(ProjectHistory);
+export default connect(mapStateToProps)(ProjectHistory);
