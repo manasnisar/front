@@ -12,7 +12,7 @@ import {
   removeStoredAuthToken
 } from "../../utils/authToken";
 
-const ProjectNavbarLeft = () => {
+const ProjectNavbarLeft = ({ page }) => {
   const history = useHistory();
   const [, signOut] = useApi.post("/auth/logout");
 
@@ -22,6 +22,18 @@ const ProjectNavbarLeft = () => {
         <Logo color="#fff" />
         <LogoText>Sharingan</LogoText>
       </LogoLink>
+
+      {page === "account" ? (
+        <Item onClick={() => history.push("/projects")}>
+          <Icon type="arrow-left" size={22} top={1} left={3} />
+          <ItemText>Projects</ItemText>
+        </Item>
+      ) : (
+        <Item onClick={() => history.push("/account")}>
+          <Icon type="settings" size={22} top={1} left={3} />
+          <ItemText>Account</ItemText>
+        </Item>
+      )}
 
       <Bottom>
         <Item

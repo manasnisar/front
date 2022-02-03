@@ -14,7 +14,7 @@ const propTypes = {
   fetchIssue: PropTypes.func.isRequired
 };
 
-const ProjectBoardIssueDetailsCommentsCreate = ({ issueId, fetchIssue }) => {
+const ProjectBoardIssueDetailsCommentsCreate = ({ epicId, fetchEpic }) => {
   const [isFormOpen, setFormOpen] = useState(false);
   const [isCreating, setCreating] = useState(false);
   const [body, setBody] = useState("");
@@ -26,11 +26,11 @@ const ProjectBoardIssueDetailsCommentsCreate = ({ issueId, fetchIssue }) => {
       setCreating(true);
       await api.post(`/comment`, {
         body,
-        issueId,
+        issueId: epicId,
         userId: currentUser.id,
         user: currentUser.id
       });
-      await fetchIssue();
+      await fetchEpic();
       setFormOpen(false);
       setCreating(false);
       setBody("");

@@ -23,7 +23,7 @@ const propTypes = {
   fetchIssue: PropTypes.func.isRequired
 };
 
-const ProjectBoardIssueDetailsComment = ({ comment, fetchIssue }) => {
+const ProjectBoardIssueDetailsComment = ({ comment, fetchEpic }) => {
   const [isFormOpen, setFormOpen] = useState(false);
   const [isUpdating, setUpdating] = useState(false);
   const [body, setBody] = useState(comment.body);
@@ -31,7 +31,7 @@ const ProjectBoardIssueDetailsComment = ({ comment, fetchIssue }) => {
   const handleCommentDelete = async () => {
     try {
       await api.delete(`/comment/${comment.id}`);
-      await fetchIssue();
+      await fetchEpic();
     } catch (error) {
       toast.error(error);
     }
@@ -41,7 +41,7 @@ const ProjectBoardIssueDetailsComment = ({ comment, fetchIssue }) => {
     try {
       setUpdating(true);
       await api.put(`/comment/${comment.id}`, { body });
-      await fetchIssue();
+      await fetchEpic();
       setUpdating(false);
       setFormOpen(false);
     } catch (error) {

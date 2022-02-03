@@ -6,6 +6,7 @@ import PageError from "../shared/components/PageError";
 import SignIn from "../Pages/SignIn";
 import SignUp from "../Pages/SignUp";
 import MyProjects from "../Pages/MyProjects";
+import UserAccount from "../Pages/Account";
 
 const Routes = ({ history }) => {
   return (
@@ -16,6 +17,7 @@ const Routes = ({ history }) => {
         <Route path="/signup" component={SignUp} />
         <Route path="/authenticate" component={Authenticate} />
         <Route path="/projects" component={MyProjects} />
+        <Route path="/account" component={UserAccount} />
         <Route path="/project/:id" component={Project} />
         <Route component={PageError} />
       </Switch>

@@ -26,15 +26,15 @@ const ProjectSidebar = ({ project }) => {
 
   return (
     <Sidebar>
-      <ProjectInfo>
-        <ProjectAvatar />
-        <ProjectTexts>
-          <ProjectName>{project.name}</ProjectName>
-          <ProjectCategory>
-            {ProjectTypeCopy[project.category]} Project
-          </ProjectCategory>
-        </ProjectTexts>
-      </ProjectInfo>
+      {/*<ProjectInfo>*/}
+      {/*  <ProjectAvatar />*/}
+      {/*  <ProjectTexts>*/}
+      {/*    <ProjectName>{project.name}</ProjectName>*/}
+      {/*    <ProjectCategory>*/}
+      {/*      {ProjectTypeCopy[project.category]} Project*/}
+      {/*    </ProjectCategory>*/}
+      {/*  </ProjectTexts>*/}
+      {/*</ProjectInfo>*/}
 
       {renderLinkItem(match, "Active Sprint", "board", "/board")}
       {renderLinkItem(match, "Backlog", "plus", "/backlog")}

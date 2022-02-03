@@ -24,7 +24,7 @@ const MyProjects = ({ userId }) => {
   const users = members.concat(owner);
   return (
     <ProjectPage>
-      <NavbarLeft page={"projects"} />
+      <NavbarLeft />
       <Board
         projects={projects}
         users={users}
