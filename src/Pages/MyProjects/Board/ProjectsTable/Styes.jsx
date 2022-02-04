@@ -2,10 +2,12 @@ import styled from "styled-components";
 import { Icon } from "../../../../shared/components";
 
 export const GridContainer = styled.div`
-  padding-top: 50px;
-
   .pointer {
     cursor: pointer;
+  }
+
+  .rgt-wrapper {
+    min-height: 100%;
   }
 `;
 

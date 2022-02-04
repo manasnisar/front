@@ -51,7 +51,6 @@ const SignUp = ({ inviteInputVisible }) => {
               name: "",
               email: "",
               password: "",
-              passwordAgain: "",
               organization: "",
               role: "member"
             }}
@@ -63,15 +62,15 @@ const SignUp = ({ inviteInputVisible }) => {
               role: Form.is.oneOf(["owner", "member"])
             }}
             onSubmit={async (values, form) => {
-              const { passwordAgain, ...payload } = values;
               try {
                 await signUp({
-                  ...payload
+                  ...values,
+                  creationDate: Date.now()
                 });
                 toast.success("User created successfully!");
                 setTimeout(() => {
                   history.push("/signin");
-                }, 2000);
+                }, 500);
               } catch (error) {
                 toast.error(error);
               }

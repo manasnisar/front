@@ -1,10 +1,8 @@
-import React, { Fragment } from "react";
-import PropTypes from "prop-types";
-
+import React, { Fragment, useEffect, useState } from "react";
 import { ProjectType, ProjectTypeCopy } from "../../shared/constants/projects";
 import toast from "../../shared/utils/toast";
 import useApi from "../../shared/hooks/api";
-import { Form } from "../../shared/components";
+import { Avatar, Form } from "../../shared/components";
 
 import {
   FormCont,
@@ -12,91 +10,108 @@ import {
   FormElement,
   ActionButton,
   Header,
-  AccountPage
+  AccountPage,
+  AvatarContainer,
+  ActionContainer
 } from "./Styles";
-import { connect } from "react-redux";
-import { getTextContentsFromHtmlString } from "../../shared/utils/browser";
 import NavbarLeft from "../../shared/components/NavbarLeft";
-import Sidebar from "../Project/Sidebar";
+import { SectionTitle } from "../Project/EpicDetails/Styles";
+import { formatDateTimeConversational } from "../../shared/utils/dateTime";
+import { connect } from "react-redux";
+import ProjectsTable from "../MyProjects/Board/ProjectsTable";
 
-const propTypes = {
-  user: PropTypes.object.isRequired,
-  fetchUser: PropTypes.func.isRequired
-};
+const UserAccount = ({ user, orgProjects }) => {
+  const [{ data }, fetchUser] = useApi.get(
+    `/user/${user.id}`,
+    {},
+    { cachePolicy: "no-cache" }
+  );
+  const [{ isUpdating }, updateUser] = useApi.put(`/user/${user.id}`);
+  const [userProjects, setUserProjects] = useState([]);
+  user = data;
 
-const UserAccount = ({ user, fetchUser }) => {
-  const [{ isUpdating }, updateUser] = useApi.put(`/user/${user._id}`);
+  useEffect(() => {
+    if (user !== null) {
+      setUserProjects(
+        orgProjects.filter(project => user.projects.includes(project.id))
+      );
+    }
+  }, [user]);
 
   return (
-    <AccountPage>
-      <Fragment>
-        <NavbarLeft page="account" />
+    user && (
+      <AccountPage>
+        <Fragment>
+          <NavbarLeft page="account" />
 
-        <Form
-          initialValues={Form.initialValues(user, get => ({
-            name: get("name"),
-            category: get("category"),
-            description: getTextContentsFromHtmlString(get("description"))
-          }))}
-          encType="multipart/form-data"
-          validations={{
-            name: [Form.is.required(), Form.is.maxLength(100)],
-            category: Form.is.required(),
-            projectLead: Form.is.required()
-          }}
-          onSubmit={async (values, form) => {
-            try {
-              await updateUser(values);
-              await fetchUser();
-              toast.success("Changes have been saved successfully.");
-            } catch (error) {
-              Form.handleAPIError(error, form);
-            }
-          }}
-        >
-          <FormCont>
-            <FormElement>
-              <Header>
-                <FormHeading>Project Details</FormHeading>
-              </Header>
+          <Form
+            initialValues={Form.initialValues(user, get => ({
+              name: get("name")
+            }))}
+            validations={{
+              name: [Form.is.required(), Form.is.maxLength(100)]
+            }}
+            onSubmit={async (values, form) => {
+              try {
+                await updateUser(values);
+                await fetchUser();
+                toast.success("Changes have been saved successfully.");
+              } catch (error) {
+                toast.success("Changes unsuccessful!");
+              }
+            }}
+          >
+            <FormCont>
+              <FormElement>
+                <Header>
+                  <FormHeading>Account</FormHeading>
+                </Header>
+                <AvatarContainer>
+                  <Avatar
+                    size={150}
+                    avatarUrl={user.avatarUrl}
+                    name={user.name}
+                  />
+                </AvatarContainer>
 
-              <Form.Field.Input name="name" label="Name" />
-              <Form.Field.TextEditor
-                name="description"
-                label="Description"
-                tip="Describe the project in as much detail as you'd like."
-              />
-              <Form.Field.Select
-                name="category"
-                label="Project Category"
-                options={categoryOptions}
-              />
-
-              <ActionButton
-                type="submit"
-                variant="primary"
-                isWorking={isUpdating}
-              >
-                Save changes
-              </ActionButton>
-            </FormElement>
-          </FormCont>
-        </Form>
-      </Fragment>
-    </AccountPage>
+                <Form.Field.Input name="name" label="Name" />
+                <Fragment>
+                  <SectionTitle>Email</SectionTitle>
+                  <div>{user.email}</div>
+                </Fragment>
+                <Fragment>
+                  <SectionTitle>Avatar Letters</SectionTitle>
+                  <div>{user.name.slice(0, 2).toUpperCase()}</div>
+                </Fragment>
+                <Fragment>
+                  <SectionTitle>Member Since</SectionTitle>
+                  <div>{formatDateTimeConversational(user.creationDate)}</div>
+                </Fragment>
+                <Fragment>
+                  <SectionTitle>Active Projects</SectionTitle>
+                  <ProjectsTable projects={userProjects} page="account" />
+                </Fragment>
+                <ActionContainer>
+                  <ActionButton
+                    type="submit"
+                    variant="primary"
+                    isWorking={isUpdating}
+                  >
+                    Save changes
+                  </ActionButton>
+                </ActionContainer>
+              </FormElement>
+            </FormCont>
+          </Form>
+        </Fragment>
+      </AccountPage>
+    )
   );
 };
 
-const categoryOptions = Object.values(ProjectType).map(category => ({
-  value: category,
-  label: ProjectTypeCopy[category]
-}));
-
-UserAccount.propTypes = propTypes;
-
 const mapStateToProps = state => ({
-  project: state.projectState.project,
-  user: state.userState.user
+  user: state.userState.user,
+  orgProjects: state.projectState.orgProjects
 });
 
 export default connect(mapStateToProps)(UserAccount);

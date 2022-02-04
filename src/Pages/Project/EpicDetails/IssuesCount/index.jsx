@@ -1,14 +1,7 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 
-import {
-  EpicPriority,
-  EpicPriorityCopy
-} from "../../../../shared/constants/epics";
-import { Select, IssuePriorityIcon } from "../../../../shared/components";
-
 import { SectionTitle } from "../Styles";
-import { Priority, Label } from "./Styles";
 import { connect } from "react-redux";
 
 const propTypes = {

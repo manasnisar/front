@@ -9,8 +9,9 @@ import NavbarLeft from "../../shared/components/NavbarLeft";
 import { ProjectPage } from "./Styles";
 import ProjectCreate from "./ProjectCreate";
 import { connect } from "react-redux";
+import { setOrgProjects } from "../../redux/project/project-reducer";
 
-const MyProjects = ({ userId }) => {
+const MyProjects = ({ userId, setOrgProjects }) => {
   const projectCreateModalHelpers = createQueryParamModalHelpers(
     "project-create"
   );
@@ -19,7 +20,7 @@ const MyProjects = ({ userId }) => {
 
   if (!data) return <PageLoader />;
   if (error) return <PageError />;
-
+  setOrgProjects(data.projects);
   const { projects, members, owner } = data;
   const users = members.concat(owner);
   return (
@@ -57,4 +58,8 @@ const mapStateToProps = state => ({
   userId: state.userState.user.id
 });
 
-export default connect(mapStateToProps)(MyProjects);
+const mapDispatchToProps = dispatch => ({
+  setOrgProjects: data => dispatch(setOrgProjects(data))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyProjects);

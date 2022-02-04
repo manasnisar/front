@@ -4,7 +4,7 @@ import { GridContainer } from "./Styes";
 import { useHistory } from "react-router-dom";
 import ProjectDelete from "./Delete";
 
-const ProjectsTable = ({ projects, filters, fetchProjects }) => {
+const ProjectsTable = ({ projects, filters, fetchProjects, page }) => {
   const projectLead = ({ data }) => {
     return (
       <div
@@ -16,7 +16,9 @@ const ProjectsTable = ({ projects, filters, fetchProjects }) => {
         }}
       >
         <div>{data.projectLead.name}</div>
-        <ProjectDelete fetchProjects={fetchProjects} project={data} />
+        {page !== "account" && (
+          <ProjectDelete fetchProjects={fetchProjects} project={data} />
+        )}
       </div>
     );
   };
@@ -97,7 +99,7 @@ const ProjectsTable = ({ projects, filters, fetchProjects }) => {
         columns={columns}
         rows={projects}
         isPaginated={false}
-        searchText={filters.searchTerm}
+        searchText={page !== "account" ? filters.searchTerm : null}
         showSearch={false}
         showRowsInformation={false}
         showColumnVisibilityManager={false}

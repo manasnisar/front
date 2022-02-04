@@ -26,11 +26,13 @@ const ProjectBoard = ({ projects, openCreateProjectModal, fetchProjects }) => {
         filters={filters}
         mergeFilters={mergeFilters}
       />
-      <ProjectsTable
-        projects={projects}
-        filters={filters}
-        fetchProjects={fetchProjects}
-      />
+      <div style={{ paddingTop: "50px" }}>
+        <ProjectsTable
+          projects={projects}
+          filters={filters}
+          fetchProjects={fetchProjects}
+        />
+      </div>
     </Fragment>
   );
 };

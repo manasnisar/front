@@ -11,7 +11,14 @@ export const FormCont = styled.div`
 
 export const Header = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  margin-bottom: 30px;
+`;
+
+export const AvatarContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const FormElement = styled(Form.Element)`
@@ -26,17 +33,22 @@ export const FormHeading = styled.h1`
 
 export const ActionButton = styled(Button)`
   margin-top: 30px;
+  width: 200px;
+`;
+export const ActionContainer = styled.div`
+  margin-top: 30px;
+  width: 100%;
+  justify-content: center;
+  display: flex;
 `;
 
-const paddingLeft = sizes.appNavBarLeftWidth + 50;
-
 export const AccountPage = styled.div`
-  padding: 30px 50px 50px ${paddingLeft}px;
+  padding: 50px 350px 50px 412px;
 
   @media (max-width: 1100px) {
-    padding: 25px 20px 50px ${paddingLeft - 20}px;
+    padding: 25px 20px 50px 180px;
   }
   @media (max-width: 999px) {
-    padding-left: ${paddingLeft - 20 - sizes.secondarySideBarWidth}px;
+    padding-left: ${180 - sizes.secondarySideBarWidth}px;
   }
 `;
