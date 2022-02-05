@@ -1,12 +1,14 @@
 import React from "react";
-
+import Sprint from "./Sprint";
 import { Button } from "../../../shared/components";
-
 import { Header, BoardName, ActionContainer } from "../Styles";
-import { useHistory } from "react-router-dom";
 
-const ProjectBoardHeader = ({ epicCreateModalOpen }) => {
-  const history = useHistory();
+const ProjectBoardHeader = ({
+  epicCreateModalOpen,
+  projectId,
+  fetchProject,
+  sprintStatus
+}) => {
   return (
     <Header>
       <BoardName>Backlog</BoardName>
@@ -14,14 +16,9 @@ const ProjectBoardHeader = ({ epicCreateModalOpen }) => {
         <Button variant="success" onClick={epicCreateModalOpen}>
           Create Epic
         </Button>
-        <Button
-          variant="primary"
-          onClick={() => {
-            history.push(`/project/board`);
-          }}
-        >
-          Start Sprint
-        </Button>
+        {sprintStatus === "inactive" && (
+          <Sprint fetchProject={fetchProject} projectId={projectId} />
+        )}
       </ActionContainer>
     </Header>
   );

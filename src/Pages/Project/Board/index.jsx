@@ -37,7 +37,7 @@ const ProjectBoard = ({ project, fetchProject, epicDetailsModalOpen }) => {
   return (
     <Fragment>
       <Breadcrumbs items={["Projects", project.name, "Active Sprint"]} />
-      <Header />
+      <Header project={project} fetchProject={fetchProject} />
       <Filters
         projectUsers={project.users}
         defaultFilters={defaultFilters}
@@ -55,6 +55,7 @@ const ProjectBoard = ({ project, fetchProject, epicDetailsModalOpen }) => {
           filters={filters}
           project={project}
           epicDetailsModalOpen={epicDetailsModalOpen}
+          fetchProject={fetchProject}
           page="board"
         />
       </TitlesAndLists>
@@ -72,6 +73,7 @@ const ProjectBoard = ({ project, fetchProject, epicDetailsModalOpen }) => {
             }}
             renderContent={modal => (
               <IssueDetails
+                page="board"
                 issueId={routeProps.match.params.issueId}
                 projectUsers={project.users}
                 fetchProject={fetchProject}

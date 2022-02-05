@@ -82,6 +82,7 @@ const ProjectHistory = ({
                 projectUsers={project.users}
                 fetchProject={fetchProject}
                 modalClose={modal.close}
+                page="history"
               />
             )}
           />

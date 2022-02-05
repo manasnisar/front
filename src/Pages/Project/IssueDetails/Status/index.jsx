@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import {
   BacklogIssueStatus,
   BacklogIssueStatusCopy,
+  HistoryIssueStatus,
+  HistoryIssueStatusCopy,
   IssueStatus,
   IssueStatusCopy
 } from "../../../../shared/constants/issues";
@@ -33,6 +35,11 @@ const ProjectBoardIssueDetailsStatus = ({ issue, updateIssue, page }) => (
               value: status,
               label: IssueStatusCopy[status]
             }))
+          : page === "history"
+          ? Object.values(HistoryIssueStatus).map(status => ({
+              value: status,
+              label: HistoryIssueStatusCopy[status]
+            }))
           : Object.values(BacklogIssueStatus).map(status => ({
               value: status,
               label: BacklogIssueStatusCopy[status]
@@ -44,6 +51,8 @@ const ProjectBoardIssueDetailsStatus = ({ issue, updateIssue, page }) => (
           <div>
             {page === "board"
               ? IssueStatusCopy[status]
+              : page === "history"
+              ? HistoryIssueStatusCopy[status]
               : BacklogIssueStatusCopy[status]}
           </div>
           <Icon type="chevron-down" size={18} />
@@ -53,6 +62,8 @@ const ProjectBoardIssueDetailsStatus = ({ issue, updateIssue, page }) => (
         <Status color={status}>
           {page === "board"
             ? IssueStatusCopy[status]
+            : page === "history"
+            ? HistoryIssueStatusCopy[status]
             : BacklogIssueStatusCopy[status]}
         </Status>
       )}

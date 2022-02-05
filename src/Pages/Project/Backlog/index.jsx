@@ -45,7 +45,12 @@ const ProjectBacklog = ({
   return (
     <Fragment>
       <Breadcrumbs items={["Projects", project.name, "Backlog"]} />
-      <Header epicCreateModalOpen={epicCreateModalOpen} />
+      <Header
+        epicCreateModalOpen={epicCreateModalOpen}
+        fetchProject={fetchProject}
+        projectId={project._id}
+        sprintStatus={project.sprintStatus}
+      />
       <Filters
         projectUsers={project.users}
         defaultFilters={defaultFilters}
@@ -85,6 +90,7 @@ const ProjectBacklog = ({
                 projectUsers={project.users}
                 fetchProject={fetchProject}
                 modalClose={modal.close}
+                page="backlog"
               />
             )}
           />
