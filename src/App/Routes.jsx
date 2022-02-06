@@ -7,6 +7,10 @@ import SignIn from "../Pages/SignIn";
 import SignUp from "../Pages/SignUp";
 import MyProjects from "../Pages/MyProjects";
 import UserAccount from "../Pages/Account";
+import ForgotPassword from "../Pages/ForgotPassword";
+import ResetPassword from "../Pages/ResetPassword";
+import ProtectedRoute from "../shared/components/ProtectedRoute";
+import VerifyAccount from "../Pages/VerifyAccount";
 
 const Routes = ({ history }) => {
   return (
@@ -14,11 +18,13 @@ const Routes = ({ history }) => {
       <Switch>
         <Redirect exact from="/" to="/authenticate" />
         <Route path="/signin" component={SignIn} />
+        <Route path="/verify_account/:token" component={VerifyAccount} />
+        <Route path="/forgot_pass" component={ForgotPassword} />
+        <Route path="/reset_pass/:token" component={ResetPassword} />
         <Route path="/signup" component={SignUp} />
-        <Route path="/authenticate" component={Authenticate} />
-        <Route path="/projects" component={MyProjects} />
-        <Route path="/account" component={UserAccount} />
-        <Route path="/project/:id" component={Project} />
+        <ProtectedRoute path="/projects" component={MyProjects} />
+        <ProtectedRoute path="/account" component={UserAccount} />
+        <ProtectedRoute path="/project/:id" component={Project} />
         <Route component={PageError} />
       </Switch>
     </Router>

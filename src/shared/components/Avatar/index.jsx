@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { Image, Letter } from "./Styles";
+import { colors } from "../../utils/colors";
 
 const propTypes = {
   className: PropTypes.string,
@@ -35,17 +36,6 @@ const Avatar = ({ className, avatarUrl, name, size, ...otherProps }) => {
     </Letter>
   );
 };
-
-const colors = [
-  "#DA7657",
-  "#6ADA57",
-  "#5784DA",
-  "#AA57DA",
-  "#DA5757",
-  "#DA5792",
-  "#57DACA",
-  "#57A5DA"
-];
 
 const getColorFromName = name =>
   colors[name.toLocaleLowerCase().charCodeAt(0) % colors.length];

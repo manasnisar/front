@@ -20,7 +20,9 @@ const ProjectBoardHeader = ({ project, fetchProject }) => {
 
   return (
     <Header>
-      <BoardName>Active Sprint</BoardName>
+      <BoardName>
+        Active Sprint <span>(Sprint {project.sprintNumber})</span>
+      </BoardName>
       {project.sprintStatus === "active" && (
         <Right>
           {project.sprintStatus === "active" && (

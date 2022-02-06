@@ -20,20 +20,8 @@ import toast from "../../shared/utils/toast";
 import { connect } from "react-redux";
 import { setUser } from "../../redux/user/user-reducer";
 
-const SignIn = ({ setUser }) => {
-  const [{ isCreating }, signIn] = useApi.post("/auth/login");
-  const [{ data }] = useApi.get("/auth", {}, { cachePolicy: "no-cache" });
-  const history = useHistory();
-  useEffect(() => {
-    let mounted = true;
-    if (mounted && data) {
-      setUser(data.user);
-      history.push("/projects");
-    }
-    return function cleanup() {
-      mounted = false;
-    };
-  }, []);
+const ForgotPassword = () => {
+  const [{ isCreating }, forgotPassword] = useApi.post("/auth/forgot_password");
   return (
     <AuthPage>
       <HalfScreen variant="left">
@@ -46,50 +34,39 @@ const SignIn = ({ setUser }) => {
           <Form
             enableReinitialize
             initialValues={{
-              email: "",
-              password: ""
+              email: ""
             }}
             validations={{
-              email: [Form.is.required(), Form.is.email()],
-              password: Form.is.required()
+              email: [Form.is.required(), Form.is.email()]
             }}
-            onSubmit={async (values, form) => {
+            onSubmit={async values => {
               try {
-                const user = await signIn({
+                await forgotPassword({
                   ...values
                 });
-                await setUser(user.user);
-                history.push("/projects");
+                toast.success("Reset link sent to email!");
               } catch (error) {
                 toast.error(error);
               }
             }}
           >
             <FormElement>
-              <FormHeading>Sign in to your account</FormHeading>
+              <FormHeading>Forgot password</FormHeading>
 
               <Form.Field.Input name="email" placeholder="Email" />
-              <Form.Field.Input
-                name="password"
-                placeholder="Password"
-                type="password"
-              />
               <Actions>
                 <ActionButton
                   type="submit"
                   variant="full"
                   isWorking={isCreating}
                 >
-                  Log In
+                  Request Reset
                 </ActionButton>
               </Actions>
-              <span style={{ marginTop: "15px" }}>
-                <Link to="/forgot_pass">Forgot password?</Link>
-              </span>
               <Divider />
               <span>
-                Don't have an account?
-                <Link to="/signup">Sign up</Link>
+                Have a password?
+                <Link to="/signin">Sign in</Link>
               </span>
             </FormElement>
           </Form>
@@ -99,8 +76,4 @@ const SignIn = ({ setUser }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  setUser: user => dispatch(setUser(user))
-});
-
-export default connect(null, mapDispatchToProps)(SignIn);
+export default ForgotPassword;

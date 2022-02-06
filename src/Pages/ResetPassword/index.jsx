@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { Form } from "../../shared/components";
 import {
@@ -13,27 +13,15 @@ import useApi from "../../shared/hooks/api";
 import HalfScreen from "../../shared/components/HalfSide";
 import Mangekyo from "../../shared/components/Loaders/Mangekyo";
 import SharinganBanner from "../../shared/components/Banner";
-import { Link, useHistory } from "react-router-dom";
 import { BannerText } from "../../shared/components/Banner/Styles";
 import { AuthPage } from "../Styles";
 import toast from "../../shared/utils/toast";
-import { connect } from "react-redux";
-import { setUser } from "../../redux/user/user-reducer";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
-const SignIn = ({ setUser }) => {
-  const [{ isCreating }, signIn] = useApi.post("/auth/login");
-  const [{ data }] = useApi.get("/auth", {}, { cachePolicy: "no-cache" });
+const ResetPassword = () => {
+  const match = useRouteMatch();
   const history = useHistory();
-  useEffect(() => {
-    let mounted = true;
-    if (mounted && data) {
-      setUser(data.user);
-      history.push("/projects");
-    }
-    return function cleanup() {
-      mounted = false;
-    };
-  }, []);
+  const [{ isCreating }, resetPassword] = useApi.post("/auth/reset_password");
   return (
     <AuthPage>
       <HalfScreen variant="left">
@@ -46,32 +34,31 @@ const SignIn = ({ setUser }) => {
           <Form
             enableReinitialize
             initialValues={{
-              email: "",
               password: ""
             }}
             validations={{
-              email: [Form.is.required(), Form.is.email()],
               password: Form.is.required()
             }}
-            onSubmit={async (values, form) => {
+            onSubmit={async values => {
               try {
-                const user = await signIn({
-                  ...values
+                await resetPassword({
+                  ...values,
+                  token: match.params.token
                 });
-                await setUser(user.user);
-                history.push("/projects");
+                toast.success("Password reset successful!");
+                setTimeout(() => {
+                  history.push("/signin");
+                }, 500);
               } catch (error) {
                 toast.error(error);
               }
             }}
           >
             <FormElement>
-              <FormHeading>Sign in to your account</FormHeading>
-
-              <Form.Field.Input name="email" placeholder="Email" />
+              <FormHeading>Reset Password</FormHeading>
               <Form.Field.Input
                 name="password"
-                placeholder="Password"
+                placeholder="New Password"
                 type="password"
               />
               <Actions>
@@ -80,17 +67,10 @@ const SignIn = ({ setUser }) => {
                   variant="full"
                   isWorking={isCreating}
                 >
-                  Log In
+                  Reset Password
                 </ActionButton>
               </Actions>
-              <span style={{ marginTop: "15px" }}>
-                <Link to="/forgot_pass">Forgot password?</Link>
-              </span>
               <Divider />
-              <span>
-                Don't have an account?
-                <Link to="/signup">Sign up</Link>
-              </span>
             </FormElement>
           </Form>
         </EntryCard>
@@ -99,8 +79,4 @@ const SignIn = ({ setUser }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  setUser: user => dispatch(setUser(user))
-});
-
-export default connect(null, mapDispatchToProps)(SignIn);
+export default ResetPassword;

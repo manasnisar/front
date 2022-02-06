@@ -1,54 +1,21 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 
 import NormalizeStyles from "./NormalizeStyles";
 import BaseStyles from "./BaseStyles";
 import Toast from "./Toast";
 import Routes from "./Routes";
 import history from "../browserHistory";
-
 import "./fontStyles.css";
-import useApi from "../shared/hooks/api";
-import { setUser } from "../redux/user/user-reducer";
-import { connect } from "react-redux";
-import Mangekyo from "../shared/components/Loaders/Mangekyo";
 
-const App = ({ setUser }) => {
-  const [{ data, error, isLoading }] = useApi.get(
-    "/auth",
-    {},
-    { cachePolicy: "no-cache" }
-  );
-  useEffect(() => {
-    console.log(data);
-
-    async function checkAuth() {
-      if (error) {
-        history.push("/signin");
-      } else if (data) {
-        setUser(data.user);
-      }
-    }
-
-    checkAuth();
-  }, [data, history]);
+const App = () => {
   return (
-    <div>
-      {isLoading ? (
-        <Mangekyo />
-      ) : (
-        <Fragment>
-          <NormalizeStyles />
-          <BaseStyles />
-          <Toast />
-          <Routes history={history} />
-        </Fragment>
-      )}
-    </div>
+    <Fragment>
+      <NormalizeStyles />
+      <BaseStyles />
+      <Toast />
+      <Routes history={history} />
+    </Fragment>
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  setUser: user => dispatch(setUser(user))
-});
-
-export default connect(null, mapDispatchToProps)(App);
+export default App;

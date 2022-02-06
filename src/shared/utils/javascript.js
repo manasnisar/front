@@ -22,6 +22,5 @@ export const updateArrayItemById = (arr, itemId, fields) => {
 };
 
 export const sortByNewest = (items, sortField) => {
-  console.log(items);
   return items.sort((a, b) => -a[sortField].localeCompare(b[sortField]));
 };

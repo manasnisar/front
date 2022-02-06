@@ -52,7 +52,7 @@ const SignUp = ({ inviteInputVisible }) => {
               email: "",
               password: "",
               organization: "",
-              role: "member"
+              role: "owner"
             }}
             validations={{
               name: Form.is.required(),
@@ -63,14 +63,20 @@ const SignUp = ({ inviteInputVisible }) => {
             }}
             onSubmit={async (values, form) => {
               try {
-                await signUp({
+                const user = await signUp({
                   ...values,
                   creationDate: Date.now()
                 });
-                toast.success("User created successfully!");
+                if (user.user.role === "owner") {
+                  toast.success(
+                    "Organization Registered. Please verify your email to access your account!"
+                  );
+                } else {
+                  toast.success("User created successfully!");
+                }
                 setTimeout(() => {
                   history.push("/signin");
-                }, 500);
+                }, 1000);
               } catch (error) {
                 toast.error(error);
               }
@@ -82,7 +88,7 @@ const SignUp = ({ inviteInputVisible }) => {
               <Form.Field.Input name="email" placeholder="Email" />
               <Form.Field.Input
                 name="password"
-                placeholder="Password"
+                placeholder="New password"
                 type="password"
               />
               <Form.Field.Input

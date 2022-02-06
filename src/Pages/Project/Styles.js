@@ -31,6 +31,10 @@ export const Header = styled.div`
 export const BoardName = styled.div`
   ${font.size(24)}
   ${font.medium}
+  span {
+    color: #5e6c84;
+    font-size: 15px;
+  }
 `;
 
 export const ActionContainer = styled.div`

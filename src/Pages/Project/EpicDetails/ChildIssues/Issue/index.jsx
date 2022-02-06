@@ -25,7 +25,6 @@ const propTypes = {
 
 const ProjectBoardListIssue = ({ projectUsers, issue, stage }) => {
   const match = useRouteMatch();
-  console.log(match);
 
   const assignee = projectUsers.find(user => user.id === issue.assigneeId);
 

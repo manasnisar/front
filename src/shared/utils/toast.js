@@ -6,7 +6,6 @@ const show = toast => pubsub.emit("toast", toast);
 const success = title => show({ title });
 
 const error = err => {
-  console.log(err);
   show({
     type: "danger",
     title: "Error",
