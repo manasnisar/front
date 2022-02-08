@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import useApi from "../../shared/hooks/api";
 import HalfScreen from "../../shared/components/HalfSide";
 import Mangekyo from "../../shared/components/Loaders/Mangekyo";
@@ -10,7 +10,7 @@ import { AfterVerification, VerifcationContainer } from "./Styles";
 
 const VerifyAccount = () => {
   const match = useRouteMatch();
-  const [{ data, error, isLoading }, verifyAccount] = useApi.get(
+  const [{ error, isLoading }] = useApi.get(
     `/auth/verify_account/${match.params.token}`
   );
 

@@ -5,7 +5,6 @@ import { Avatar, Select, Icon } from "../../../../shared/components";
 
 import { SectionTitle } from "../Styles";
 import { User, Username } from "./Styles";
-import { value } from "lodash/seq";
 
 const propTypes = {
   issue: PropTypes.object.isRequired,

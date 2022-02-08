@@ -32,7 +32,7 @@ const useMutation = (method, url) => {
           }
         );
       }),
-    [method, url, mergeState]
+    [history, method, url, mergeState, match.path]
   );
 
   return [

@@ -33,7 +33,7 @@ const SignIn = ({ setUser }) => {
     return function cleanup() {
       mounted = false;
     };
-  }, []);
+  }, [data, history, setUser]);
   return (
     <AuthPage>
       <HalfScreen variant="left">
@@ -73,6 +73,7 @@ const SignIn = ({ setUser }) => {
                 name="password"
                 placeholder="Password"
                 type="password"
+                autocomplete="current-password"
               />
               <Actions>
                 <ActionButton

@@ -34,7 +34,7 @@ const SignUp = ({ inviteInputVisible }) => {
     return function cleanup() {
       mounted = false;
     };
-  }, []);
+  }, [data, history]);
 
   return (
     <AuthPage>

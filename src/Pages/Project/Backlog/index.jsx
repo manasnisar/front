@@ -13,7 +13,6 @@ import ProjectBacklogTitleList from "../Titles";
 import ProjectBacklogEpics from "../Rows";
 import useCurrentUser from "../../../shared/hooks/currentUser";
 import { connect } from "react-redux";
-import EpicDetails from "../EpicDetails";
 
 const propTypes = {
   project: PropTypes.object.isRequired,

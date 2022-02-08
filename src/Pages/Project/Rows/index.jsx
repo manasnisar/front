@@ -11,8 +11,9 @@ const propTypes = {
   project: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
   fetchProject: PropTypes.func.isRequired,
-  updateLocalProjectIssues: PropTypes.func.isRequired,
   issueCreateModalOpen: PropTypes.func.isRequired,
+  page: PropTypes.string.isRequired,
+  setEpicUnderView: PropTypes.func.isRequired,
   epicDetailsModalOpen: PropTypes.func.isRequired
 };
 

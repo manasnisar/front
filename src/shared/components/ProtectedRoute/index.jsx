@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import useApi from "../../hooks/api";
 import Mangekyo from "../Loaders/Mangekyo";
 
 function ProtectedRoute({ component: Component, ...restOfProps }) {
-  const [{ data, error, isLoading }] = useApi.get(
+  const [{ error, isLoading }] = useApi.get(
     "/auth",
     {},
     { cachePolicy: "no-cache" }

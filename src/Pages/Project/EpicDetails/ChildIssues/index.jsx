@@ -53,6 +53,7 @@ const ProjectBoardEpicDetailsChildIssues = ({ epic, project, stage }) => {
               />
             );
           }
+          return null;
         })}
       </ScrollArea>
     </Fragment>

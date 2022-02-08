@@ -67,7 +67,7 @@ const optimisticUpdate = async (url, updatedFields) => {
   }
 };
 
-export default {
+const exported = {
   get: (...args) => api("get", ...args),
   post: (...args) => api("post", ...args),
   put: (...args) => api("put", ...args),
@@ -75,3 +75,5 @@ export default {
   delete: (...args) => api("delete", ...args),
   optimisticUpdate
 };
+
+export default exported;

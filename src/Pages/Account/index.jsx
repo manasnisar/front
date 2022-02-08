@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { ProjectType, ProjectTypeCopy } from "../../shared/constants/projects";
 import toast from "../../shared/utils/toast";
 import useApi from "../../shared/hooks/api";
 import { Avatar, Form } from "../../shared/components";
@@ -36,7 +35,7 @@ const UserAccount = ({ user, orgProjects }) => {
         orgProjects.filter(project => user.projects.includes(project.id))
       );
     }
-  }, [user]);
+  }, [user, orgProjects]);
 
   return (
     user && (

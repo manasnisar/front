@@ -14,4 +14,6 @@ const error = err => {
   });
 };
 
-export default { show, error, success };
+const exported = { show, error, success };
+
+export default exported;

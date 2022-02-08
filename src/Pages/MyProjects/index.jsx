@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import useApi from "../../shared/hooks/api";
 import { createQueryParamModalHelpers } from "../../shared/utils/queryParamModal";
@@ -15,12 +15,19 @@ const MyProjects = ({ userId, setOrgProjects }) => {
   const projectCreateModalHelpers = createQueryParamModalHelpers(
     "project-create"
   );
-
   const [{ data, error }, fetchProjects] = useApi.get(`/project/${userId}`);
-
+  useEffect(() => {
+    let mounted = true;
+    if (mounted && data) {
+      setOrgProjects(data.projects);
+    }
+    return function cleanup() {
+      mounted = false;
+    };
+  }, [data, setOrgProjects]);
   if (!data) return <PageLoader />;
   if (error) return <PageError />;
-  setOrgProjects(data.projects);
+
   const { projects, members, owner } = data;
   const users = members.concat(owner);
   return (

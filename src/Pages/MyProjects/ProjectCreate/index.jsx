@@ -45,6 +45,7 @@ const CreateProject = ({
         projectName: "",
         description: "",
         category: "",
+        key: "",
         projectLead: currentUserId
       }}
       validations={{

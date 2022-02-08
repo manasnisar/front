@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-import { color, font } from "../../../../shared/utils/styles";
-import { Button } from "../../../../shared/components";
+import { font } from "../../../../shared/utils/styles";
 
 export const Type = styled.div`
   display: flex;

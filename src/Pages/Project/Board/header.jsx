@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "../../../shared/components";
 import { Header, BoardName } from "../Styles";
 import { Right, SprintInfo } from "./Styles";
 import SprintEnd from "./sprint";

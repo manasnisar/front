@@ -7,9 +7,8 @@ import { ConfirmModal } from "../../../../shared/components";
 import { TypeIcon } from "./Styes";
 
 const propTypes = {
-  issue: PropTypes.object.isRequired,
-  fetchProject: PropTypes.func.isRequired,
-  modalClose: PropTypes.func.isRequired
+  fetchProjects: PropTypes.func.isRequired,
+  project: PropTypes.object.isRequired
 };
 
 const ProjectDelete = ({ project, fetchProjects }) => {

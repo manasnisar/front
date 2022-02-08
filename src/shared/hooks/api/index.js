@@ -1,11 +1,13 @@
-import useQuery from './query';
-import useMutation from './mutation';
+import useQuery from "./query";
+import useMutation from "./mutation";
 
 /* eslint-disable react-hooks/rules-of-hooks */
-export default {
+const exported = {
   get: (...args) => useQuery(...args),
-  post: (...args) => useMutation('post', ...args),
-  put: (...args) => useMutation('put', ...args),
-  patch: (...args) => useMutation('patch', ...args),
-  delete: (...args) => useMutation('delete', ...args),
+  post: (...args) => useMutation("post", ...args),
+  put: (...args) => useMutation("put", ...args),
+  patch: (...args) => useMutation("patch", ...args),
+  delete: (...args) => useMutation("delete", ...args)
 };
+
+export default exported;
