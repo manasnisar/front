@@ -3,8 +3,9 @@ import GridTable from "@nadavshaar/react-grid-table";
 import { GridContainer } from "./Styes";
 import { useHistory } from "react-router-dom";
 import ProjectDelete from "./Delete";
+import { connect } from "react-redux";
 
-const ProjectsTable = ({ projects, filters, fetchProjects, page }) => {
+const ProjectsTable = ({ user, projects, filters, fetchProjects, page }) => {
   const projectLead = ({ data }) => {
     return (
       <div
@@ -16,7 +17,7 @@ const ProjectsTable = ({ projects, filters, fetchProjects, page }) => {
         }}
       >
         <div>{data.projectLead.name}</div>
-        {page !== "account" && (
+        {page !== "account" && user.role === "owner" && (
           <ProjectDelete fetchProjects={fetchProjects} project={data} />
         )}
       </div>
@@ -25,6 +26,12 @@ const ProjectsTable = ({ projects, filters, fetchProjects, page }) => {
 
   const projectName = ({ data }) => {
     return <div style={{ marginLeft: "20px" }}>{data.name}</div>;
+  };
+
+  const NoResults = () => {
+    return (
+      <div style={{ marginTop: "-20px", fontSize: "18px" }}>No Projects</div>
+    );
   };
 
   const createdAt = ({ data }) => {
@@ -109,9 +116,14 @@ const ProjectsTable = ({ projects, filters, fetchProjects, page }) => {
         ) => {
           if (column.index !== 3) history.push(`/project/${data.id}/board`);
         }}
+        components={{ NoResults }}
       />
     </GridContainer>
   );
 };
 
-export default ProjectsTable;
+const mapStateToProps = state => ({
+  user: state.userState.user
+});
+
+export default connect(mapStateToProps)(ProjectsTable);

@@ -26,7 +26,7 @@ const VerifyAccount = () => {
           {isLoading
             ? "Verifying your account..."
             : error
-            ? "Account verification failed!"
+            ? error.message
             : "Account verification successful!"}
         </VerifcationContainer>
         <AfterVerification>
