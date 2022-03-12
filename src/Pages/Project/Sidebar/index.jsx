@@ -16,12 +16,14 @@ import {
   LinkText,
   NotImplemented
 } from "./Styles";
+import { setOrgProjects } from "../../../redux/project/project-reducer";
+import { connect } from "react-redux";
 
 const propTypes = {
   project: PropTypes.object.isRequired
 };
 
-const ProjectSidebar = ({ project }) => {
+const ProjectSidebar = ({ userRole, project }) => {
   const match = useRouteMatch();
 
   return (
@@ -39,7 +41,8 @@ const ProjectSidebar = ({ project }) => {
       {renderLinkItem(match, "Active Sprint", "board", "/board")}
       {renderLinkItem(match, "Backlog", "plus", "/backlog")}
       {renderLinkItem(match, "History", "menu", "/history")}
-      {renderLinkItem(match, "Project settings", "settings", "/settings")}
+      {userRole === "owner" &&
+        renderLinkItem(match, "Project settings", "settings", "/settings")}
       <Divider />
       {renderLinkItem(match, "Back to Projects", "arrow-left", "../projects")}
     </Sidebar>
@@ -70,4 +73,8 @@ const renderLinkItem = (match, text, iconType, path) => {
 
 ProjectSidebar.propTypes = propTypes;
 
-export default ProjectSidebar;
+const mapStateToProps = state => ({
+  userRole: state.userState.user.role
+});
+
+export default connect(mapStateToProps)(ProjectSidebar);
