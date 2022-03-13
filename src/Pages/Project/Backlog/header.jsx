@@ -2,12 +2,15 @@ import React from "react";
 import Sprint from "./Sprint";
 import { Button } from "../../../shared/components";
 import { Header, BoardName, ActionContainer } from "../Styles";
+import { connect } from "react-redux";
 
 const ProjectBoardHeader = ({
   epicCreateModalOpen,
   projectId,
   fetchProject,
-  sprintStatus
+  sprintStatus,
+  user,
+  project
 }) => {
   return (
     <Header>
@@ -16,12 +19,18 @@ const ProjectBoardHeader = ({
         <Button variant="success" onClick={epicCreateModalOpen}>
           Create Epic
         </Button>
-        {sprintStatus === "inactive" && (
-          <Sprint fetchProject={fetchProject} projectId={projectId} />
-        )}
+        {sprintStatus === "inactive" &&
+          (user.role === "owner" || user.id === project.projectLead.id) && (
+            <Sprint fetchProject={fetchProject} projectId={projectId} />
+          )}
       </ActionContainer>
     </Header>
   );
 };
 
-export default ProjectBoardHeader;
+const mapStateToProps = state => ({
+  user: state.userState.user,
+  project: state.projectState.project
+});
+
+export default connect(mapStateToProps)(ProjectBoardHeader);

@@ -2,8 +2,10 @@ import React from "react";
 import { Header, BoardName } from "../Styles";
 import { Right, SprintInfo } from "./Styles";
 import SprintEnd from "./sprint";
+import Sprint from "../Backlog/Sprint";
+import { connect } from "react-redux";
 
-const ProjectBoardHeader = ({ project, fetchProject }) => {
+const ProjectBoardHeader = ({ project, fetchProject, user }) => {
   let sprintOverDue = false;
   const startDate = new Date(Date.now());
   const endDate = new Date(project.sprintEndDate);
@@ -33,11 +35,18 @@ const ProjectBoardHeader = ({ project, fetchProject }) => {
                 : `Sprint ends in ${days} days, ${hours} hours`}
             </SprintInfo>
           )}
-          <SprintEnd fetchProject={fetchProject} projectId={project._id} />
+          {project.sprintStatus === "active" &&
+            (user.role === "owner" || user.id === project.projectLead.id) && (
+              <SprintEnd fetchProject={fetchProject} projectId={project._id} />
+            )}
         </Right>
       )}
     </Header>
   );
 };
 
-export default ProjectBoardHeader;
+const mapStateToProps = state => ({
+  user: state.userState.user
+});
+
+export default connect(mapStateToProps)(ProjectBoardHeader);
