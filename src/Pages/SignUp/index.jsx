@@ -52,7 +52,7 @@ const SignUp = ({ inviteInputVisible }) => {
               email: "",
               password: "",
               organization: "",
-              role: "owner"
+              role: "member"
             }}
             validations={{
               name: Form.is.required(),

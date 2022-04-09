@@ -20,6 +20,17 @@ const defaultProps = {
   validateOnBlur: false
 };
 
+const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+function generateString() {
+  let result = "";
+  const charactersLength = characters.length;
+  for (let i = 0; i < 5; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
 const Form = ({ validate, validations, ...otherProps }) => (
   <Formik
     {...otherProps}
@@ -48,10 +59,13 @@ Form.Field = mapValues(
           name={name}
           error={get(touched, name) && get(errors, name)}
           onChange={value => {
-            setFieldValue(name, value);
             if (name === "projectName") {
-              setFieldValue("key", value.slice(0, 3).toUpperCase());
+              setFieldValue(
+                "key",
+                `${value.slice(0, 3).toUpperCase()}-${generateString()}`
+              );
             }
+            setFieldValue(name, value);
           }}
         />
       )}
