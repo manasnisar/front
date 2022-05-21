@@ -67,7 +67,7 @@ const renderHourInput = (fieldName, issue, updateIssue) => (
     value={isNil(issue[fieldName]) ? "" : issue[fieldName]}
     onChange={stringValue => {
       const value = stringValue.trim() ? Number(stringValue) : null;
-      updateIssue({ [fieldName]: value });
+      if (value) updateIssue({ [fieldName]: value });
     }}
   />
 );

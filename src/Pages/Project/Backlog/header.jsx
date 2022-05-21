@@ -4,12 +4,15 @@ import { Button } from "../../../shared/components";
 import { Header, BoardName, ActionContainer } from "../Styles";
 import { HeaderRightContent } from "../../MyProjects/Board/Header/Styles";
 import NotificationHandler from "../../../shared/components/Notifications";
+import { connect } from "react-redux";
 
 const ProjectBoardHeader = ({
   epicCreateModalOpen,
   projectId,
   fetchProject,
-  sprintStatus
+  sprintStatus,
+  user,
+  project
 }) => {
   return (
     <Header>
@@ -18,15 +21,21 @@ const ProjectBoardHeader = ({
         <HeaderRightContent>
           <NotificationHandler/>
           <Button variant="success" onClick={epicCreateModalOpen}>
-                Create Epic
-              </Button>
-              {sprintStatus === "inactive" && (
-                <Sprint fetchProject={fetchProject} projectId={projectId} />
-              )}
+            Create Epic
+          </Button>
+          {sprintStatus === "inactive" &&
+            (user.role === "owner" || user.id === project.projectLead.id) && (
+              <Sprint fetchProject={fetchProject} projectId={projectId} />
+            )}
         </HeaderRightContent>
       </ActionContainer>
     </Header>
   );
 };
 
-export default ProjectBoardHeader;
+const mapStateToProps = state => ({
+  user: state.userState.user,
+  project: state.projectState.project
+});
+
+export default connect(mapStateToProps)(ProjectBoardHeader);

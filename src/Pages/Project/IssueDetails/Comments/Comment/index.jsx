@@ -17,16 +17,19 @@ import {
   EditLink,
   DeleteLink
 } from "./Styles";
+import { connect } from "react-redux";
 
 const propTypes = {
   comment: PropTypes.object.isRequired,
-  fetchIssue: PropTypes.func.isRequired
+  fetchIssue: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired
 };
 
-const ProjectBoardIssueDetailsComment = ({ comment, fetchIssue }) => {
+const ProjectBoardIssueDetailsComment = ({ comment, fetchIssue, userId }) => {
   const [isFormOpen, setFormOpen] = useState(false);
   const [isUpdating, setUpdating] = useState(false);
   const [body, setBody] = useState(comment.body);
+  console.log(comment);
 
   const handleCommentDelete = async () => {
     try {
@@ -67,16 +70,20 @@ const ProjectBoardIssueDetailsComment = ({ comment, fetchIssue }) => {
         ) : (
           <Fragment>
             <Body>{comment.body}</Body>
-            <EditLink onClick={() => setFormOpen(true)}>Edit</EditLink>
-            <ConfirmModal
-              title="Are you sure you want to delete this comment?"
-              message="Once you delete, it's gone for good."
-              confirmText="Delete comment"
-              onConfirm={handleCommentDelete}
-              renderLink={modal => (
-                <DeleteLink onClick={modal.open}>Delete</DeleteLink>
-              )}
-            />
+            {userId === comment.userId && (
+              <>
+                <EditLink onClick={() => setFormOpen(true)}>Edit</EditLink>
+                <ConfirmModal
+                  title="Are you sure you want to delete this comment?"
+                  message="Once you delete, it's gone for good."
+                  confirmText="Delete comment"
+                  onConfirm={handleCommentDelete}
+                  renderLink={modal => (
+                    <DeleteLink onClick={modal.open}>Delete</DeleteLink>
+                  )}
+                />
+              </>
+            )}
           </Fragment>
         )}
       </Content>
@@ -86,4 +93,8 @@ const ProjectBoardIssueDetailsComment = ({ comment, fetchIssue }) => {
 
 ProjectBoardIssueDetailsComment.propTypes = propTypes;
 
-export default ProjectBoardIssueDetailsComment;
+const mapStateToProps = state => ({
+  userId: state.userState.user.id
+});
+
+export default connect(mapStateToProps)(ProjectBoardIssueDetailsComment);

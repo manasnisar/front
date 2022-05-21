@@ -4,8 +4,10 @@ import { Right, SprintInfo } from "./Styles";
 import SprintEnd from "./sprint";
 import { HeaderRightContent } from "../../MyProjects/Board/Header/Styles";
 import NotificationHandler from "../../../shared/components/Notifications";
+import Sprint from "../Backlog/Sprint";
+import { connect } from "react-redux";
 
-const ProjectBoardHeader = ({ project, fetchProject }) => {
+const ProjectBoardHeader = ({ project, fetchProject, user }) => {
   let sprintOverDue = false;
   const startDate = new Date(Date.now());
   const endDate = new Date(project.sprintEndDate);
@@ -28,7 +30,6 @@ const ProjectBoardHeader = ({ project, fetchProject }) => {
         <NotificationHandler/>
         {project.sprintStatus === "active" && (
           <Right>
-
             {project.sprintStatus === "active" && (
               <SprintInfo sprintOverDue={sprintOverDue}>
                 {sprintOverDue
@@ -38,7 +39,10 @@ const ProjectBoardHeader = ({ project, fetchProject }) => {
                   : `Sprint ends in ${days} days, ${hours} hours`}
               </SprintInfo>
             )}
-            <SprintEnd fetchProject={fetchProject} projectId={project._id} />
+            {project.sprintStatus === "active" &&
+              (user.role === "owner" || user.id === project.projectLead.id) && (
+                <SprintEnd fetchProject={fetchProject} projectId={project._id} />
+              )}
           </Right>
         )}
       </HeaderRightContent>
@@ -47,4 +51,8 @@ const ProjectBoardHeader = ({ project, fetchProject }) => {
   );
 };
 
-export default ProjectBoardHeader;
+const mapStateToProps = state => ({
+  user: state.userState.user
+});
+
+export default connect(mapStateToProps)(ProjectBoardHeader);
