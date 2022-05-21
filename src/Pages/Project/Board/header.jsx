@@ -2,6 +2,8 @@ import React from "react";
 import { Header, BoardName } from "../Styles";
 import { Right, SprintInfo } from "./Styles";
 import SprintEnd from "./sprint";
+import { HeaderRightContent } from "../../MyProjects/Board/Header/Styles";
+import NotificationHandler from "../../../shared/components/Notifications";
 
 const ProjectBoardHeader = ({ project, fetchProject }) => {
   let sprintOverDue = false;
@@ -22,20 +24,25 @@ const ProjectBoardHeader = ({ project, fetchProject }) => {
       <BoardName>
         Active Sprint <span>(Sprint {project.sprintNumber})</span>
       </BoardName>
-      {project.sprintStatus === "active" && (
-        <Right>
-          {project.sprintStatus === "active" && (
-            <SprintInfo sprintOverDue={sprintOverDue}>
-              {sprintOverDue
-                ? `Sprint overdue by ${days} ${
-                    days > 1 ? "days" : "day"
-                  }, ${hours} hours`
-                : `Sprint ends in ${days} days, ${hours} hours`}
-            </SprintInfo>
-          )}
-          <SprintEnd fetchProject={fetchProject} projectId={project._id} />
-        </Right>
-      )}
+      <HeaderRightContent>
+        <NotificationHandler/>
+        {project.sprintStatus === "active" && (
+          <Right>
+
+            {project.sprintStatus === "active" && (
+              <SprintInfo sprintOverDue={sprintOverDue}>
+                {sprintOverDue
+                  ? `Sprint overdue by ${days} ${
+                      days > 1 ? "days" : "day"
+                    }, ${hours} hours`
+                  : `Sprint ends in ${days} days, ${hours} hours`}
+              </SprintInfo>
+            )}
+            <SprintEnd fetchProject={fetchProject} projectId={project._id} />
+          </Right>
+        )}
+      </HeaderRightContent>
+
     </Header>
   );
 };

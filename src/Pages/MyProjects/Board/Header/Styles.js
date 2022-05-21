@@ -12,3 +12,10 @@ export const BoardName = styled.div`
   ${font.size(24)}
   ${font.medium}
 `;
+
+export const HeaderRightContent = styled.div`
+  display: flex;
+  gap: 10px
+`;
+
+

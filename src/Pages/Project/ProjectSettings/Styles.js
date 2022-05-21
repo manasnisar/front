@@ -26,3 +26,7 @@ export const FormHeading = styled.h1`
 export const ActionButton = styled(Button)`
   margin-top: 30px;
 `;
+
+export const ActionButtonHeader = styled(Button)`
+  margin-top: 0;
+`;
