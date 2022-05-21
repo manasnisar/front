@@ -29,7 +29,6 @@ const ProjectBoardIssueDetailsComment = ({ comment, fetchIssue, userId }) => {
   const [isFormOpen, setFormOpen] = useState(false);
   const [isUpdating, setUpdating] = useState(false);
   const [body, setBody] = useState(comment.body);
-  console.log(comment);
 
   const handleCommentDelete = async () => {
     try {

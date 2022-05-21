@@ -9,10 +9,10 @@ import "./fontStyles.css";
 import { connectSocket } from "../redux/socket/socket-reducer";
 import { connect } from "react-redux";
 
-const App = ({connect}) => {
+const App = ({connectSocket}) => {
   useEffect(() => {
-    connect();
-  },[connect])
+    connectSocket();
+  },[])
   return (
     <Fragment>
       <NormalizeStyles />
@@ -25,7 +25,7 @@ const App = ({connect}) => {
 
 
 const mapDispatchToProps = dispatch => ({
-  connect: () => dispatch(connectSocket())
+  connectSocket: () => dispatch(connectSocket())
 });
 
 export default connect(null, mapDispatchToProps)(App);

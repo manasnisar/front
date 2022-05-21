@@ -1,6 +1,5 @@
 import { socketService } from "../../shared/utils/socket-service";
 import api from "../../shared/utils/api";
-import { getState } from "core-js/modules/web.url-search-params";
 import { getStoredAuthToken } from "../../shared/utils/authToken";
 
 const socketConstants = {
@@ -40,7 +39,7 @@ export const connectSocket = () => async (dispatch ) => {
     };
   };
 
-  const fetchNotifications = (dispatch) => {
+  export const fetchNotifications = (dispatch) => {
     const data = api.get(
       `/notification/get/${getStoredAuthToken()}`,
     ).then(data => {
