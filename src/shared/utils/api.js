@@ -10,7 +10,7 @@ import {
 } from "../../shared/utils/authToken";
 
 const defaults = {
-  baseURL: process.env.API_URL || "http://localhost:5000/v1",
+  baseURL: 'https://sharingan-backend.herokuapp.com/v1',
   headers: () => ({
     "Content-Type": "application/json",
     Authorization: getStoredAuthToken()

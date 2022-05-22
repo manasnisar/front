@@ -1,4 +1,4 @@
-Copy-Item "./build/*" -Destination "/home/anas/Desktop/Uni/sharingan.github.io" -Recurse -force
+cp -a ./build/. /home/anas/Desktop/Uni/sharingan.github.io
 
 cd /home/anas/Desktop/Uni/sharingan.github.io
 git add -A .
