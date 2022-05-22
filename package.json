@@ -22,6 +22,7 @@
     "react-collapsible": "^2.8.4",
     "react-content-loader": "^4.3.3",
     "react-dom": "^17.0.2",
+    "react-notifications-menu": "^1.0.6",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -33,6 +34,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
     "regenerator-runtime": "^0.13.3",
+    "socket.io-client": "^4.5.0",
     "styled-components": "^4.4.1",
     "sweet-pubsub": "^1.1.2",
     "yup": "^0.32.9"

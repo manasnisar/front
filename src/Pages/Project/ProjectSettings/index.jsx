@@ -8,13 +8,15 @@ import {
 import toast from "../../../shared/utils/toast";
 import useApi from "../../../shared/hooks/api";
 import { Form, Breadcrumbs, Avatar, Icon } from "../../../shared/components";
+import { HeaderRightContent } from "../../MyProjects/Board/Header/Styles";
+import NotificationHandler from "../../../shared/components/Notifications";
 
 import {
   FormCont,
   FormHeading,
   FormElement,
   ActionButton,
-  Header
+  Header, ActionButtonHeader
 } from "./Styles";
 import { connect } from "react-redux";
 import {
@@ -65,13 +67,16 @@ const ProjectSettings = ({ project, fetchProject, openInvitationModal }) => {
             />
             <Header>
               <FormHeading>Project Details</FormHeading>
-              <ActionButton
-                type="button"
-                onClick={openInvitationModal}
-                variant="success"
-              >
-                Invite Members
-              </ActionButton>
+              <HeaderRightContent>
+                <NotificationHandler/>
+                <ActionButtonHeader
+                  type="button"
+                  onClick={openInvitationModal}
+                  variant="success"
+                >
+                  Invite Members
+                </ActionButtonHeader>
+              </HeaderRightContent>
             </Header>
 
             <Form.Field.Input name="name" label="Name" />
