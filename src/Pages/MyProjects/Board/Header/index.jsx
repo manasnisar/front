@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Button } from "../../../../shared/components";
 import { Header, BoardName } from "./Styles";
 import { connect } from "react-redux";
+import { HeaderRightContent } from "./Styles";
+import NotificationHandler from "../../../../shared/components/Notifications";
 
 const propTypes = {
   user: PropTypes.object.isRequired,
@@ -12,11 +14,15 @@ const propTypes = {
 const ProjectBoardHeader = ({ openCreateProjectModal, user }) => (
   <Header>
     <BoardName>My Projects</BoardName>
+    <HeaderRightContent>
+    <NotificationHandler/>
     {user.role === "owner" && (
       <Button onClick={openCreateProjectModal} variant="primary">
         Create Project
       </Button>
     )}
+    </HeaderRightContent>
+
   </Header>
 );
 

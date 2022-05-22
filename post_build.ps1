@@ -2,5 +2,5 @@ Copy-Item "./build/*" -Destination "C:\Users\manas\Desktop\FYP\sharingan.github.
 
 cd C:\Users\manas\Desktop\Uni\sharingan.github.io
 git add -A .
-git commit -m 'universall auto push'
+git commit -m 'almighty push'
 git push -u origin main

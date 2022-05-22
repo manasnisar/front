@@ -1,6 +1,5 @@
 import axios from "axios";
 
-import history from "../../browserHistory";
 import toast from "../../shared/utils/toast";
 import { objectToQueryString } from "../../shared/utils/url";
 import {
@@ -47,8 +46,8 @@ const api = (method, url, variables) =>
       error => {
         if (error.response) {
           if (error.response.data.statusText === "INVALID_TOKEN") {
+            console.log("here");
             removeStoredAuthToken();
-            history.push("/authenticate");
           } else {
             reject(error.response.data);
           }
