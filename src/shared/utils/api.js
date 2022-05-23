@@ -12,7 +12,7 @@ import {
 
 
 const defaults = {
-  baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://sharingan-backend.herokuapp.com/v1',
+  baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/v1' : 'https://sharingan-backend.herokuapp.com/v1',
   headers: () => ({
     "Content-Type": "application/json",
     Authorization: getStoredAuthToken()
