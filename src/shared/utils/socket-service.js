@@ -7,7 +7,7 @@ export const socketService = {
 
 function connect() {
   return new Promise((resolve, reject) => {
-    const socket = io("https://sharingan-backend.herokuapp.com", {
+    const socket = io(process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://sharingan-backend.herokuapp.com/v1', {
       query: { token: getStoredAuthToken() },
     });
     socket.on("connect", () => {
