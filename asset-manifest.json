@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "./static/css/main.78d09878.chunk.css",
-    "main.js": "./static/js/main.d2d93359.chunk.js",
-    "main.js.map": "./static/js/main.d2d93359.chunk.js.map",
+    "main.js": "./static/js/main.c87808f9.chunk.js",
+    "main.js.map": "./static/js/main.c87808f9.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.59b9ee4b.js",
     "runtime-main.js.map": "./static/js/runtime-main.59b9ee4b.js.map",
     "static/css/2.59dee6c0.chunk.css": "./static/css/2.59dee6c0.chunk.css",
-    "static/js/2.ff33715a.chunk.js": "./static/js/2.ff33715a.chunk.js",
-    "static/js/2.ff33715a.chunk.js.map": "./static/js/2.ff33715a.chunk.js.map",
+    "static/js/2.8ad45697.chunk.js": "./static/js/2.8ad45697.chunk.js",
+    "static/js/2.8ad45697.chunk.js.map": "./static/js/2.8ad45697.chunk.js.map",
     "index.html": "./index.html",
     "static/css/2.59dee6c0.chunk.css.map": "./static/css/2.59dee6c0.chunk.css.map",
     "static/css/main.78d09878.chunk.css.map": "./static/css/main.78d09878.chunk.css.map",
-    "static/js/2.ff33715a.chunk.js.LICENSE.txt": "./static/js/2.ff33715a.chunk.js.LICENSE.txt",
+    "static/js/2.8ad45697.chunk.js.LICENSE.txt": "./static/js/2.8ad45697.chunk.js.LICENSE.txt",
     "static/media/fontStyles.css": "./static/media/jira.c920b0e9.ttf",
     "static/media/background-forest.758fb626.jpg": "./static/media/background-forest.758fb626.jpg",
     "static/media/mangekyo-logo.5a692fac.png": "./static/media/mangekyo-logo.5a692fac.png"
@@ -19,8 +19,8 @@
   "entrypoints": [
     "static/js/runtime-main.59b9ee4b.js",
     "static/css/2.59dee6c0.chunk.css",
-    "static/js/2.ff33715a.chunk.js",
+    "static/js/2.8ad45697.chunk.js",
     "static/css/main.78d09878.chunk.css",
-    "static/js/main.d2d93359.chunk.js"
+    "static/js/main.c87808f9.chunk.js"
   ]
 }
