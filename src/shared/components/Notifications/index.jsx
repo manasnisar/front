@@ -16,16 +16,15 @@ const NotificationHandler = ({ socket, userId }) => {
         image: '/Assets/comment.png',
         message: notification.message,
         projectId: notification.project.id,
-        redirectUrl: `${ match.url === "/projects" ? "/project/" + notification.project.id + "/backlog/issues" + notification.issue.id :  match.url + "/issues/" + notification.issue.id}`
+        redirectUrl: notification.issue ? `${ match.url === "/projects" ? "/project/" + notification.project.id + "/backlog/issues" + notification.issue.id :  match.url + "/issues/" + notification.issue.id}` : `${"/project/" + notification.project.id + "/backlog/"}`
       }
     } else if (notification.type === "updated_issue"){
-      console.log(match.url)
       return {
         id: notification.id,
         userId,
         image: '/Assets/update.png',
         message: notification.message,
-        redirectUrl: `${ match.url === "/projects" ? "/project/" + notification.project.id + "/backlog/issues" + notification.issue.id : match.url + "/issues/" + notification.issue.id}`
+        redirectUrl: notification.issue ? `${ match.url === "/projects" ? "/project/" + notification.project.id + "/backlog/issues" + notification.issue.id : match.url + "/issues/" + notification.issue.id}` : `${"/project/" + notification.project.id + "/backlog/"}`
       }
     } else if (notification.type === "deleted_issue") {
       return {
@@ -81,8 +80,6 @@ const NotificationCard = ({ data }) => {
       `/notification/read/${data.id}`,
     )
   }
-  console.log(data)
-  console.log(match)
 
 
   return (

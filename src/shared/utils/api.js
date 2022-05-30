@@ -48,7 +48,6 @@ const api = (method, url, variables) =>
       error => {
         if (error.response) {
           if (error.response.data.statusText === "INVALID_TOKEN") {
-            console.log("here");
             removeStoredAuthToken();
           } else {
             reject(error.response.data);
