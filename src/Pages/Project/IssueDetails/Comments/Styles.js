@@ -10,3 +10,8 @@ export const Title = styled.div`
   ${font.medium}
   ${font.size(15)}
 `;
+
+export const Scrollable = styled.div`
+  overflow-y: scroll;
+  max-height: 450px;
+`;

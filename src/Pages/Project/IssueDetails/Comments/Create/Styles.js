@@ -6,6 +6,7 @@ import { Avatar } from "../../../../../shared/components";
 export const Create = styled.div`
   position: relative;
   margin-top: 25px;
+  padding-bottom: 30px;
   ${font.size(15)}
 `;
 

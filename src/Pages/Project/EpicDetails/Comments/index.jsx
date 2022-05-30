@@ -6,6 +6,7 @@ import { sortByNewest } from "../../../../shared/utils/javascript";
 import Create from "./Create";
 import Comment from "./Comment";
 import { Comments, Title } from "./Styles";
+import { Scrollable } from '../../IssueDetails/Comments/Styles';
 
 const propTypes = {
   epic: PropTypes.object.isRequired,
@@ -18,9 +19,12 @@ const ProjectBoardEpicDetailsComments = ({ epic, fetchEpic }) => {
       <Title>Comments</Title>
       <Create epicId={epic.id} fetchEpic={fetchEpic} />
 
-      {sortByNewest(epic.comments, "creationDate").map(comment => (
-        <Comment key={comment.id} comment={comment} fetchEpic={fetchEpic} />
-      ))}
+      <Scrollable>
+        {sortByNewest(epic.comments, "creationDate").map(comment => (
+          <Comment key={comment.id} comment={comment} fetchEpic={fetchEpic} />
+        ))}
+      </Scrollable>
+
     </Comments>
   );
 };

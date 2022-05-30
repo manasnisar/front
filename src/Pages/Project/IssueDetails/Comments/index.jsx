@@ -5,7 +5,7 @@ import { sortByNewest } from "../../../../shared/utils/javascript";
 
 import Create from "./Create";
 import Comment from "./Comment";
-import { Comments, Title } from "./Styles";
+import { Comments, Scrollable, Title } from './Styles';
 
 const propTypes = {
   issue: PropTypes.object.isRequired,
@@ -17,10 +17,12 @@ const ProjectBoardIssueDetailsComments = ({ issue, fetchIssue }) => {
     <Comments>
       <Title>Comments</Title>
       <Create issueId={issue.id} fetchIssue={fetchIssue} />
-
-      {sortByNewest(issue.comments, "creationDate").map(comment => (
+      <Scrollable>
+        {sortByNewest(issue.comments, "creationDate").map(comment => (
         <Comment key={comment.id} comment={comment} fetchIssue={fetchIssue} />
       ))}
+      </Scrollable>
+
     </Comments>
   );
 };
