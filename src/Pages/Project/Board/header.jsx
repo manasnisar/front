@@ -24,7 +24,7 @@ const ProjectBoardHeader = ({ project, fetchProject, user }) => {
   return (
     <Header>
       <BoardName>
-        Active Sprint <span>(Sprint {project.sprintNumber})</span>
+        Active Sprint <span>{project.sprintStatus === "active" &&  "(Sprint " + project.sprintNumber + ")"}</span>
       </BoardName>
       <HeaderRightContent>
         <NotificationHandler/>
