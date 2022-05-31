@@ -25,7 +25,7 @@ const ProjectBoardIssueDetailsDescription = ({ issue, updateIssue }) => {
   };
 
   const isDescriptionEmpty =
-    getTextContentsFromHtmlString(description).trim().length === 0;
+    description.trim().length === 0;
 
   return (
     <Fragment>

@@ -22,7 +22,6 @@ const ProjectBoardIssueDetailsComments = ({ issue, fetchIssue }) => {
         <Comment key={comment.id} comment={comment} fetchIssue={fetchIssue} />
       ))}
       </Scrollable>
-
     </Comments>
   );
 };

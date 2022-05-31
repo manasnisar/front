@@ -1,8 +1,11 @@
 export const getTextContentsFromHtmlString = html => {
-  const el = document.createElement("div");
-  el.innerHTML = html;
-  let cleanText = el.textContent.replace(/<\/?[^>]+(>|$)/g, "");
-  return cleanText;
+  let el = html.replace(/&lt;/g, "<");
+  el = el.replace(/&gt;/g, ">");
+  el = el.replace(/&quot;/g, "\"");
+  el = el.replace(/&#10;/g, "");
+  el = el.replace(/&amp;/g, "&");
+  return el
+
 };
 
 export const copyToClipboard = value => {
