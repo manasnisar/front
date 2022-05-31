@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import Logo from "./mangekyo-logo.png";
 
 export const StyledLogo = styled.div`
-  background-image: url(${Logo});
+  background-image: url("/Assets/Logos/mangekyo-logo.png");
   width: ${props => props.size}px;
   height: ${props => props.size}px;
   background-size: 40px;
