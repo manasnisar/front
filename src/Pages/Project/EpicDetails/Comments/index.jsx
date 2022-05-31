@@ -20,7 +20,7 @@ const ProjectBoardEpicDetailsComments = ({ epic, fetchEpic }) => {
       <Create epicId={epic.id} fetchEpic={fetchEpic} />
 
       <Scrollable>
-        {sortByNewest(epic.comments, "creationDate").map(comment => (
+        {sortByNewest(epic.comments, "creationDate").reverse().map(comment => (
           <Comment key={comment.id} comment={comment} fetchEpic={fetchEpic} />
         ))}
       </Scrollable>

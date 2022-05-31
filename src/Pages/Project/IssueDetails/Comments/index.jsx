@@ -18,7 +18,7 @@ const ProjectBoardIssueDetailsComments = ({ issue, fetchIssue }) => {
       <Title>Comments</Title>
       <Create issueId={issue.id} fetchIssue={fetchIssue} />
       <Scrollable>
-        {sortByNewest(issue.comments, "creationDate").map(comment => (
+        {sortByNewest(issue.comments, "creationDate").reverse().map(comment => (
         <Comment key={comment.id} comment={comment} fetchIssue={fetchIssue} />
       ))}
       </Scrollable>
